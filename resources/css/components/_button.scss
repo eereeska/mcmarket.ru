@@ -1,0 +1,42 @@
+button {
+    position: relative;
+    font-family: inherit;
+    font-weight: 600;
+    color: var(--color-white);
+    width: 100%;
+    background-color: var(--color-secondary);
+    border: none;
+    border-radius: 15px;
+    padding: 24px;
+    outline: none;
+    transition: all 0.1s ease;
+    cursor: pointer;
+
+    &.primary {
+        background-color: var(--color-primary);
+    }
+
+    &.loading {
+        color: transparent;
+        pointer-events: none;
+        user-select: none;
+        cursor: default;
+        
+        &:before {
+            content: '\f2f1';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Font Awesome 5 Pro';
+            font-weight: 100;
+            font-size: 18px;
+            color: var(--color-white);
+            animation: spin 1.5s linear infinite;
+        }
+    }
+}

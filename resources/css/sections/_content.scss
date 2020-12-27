@@ -1,0 +1,16 @@
+.content {
+    max-width: var(--content-max-width);
+    margin: 60px auto;
+
+    &.auth_form {
+        max-width: 400px;
+    }
+}
+
+.section_title {
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 30px;
+}

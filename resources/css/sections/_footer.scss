@@ -1,0 +1,27 @@
+.footer {
+    position: sticky;
+    top: 100%;
+    background-color: var(--color-primary-05);
+    padding: 30px 0;
+
+    &__inner {
+        display: flex;
+        flex-wrap: wrap;
+        max-width: var(--content-max-width);
+        margin: 0 auto;
+    }
+
+    a {
+        font-weight: 600;
+        color: var(--text-color-primary);
+        margin-right: 30px;
+
+        &:first-child {
+            margin-right: auto;
+        }
+
+        &:last-child {
+            margin-right: 0;
+        }
+    }
+}

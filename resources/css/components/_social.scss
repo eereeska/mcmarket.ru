@@ -1,0 +1,54 @@
+.social_links {
+    
+    &.grid {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 30px;
+
+        > a {
+            text-align: center;
+            flex-grow: 1;
+            width: 70px;
+            height: 70px;
+        }
+    }
+
+    a {
+        display: block;
+        font-size: 24px;
+        background-color: var(--color-primary-05);
+        border: 1px solid var(--color-primary-10);
+        border-radius: 15px;
+        padding: 20px;
+
+        &:before {
+            font-family: 'Font Awesome 5 Brands';
+        }
+
+        &:not(:empty) {
+            display: flex;
+            align-items: center;
+            
+            &:before {
+                margin-right: 15px;
+            }
+        }
+
+        &.vk:before {
+            content: '\f189';
+        }
+
+        &.google:before {
+            content: '\f1a0';
+        }
+
+        &.yandex:before {
+            content: '\f413';
+        }
+
+        &.fb:before {
+            content: '\f39e';
+        }
+    }
+}

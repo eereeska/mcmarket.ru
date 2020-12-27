@@ -1,0 +1,531 @@
+@charset "UTF-8";
+
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --html-bg-color: #F1F3FA;
+  --content-max-width: 1100px;
+  --text-color-primary: #2A2C34;
+  --color-white: #F2F6F9;
+  --color-primary: rgb(109, 128, 226);
+  --color-primary-70: rgba(109, 128, 226, 0.7);
+  --color-primary-50: rgba(109, 128, 226, 0.5);
+  --color-primary-10: rgba(109, 128, 226, 0.1);
+  --color-primary-05: rgba(109, 128, 226, 0.05);
+  --color-secondary: rgb(102, 102, 115);
+  --color-red: #FB7676;
+}
+
+html {
+  height: 100%;
+  background-color: var(--html-bg-color);
+}
+
+body {
+  font-family: "Nunito", Arial, Helvetica, sans-serif;
+  font-weight: normal;
+  font-size: 16px;
+  height: 100%;
+  color: var(--text-color-primary);
+  margin: 0;
+}
+
+a {
+  color: var(--color-primary-70);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--color-primary);
+}
+
+@font-face {
+  font-family: "Font Awesome 5 Pro";
+  font-style: normal;
+  font-weight: 300;
+  font-display: block;
+  src: url(/fonts/fa-light-300.eot?a624ea3f4dd832cb54ea41286ded8fc3);
+  src: url(/fonts/fa-light-300.eot?a624ea3f4dd832cb54ea41286ded8fc3) format("embedded-opentype"), url(/fonts/fa-light-300.woff2?3d8af27a47bbfab857f96dbcf710b087) format("woff2"), url(/fonts/fa-light-300.woff?0b4313e036624b29c8f651d0c9a5ecd8) format("woff"), url(/fonts/fa-light-300.ttf?0e0b8b741276d5220c847d0be486609e) format("truetype"), url(/fonts/fa-light-300.svg?a83fcc84a08516a0e8bf77b2d982827a) format("svg");
+}
+
+@font-face {
+  font-family: "Font Awesome 5 Pro";
+  font-style: normal;
+  font-weight: 400;
+  font-display: block;
+  src: url(/fonts/fa-regular-400.eot?fde04f8e6967b818c6fb3338d8b366d3);
+  src: url(/fonts/fa-regular-400.eot?fde04f8e6967b818c6fb3338d8b366d3) format("embedded-opentype"), url(/fonts/fa-regular-400.woff2?3e332211899360ab9380df4d50e1c33a) format("woff2"), url(/fonts/fa-regular-400.woff?4776aa52b579295cf651f6284793dac4) format("woff"), url(/fonts/fa-regular-400.ttf?faa0b37d4fdba1e304982f192c55bbe2) format("truetype"), url(/fonts/fa-regular-400.svg?a7fe14be02125376c03aced162443080) format("svg");
+}
+
+@font-face {
+  font-family: "Font Awesome 5 Pro";
+  font-style: normal;
+  font-weight: 900;
+  font-display: block;
+  src: url(/fonts/fa-solid-900.eot?6c207a7b79c06c76e915eb8f30e51d8a);
+  src: url(/fonts/fa-solid-900.eot?6c207a7b79c06c76e915eb8f30e51d8a) format("embedded-opentype"), url(/fonts/fa-solid-900.woff2?150120b3d9b448dd116680b66eba9bbe) format("woff2"), url(/fonts/fa-solid-900.woff?fb2f453136d024f47f2463d0d2ea2f05) format("woff"), url(/fonts/fa-solid-900.ttf?749dd3651c1a97f03faa88723af2371a) format("truetype"), url(/fonts/fa-solid-900.svg?29fd9e8a4f8962b6a48328553db58f2c) format("svg");
+}
+
+@font-face {
+  font-family: "Font Awesome 5 Brands";
+  font-style: normal;
+  font-weight: 400;
+  font-display: block;
+  src: url(/fonts/fa-brands-400.eot?05c475fabceebae1f9d40ba6711cb41a);
+  src: url(/fonts/fa-brands-400.eot?05c475fabceebae1f9d40ba6711cb41a) format("embedded-opentype"), url(/fonts/fa-brands-400.woff2?7c0be8b6640f024b6f4505161bf1bfd4) format("woff2"), url(/fonts/fa-brands-400.woff?5d875e6a4dcceea77fa7d4b8e1440982) format("woff"), url(/fonts/fa-brands-400.ttf?8ca6e74eddaf8fce3cdcf8647b37cbf1) format("truetype"), url(/fonts/fa-brands-400.svg?6c6d2066f4cf11ef750989386713bccd) format("svg");
+}
+
+@font-face {
+  font-family: "Nunito";
+  src: url(/fonts/Nunito-Black.eot?1365f5a761f8ca297de815287cf1dbf0);
+  src: url(/fonts/Nunito-Black.eot?1365f5a761f8ca297de815287cf1dbf0) format("embedded-opentype"), url(/fonts/Nunito-Black.woff2?99e9c015d37f092ca838e099ef47630b) format("woff2"), url(/fonts/Nunito-Black.woff?59e68c03d5ee7487d6dc853c63427b0a) format("woff"), url(/fonts/Nunito-Black.ttf?e871002cb56e49676665703c88e7a0eb) format("truetype"), url(/fonts/Nunito-Black.svg?6b969aa40fa4744c4074f2b49c4c1c53) format("svg");
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Nunito";
+  src: url(/fonts/Nunito-Bold.eot?e6764d3426c5048da9160b9656e987d6);
+  src: url(/fonts/Nunito-Bold.eot?e6764d3426c5048da9160b9656e987d6) format("embedded-opentype"), url(/fonts/Nunito-Bold.woff2?71e314ab44ee39f69663aa9e3b51dbe6) format("woff2"), url(/fonts/Nunito-Bold.woff?726b1f6c4e41f23134e978fa4551a95c) format("woff"), url(/fonts/Nunito-Bold.ttf?b281483bb38c83846de4b00ef8c522a4) format("truetype"), url(/fonts/Nunito-Bold.svg?c900ce0998c4a30879886f186620034d) format("svg");
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Nunito";
+  src: url(/fonts/Nunito-ExtraBold.eot?f129bdabbfb77df457d59087d7d55309);
+  src: url(/fonts/Nunito-ExtraBold.eot?f129bdabbfb77df457d59087d7d55309) format("embedded-opentype"), url(/fonts/Nunito-ExtraBold.woff2?52cbc272f7333c0b5432e5187ad38dc4) format("woff2"), url(/fonts/Nunito-ExtraBold.woff?40d52157835073daf431760c5452bab4) format("woff"), url(/fonts/Nunito-ExtraBold.ttf?54efeb32fb87f5cefc0df83c840300cc) format("truetype"), url(/fonts/Nunito-ExtraBold.svg?03d69d5db678c624f6b64e999f2d69b0) format("svg");
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Nunito";
+  src: url(/fonts/Nunito-ExtraLight.eot?55abbbd650cc4363d4291e33d372ecdd);
+  src: url(/fonts/Nunito-ExtraLight.eot?55abbbd650cc4363d4291e33d372ecdd) format("embedded-opentype"), url(/fonts/Nunito-ExtraLight.woff2?d23c3f81601c3a6dbe29602d21a663f6) format("woff2"), url(/fonts/Nunito-ExtraLight.woff?3ccdcfbd0230fcb7eb28cd278d9c342e) format("woff"), url(/fonts/Nunito-ExtraLight.ttf?f3528e1f430974876a33902efc7a7287) format("truetype"), url(/fonts/Nunito-ExtraLight.svg?694fa87e8f61a15d48900f89eb3c82e9) format("svg");
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Nunito";
+  src: url(/fonts/Nunito-Light.eot?165836caea731766b345bb29369d7eb2);
+  src: url(/fonts/Nunito-Light.eot?165836caea731766b345bb29369d7eb2) format("embedded-opentype"), url(/fonts/Nunito-Light.woff2?5b1d49f6c01fa470e3d8a0be77db5697) format("woff2"), url(/fonts/Nunito-Light.woff?ad27b4964781a608450e33a046709c72) format("woff"), url(/fonts/Nunito-Light.ttf?d098589d69bdee5d8a7e8b7db551cb42) format("truetype"), url(/fonts/Nunito-Light.svg?bf87769a11bc3c560bc2e859a4bb039d) format("svg");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Nunito";
+  src: url(/fonts/Nunito-Regular.eot?9668847a6c1a8cbcfe5607841f3c0e56);
+  src: url(/fonts/Nunito-Regular.eot?9668847a6c1a8cbcfe5607841f3c0e56) format("embedded-opentype"), url(/fonts/Nunito-Regular.woff2?a0073737584860856c9b984a6ed9300d) format("woff2"), url(/fonts/Nunito-Regular.woff?6c3e4b3d38629d9f79338b42c9d4ff3b) format("woff"), url(/fonts/Nunito-Regular.ttf?1eed132702c261496d2626b2d513cbda) format("truetype"), url(/fonts/Nunito-Regular.svg?61beee6753cea5261cb246f2de7afec6) format("svg");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Nunito";
+  src: url(/fonts/Nunito-SemiBold.eot?71a0b7e7758bb852d2b0a919458b0346);
+  src: url(/fonts/Nunito-SemiBold.eot?71a0b7e7758bb852d2b0a919458b0346) format("embedded-opentype"), url(/fonts/Nunito-SemiBold.woff2?b585b9ad51d97924d1f02ed1f6bf868c) format("woff2"), url(/fonts/Nunito-SemiBold.woff?fed2195594894030195e2b45f393213b) format("woff"), url(/fonts/Nunito-SemiBold.ttf?e8977b980c312fc955617ad6db6b5d58) format("truetype"), url(/fonts/Nunito-SemiBold.svg?b73cedea91b73c616351b0a3a54e7a78) format("svg");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@-webkit-keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin: 0;
+}
+
+h1.center,
+h2.center,
+h3.center,
+h4.center,
+h5.center,
+h6.center,
+p.center {
+  text-align: center;
+}
+
+h1.mt-60,
+h2.mt-60,
+h3.mt-60,
+h4.mt-60,
+h5.mt-60,
+h6.mt-60,
+p.mt-60 {
+  margin-top: 60px;
+}
+
+h1.mt-30,
+h2.mt-30,
+h3.mt-30,
+h4.mt-30,
+h5.mt-30,
+h6.mt-30,
+p.mt-30 {
+  margin-top: 30px;
+}
+
+h1.mb-60,
+h2.mb-60,
+h3.mb-60,
+h4.mb-60,
+h5.mb-60,
+h6.mb-60,
+p.mb-60 {
+  margin-bottom: 60px;
+}
+
+h1.mb-30,
+h2.mb-30,
+h3.mb-30,
+h4.mb-30,
+h5.mb-30,
+h6.mb-30,
+p.mb-30 {
+  margin-bottom: 30px;
+}
+
+.header {
+  position: relative;
+}
+
+.header:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-image: url(/images/header_bg.png?b4401470b917d55e782919345b9c8412);
+  background-color: #0b1018;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center 45%;
+  z-index: -1;
+}
+
+.header a {
+  color: var(--color-white);
+}
+
+.header__main {
+  display: flex;
+  align-items: center;
+  max-width: var(--content-max-width);
+  padding: 60px 0;
+  margin: 0 auto;
+}
+
+.header__logo {
+  font-size: 24px;
+  font-weight: bold;
+  margin-right: auto;
+}
+
+.header__notifications {
+  font-size: 18px;
+  margin-right: 30px;
+}
+
+.header__notifications:before {
+  content: "\F0F3";
+  font-family: "Font Awesome 5 Pro";
+}
+
+.header-profile {
+  display: flex;
+  align-items: center;
+  font-size: 18px;
+}
+
+.header-profile__avatar {
+  width: 40px;
+  height: 40px;
+  background-color: var(--html-bg-color);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: 15px;
+  margin-right: 10px;
+}
+
+.header__nav {
+  background-color: rgba(14, 19, 29, 0.5);
+  -webkit-backdrop-filter: blur(15px);
+          backdrop-filter: blur(15px);
+}
+
+.header-nav {
+  display: flex;
+  align-items: center;
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+}
+
+.header-nav a {
+  display: block;
+  padding: 30px 0;
+  margin-right: 30px;
+}
+
+.header-nav a:last-child {
+  margin-right: 0;
+}
+
+.header-nav a.active {
+  font-weight: bold;
+}
+
+.header-nav a.search {
+  margin-left: auto;
+}
+
+.header-nav a.search:before {
+  content: "\F002";
+  font-family: "Font Awesome 5 Pro";
+}
+
+.footer {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 100%;
+  background-color: var(--color-primary-05);
+  padding: 30px 0;
+}
+
+.footer__inner {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+}
+
+.footer a {
+  font-weight: 600;
+  color: var(--text-color-primary);
+  margin-right: 30px;
+}
+
+.footer a:first-child {
+  margin-right: auto;
+}
+
+.footer a:last-child {
+  margin-right: 0;
+}
+
+.content {
+  max-width: var(--content-max-width);
+  margin: 60px auto;
+}
+
+.content.auth_form {
+  max-width: 400px;
+}
+
+.section_title {
+  margin-bottom: 30px;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+
+input {
+  font-family: inherit;
+  color: var(--text-color-primary);
+  width: 100%;
+  background-color: var(--color-primary-05);
+  border: 1px solid var(--color-primary-10);
+  border-radius: 15px;
+  padding: 24px;
+  outline: none;
+  transition: all 0.1s ease;
+}
+
+input:focus {
+  border: 1px solid var(--color-primary-50);
+}
+
+input::-moz-placeholder {
+  font-family: inherit;
+}
+
+input:-ms-input-placeholder {
+  font-family: inherit;
+}
+
+input::placeholder {
+  font-family: inherit;
+}
+
+input + input {
+  margin-top: 20px;
+}
+
+input + button {
+  margin-top: 30px;
+}
+
+input + p.alert {
+  margin-top: 20px;
+}
+
+button {
+  position: relative;
+  font-family: inherit;
+  font-weight: 600;
+  color: var(--color-white);
+  width: 100%;
+  background-color: var(--color-secondary);
+  border: none;
+  border-radius: 15px;
+  padding: 24px;
+  outline: none;
+  transition: all 0.1s ease;
+  cursor: pointer;
+}
+
+button.primary {
+  background-color: var(--color-primary);
+}
+
+button.loading {
+  color: transparent;
+  pointer-events: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  cursor: default;
+}
+
+button.loading:before {
+  content: "\F2F1";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Font Awesome 5 Pro";
+  font-weight: 100;
+  font-size: 18px;
+  color: var(--color-white);
+  -webkit-animation: spin 1.5s linear infinite;
+          animation: spin 1.5s linear infinite;
+}
+
+p.alert {
+  padding: 15px;
+  border-radius: 15px;
+}
+
+p.alert:before {
+  content: "\F06A";
+  font-family: "Font Awesome 5 Pro";
+  font-weight: 100;
+  margin-right: 15px;
+}
+
+p.alert + input {
+  margin-top: 20px;
+}
+
+p.alert.red {
+  border: 1px solid var(--color-red);
+}
+
+p.alert.red:before {
+  color: var(--color-red);
+}
+
+.social_links.grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px;
+}
+
+.social_links.grid > a {
+  text-align: center;
+  flex-grow: 1;
+  width: 70px;
+  height: 70px;
+}
+
+.social_links a {
+  display: block;
+  font-size: 24px;
+  background-color: var(--color-primary-05);
+  border: 1px solid var(--color-primary-10);
+  border-radius: 15px;
+  padding: 20px;
+}
+
+.social_links a:before {
+  font-family: "Font Awesome 5 Brands";
+}
+
+.social_links a:not(:empty) {
+  display: flex;
+  align-items: center;
+}
+
+.social_links a:not(:empty):before {
+  margin-right: 15px;
+}
+
+.social_links a.vk:before {
+  content: "\F189";
+}
+
+.social_links a.google:before {
+  content: "\F1A0";
+}
+
+.social_links a.yandex:before {
+  content: "\F413";
+}
+
+.social_links a.fb:before {
+  content: "\F39E";
+}
+

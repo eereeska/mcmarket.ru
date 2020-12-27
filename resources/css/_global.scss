@@ -1,0 +1,40 @@
+* {
+    box-sizing: border-box;
+}
+
+:root {
+    --html-bg-color: #F1F3FA;
+    --content-max-width: 1100px;
+    --text-color-primary: #2A2C34;
+    --color-white: #F2F6F9;
+    --color-primary: rgb(109, 128, 226);
+    --color-primary-70: rgba(109, 128, 226, 0.7);
+    --color-primary-50: rgba(109, 128, 226, 0.5);
+    --color-primary-10: rgba(109, 128, 226, 0.1);
+    --color-primary-05: rgba(109, 128, 226, 0.05);
+    --color-secondary: rgb(102, 102, 115);
+    --color-red: #FB7676;
+}
+
+html {
+    height: 100%;
+    background-color: var(--html-bg-color);
+}
+
+body {
+    font-family: 'Nunito', Arial, Helvetica, sans-serif;
+    font-weight: normal;
+    font-size: 16px;
+    height: 100%;
+    color: var(--text-color-primary);
+    margin: 0;
+}
+
+a {
+    color: var(--color-primary-70);
+    text-decoration: none;
+
+    &:hover {
+        color: var(--color-primary);
+    }
+}

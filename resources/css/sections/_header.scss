@@ -1,0 +1,98 @@
+.header {
+    position: relative;
+    
+    &:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background-image: url('../images/header_bg.png');
+        background-color: #0b1018;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center 45%;
+        z-index: -1;
+    }
+
+    a {
+        color: var(--color-white);
+    }
+
+    &__main {
+        display: flex;
+        align-items: center;
+        max-width: var(--content-max-width);
+        padding: 60px 0;
+        margin: 0 auto;
+    }
+
+    &__logo {
+        font-size: 24px;
+        font-weight: bold;
+        margin-right: auto;
+    }
+
+    &__notifications {
+        font-size: 18px;
+        margin-right: 30px;
+
+        &:before {
+            content: '\f0f3';
+            font-family: 'Font Awesome 5 Pro';
+        }
+    }
+
+    &-profile {
+        display: flex;
+        align-items: center;
+        font-size: 18px;
+
+        &__avatar {
+            width: 40px;
+            height: 40px;
+            background-color: var(--html-bg-color);
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            border-radius: 15px;
+            margin-right: 10px;
+        }
+    }
+
+    &__nav {
+        background-color: rgba(14, 19, 29, 0.5);
+        backdrop-filter: blur(15px);
+    }
+
+    &-nav {
+        display: flex;
+        align-items: center;
+        max-width: var(--content-max-width);
+        margin: 0 auto;
+
+        a {
+            display: block;
+            padding: 30px 0;
+            margin-right: 30px;
+
+            &:last-child {
+                margin-right: 0;
+            }
+
+            &.active {
+                font-weight: bold;
+            }
+
+            &.search {
+                margin-left: auto;
+
+                &:before {
+                    content: '\f002';
+                    font-family: 'Font Awesome 5 Pro';
+                }
+            }
+        }
+    }
+}
