@@ -1,0 +1,19 @@
+.avatar {
+    position: relative;
+    font-weight: 600;
+    color: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-primary-05);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    border-radius: var(--radius-2);
+    overflow: hidden;
+    user-select: none;
+
+    &:not([style]) {
+        color: var(--text-color-primary);
+    }
+}

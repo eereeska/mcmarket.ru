@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html dir="ltr" lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -23,7 +23,6 @@
 	<link rel="prev" href="https://invisioncommunity.com/forums/topic/458304-ms-ie-warning/" />
 	<link rel="next" href="https://invisioncommunity.com/forums/topic/458304-ms-ie-warning/page/3/" />
 	<link rel="last" href="https://invisioncommunity.com/forums/topic/458304-ms-ie-warning/page/3/" />
-	<link rel="canonical" href="https://invisioncommunity.com/forums/topic/458304-ms-ie-warning/page/2/" />
 
     <link rel="alternate" type="application/rss+xml" title="Invision Community News" href="https://invisioncommunity.com/rss/1-invision-community-news.xml/" />
 
@@ -38,41 +37,50 @@
     <link rel='shortcut icon' href='//dne4i5cb88590.cloudfront.net/invisionpower-com/monthly_2019_01/favicon.ico' type="image/x-icon"> --}}
     {{--  --}}
 
+	<link rel="canonical" href="{{ $seo['canonical'] ?? url()->current() }}" />
+
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    @yield('header_scripts')
 </head>
 <body>
-    <header class="header">
+    <header>
         @auth
-        <div class="header__main">
-            <a href="{{ route('home') }}" class="header__logo">Minecraft Маркет</a>
-            <a href="#" class="header__notifications"></a>
-            <a href="#" class="header-profile">
-                <div class="header-profile__avatar" style="background-image: url(https://dne4i5cb88590.cloudfront.net/invisionpower-com/monthly_2020_02/pixiv13975860.thumb.jpg.9b3d08c3bb6bc1838adac3a58d0d4a5e.jpg)"></div>
+        <div class="main">
+            <a href="{{ route('home') }}" class="logo">Minecraft Маркет</a>
+            <a href="#" class="notifications"></a>
+            <a href="{{ route('user-view', ['id' => Auth::user()->id ]) }}" class="profile">
+                <div class="avatar" style="background-image: url(https://dne4i5cb88590.cloudfront.net/invisionpower-com/monthly_2020_02/pixiv13975860.thumb.jpg.9b3d08c3bb6bc1838adac3a58d0d4a5e.jpg)">{{ Auth::user()->getInitials() }}</div>
                 <span>{{ Auth::user()->name }}</span>
             </a>
         </div>
         @endauth
-        <div class="header__nav">
-            <nav class="header-nav">
-                <a href="{{ route('home') }}" class="active">Форумы</a>
+        <div class="nav">
+            <nav>
+                <a href="{{ route('home') }}" class="active">Форум</a>
                 <a href="#">Загрузки</a>
                 <a href="#">Пользователи</a>
-                <a href="#" class="search"></a>
+                <a href="{{ route('search') }}" class="search"></a>
             </nav>
         </div>
     </header>
-    <main class="content {{ $content_classes ?? '' }}">
-        @yield('content')
+    <main id="app" class="page {{ $content_classes ?? '' }}">
+        <div class="content">
+            @yield('content')
+        </div>
+        @yield('sidebar')
     </main>
     <footer class="footer">
-        <div class="footer__inner">
-            <a href="/">Minecraft Маркет &copy 2020 MCMarket.ru</a>
+        <div class="links">
+            <a href="{{ route('home') }}">Minecraft Маркет &copy {{ now()->format('Y') }} MCMarket.ru</a>
             <a href="#">Контакты</a>
             <a href="#">Условия и правила</a>
             <a href="#">Политика конфиденциальности</a>
         </div>
     </footer>
+    {{-- <script src="{{ asset('js/app.js') }}"></script> --}}
     <script src="{{ asset('js/app.js') }}"></script>
-    @yield('scripts')
+    @yield('footer_scripts')
 </body>
 </html>

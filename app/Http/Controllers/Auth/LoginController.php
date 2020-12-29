@@ -15,7 +15,14 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {
-
+        if (Auth::attempt([
+            'name' => $request->name,
+            'password' => $request->password
+        ], true)) {
+            return redirect()->route('home');
+        } else {
+            return redirect()->back()->withErrors(['wrong_credentials' => 'Неверный логин или пароль'])->withInput();
+        }
     }
 
     public function logout()

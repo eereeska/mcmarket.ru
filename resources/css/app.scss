@@ -4,11 +4,22 @@
 @import './typography';
 
 @import './sections/header';
+@import './sections/page';
 @import './sections/footer';
-@import './sections/content';
+@import './sections/sidebar';
 
 @import './components/form';
 @import './components/input';
+@import './components/textarea';
 @import './components/button';
+
 @import './components/alert';
 @import './components/social';
+@import './components/dropdown';
+@import './components/avatar';
+@import './components/tags';
+@import './components/pagination';
+
+@import './components/rich-editor';
+
+@import './forum';

@@ -1,9 +1,14 @@
-.content {
+.page {
+    display: flex;
     max-width: var(--content-max-width);
     margin: 60px auto;
 
     &.auth_form {
         max-width: 400px;
+    }
+
+    .content {
+        width: 100%;
     }
 }
 

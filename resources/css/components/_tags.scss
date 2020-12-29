@@ -1,0 +1,84 @@
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    user-select: none;
+
+    .tag {
+        color: var(--text-color-primary);
+        flex-grow: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: var(--color-primary-05);
+        border: 1px solid transparent;
+        border-radius: var(--radius-2);
+        padding: 12px;
+        outline: none;
+        transition: color 0.2s ease, border 0.2s ease;
+
+        &:hover {
+            // color: var(--color-primary);
+            border: 1px solid var(--color-primary-10);
+        }
+        
+        &:focus {
+            border: 1px solid var(--color-primary-50);
+        }
+
+        &:active {
+            padding: 13px 12px 11px 12px;
+        }
+
+        &:before {
+            font-family: 'Font Awesome 5 Pro';
+            font-weight: normal;
+            margin-right: 12px;
+        }
+
+        &.selected {
+            color: var(--color-primary);
+            border: 1px solid var(--color-primary);
+        }
+
+        &.discussions:before {
+            content: '\f086';
+        }
+
+        &.ideas:before {
+            content: '\f672';
+        }
+
+        &.plugins:before {
+            content: '\f12e';
+        }
+
+        &.graphics:before {
+            content: '\f53f';
+        }
+
+        &.buildings:before {
+            content: '\f66f';
+        }
+
+        &.accounts:before {
+            content: '\f0c0';
+        }
+
+        &.news:before {
+            content: '\f1ea';
+        }
+
+        &.giveaways:before {
+            content: '\f06b';
+        }
+
+        &.buying:before {
+            content: '\f063';
+        }
+
+        &.selling:before {
+            content: '\f062';
+        }
+    }
+}

@@ -14,6 +14,17 @@
     --color-primary-05: rgba(109, 128, 226, 0.05);
     --color-secondary: rgb(102, 102, 115);
     --color-red: #FB7676;
+
+    --white: #F2F6F9;
+    --black: #2A2C34;
+    --gray: #66686F;
+    --red: #FB7676;
+
+    --radius-1: 5px;
+    --radius-2: 10px;
+    --radius-3: 15px;
+    
+    --sidebar-max-width: 300px;
 }
 
 html {
@@ -37,4 +48,10 @@ a {
     &:hover {
         color: var(--color-primary);
     }
+}
+
+ul,
+ol {
+    padding: 0;
+    margin: 0;
 }

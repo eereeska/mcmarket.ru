@@ -1,6 +1,6 @@
 p.alert {
     padding: 15px;
-    border-radius: 15px;
+    border-radius: var(--radius-2);
 
     &:before {
         content: '\f06a';

@@ -1,19 +1,44 @@
 button {
+    font: inherit;
+    background-color: unset;
+    border: none;
+    padding: unset;
+    outline: none;
+    user-select: none;
+}
+
+.button {
     position: relative;
-    font-family: inherit;
+    display: block;
+    font: inherit;
+    text-align: center;
     font-weight: 600;
     color: var(--color-white);
     width: 100%;
     background-color: var(--color-secondary);
     border: none;
-    border-radius: 15px;
+    border-radius: var(--radius-2);
     padding: 24px;
     outline: none;
     transition: all 0.1s ease;
+    user-select: none;
     cursor: pointer;
+
+    &:hover {
+        color: var(--color-white);
+    }
 
     &.primary {
         background-color: var(--color-primary);
+
+        &:hover {
+            background-color: #7486e3;
+        }
+
+        &:active {
+            background-color: #6478e0;
+            padding: 26px 24px 22px 24px;
+        }
     }
 
     &.loading {

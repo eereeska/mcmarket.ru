@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-forums index
+{{ $thread->title }}
+<hr>
+{!! $thread->body !!}
 @endsection
