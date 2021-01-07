@@ -34,6 +34,10 @@
             time:before {
                 content: ', ';
             }
+
+            time:after {
+                content: ' ';
+            }
         }
     }
 }

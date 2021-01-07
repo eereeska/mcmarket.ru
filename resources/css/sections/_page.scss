@@ -1,7 +1,8 @@
 .page {
     display: flex;
+    gap: var(--margin-6);
     max-width: var(--content-max-width);
-    margin: 60px auto;
+    margin: var(--margin-6) auto;
 
     &.auth_form {
         max-width: 400px;

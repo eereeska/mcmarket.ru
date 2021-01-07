@@ -93,80 +93,116 @@
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-$(function () {// $('[data-type="rich"]').each(function(i) {
-  //     $(this).replaceWith($(`<div class="rich-editor" data-id="' + i + '">
-  //         <div class="rich-editor__toolbar">
-  //             <div class="bold" data-action="bold"></div>
-  //             <div class="italic" data-action="italic"></div>
-  //             <div class="strikethrough" data-action="strikethrough"></div>
-  //             <div class="underline" data-action="underline"></div>
-  //         </div>
-  //         <div class="rich-editor__content" contenteditable="true"></div>
-  //     </div>`));
-  // });
-  // $('div.rich-editor').each(function(i) {
-  //     $(this).on('mouseup', function() {
-  //         var selection = getSelection();
-  //         console.log(selection);
-  //         if (selection !== '' && selection.toString().length > 0) {
-  //             var range = selection.getRangeAt(0);
-  //             var rect = range.getBoundingClientRect();
-  //             $(this).after($('<div class="rich-editor__toolbar" data-editor-id="' + $(this).data('id') + '" style="top: ' + rect.top +'px; left: ' + rect.left + 'px;"><div class="bold" data-action="bold"></div></div>'));
-  //         } else {
-  //             $(this).closest('div.rich-editor__toolbar[data-editor-id="' + $(this).data('id') + '"]').remove();
-  //         }
-  //     });
-  //     $(this).on('click', function() {
-  //         var selection = getSelection();
-  //         if (selection == '') {
-  //             $(this).closest('div.rich-editor__toolbar[data-editor-id="' + $(this).data('id') + '"]').remove();
-  //         }
-  //     })
-  // });
-  // document.onmouseup = function() {
-  //     var selection = false;
-  //     if (window.getSelection) {
-  //         selection = window.getSelection();
-  //     } else if (document.getSelection) {
-  //         selection = document.getSelection();
-  //     }
-  //     if (selection && !selection.isCollapsed) {
-  //         let range = selection.getRangeAt(0);
-  //         let rect = range.getBoundingClientRect();
-  //         let $editor = $(range.startContainer.parentElement);
-  //         let $toolBar = $editor.next('div.rich-editor__toolbar');
-  //         if (!$editor.hasClass('rich-editor')) {
-  //             return;
-  //         }
-  //         // if ($toolBar.length == 0 && typeof $target.data('selectionTooltip') !== "undefined") {
-  //         //     $toolBar = $($(document).find('.selectionTooltip').get().filter((v) => {
-  //         //         let _self = $(v).data('self')
-  //         //         if (_self.uniqueId == $target.data('selectionTooltip')) {
-  //         //             return v
-  //         //         }
-  //         //     })[0])
-  //         // }
-  //         console.log($toolBar.length)
-  //         if ($toolBar.length > 0) {
-  //             return;
-  //         }
-  //         $editor.after($('<div class="rich-editor__toolbar" data-editor-id="' + $(this).data('id') + '" style="top: ' + (rect.top - 70) +'px; left: ' + (rect.left - 90) + 'px;"><div class="bold" data-action="bold"></div><div class="italic" data-action="italic"></div><div class="strikethrough" data-action="strikethrough"></div><div class="underline" data-action="underline"></div></div>'));
-  //         console.log('create')
-  //     } else {
-  //         $(document).find('div.rich-editor__toolbar').remove();
-  //         console.log('delete')
-  //     }
-  // }
-});
+var allowedCommands = ['bold', 'italic', 'strikethrough', 'underline', 'insertOrderedList', 'insertUnorderedList', 'justifyLeft', 'justifyCenter', 'justifyRight', 'indent', 'outdent', 'superscript', 'subscript', 'removeFormat' // 'insertParagraph',
+// 'insertImage'
+];
+$('div.editor__toolbar > button').on('click', function (e) {
+  e.preventDefault();
+  var command = $(this).data('command');
 
-function getSelection() {
-  if (window.getSelection) {
-    return window.getSelection();
-  } else if (document.selection) {
-    return document.selection.createRange().text;
+  if (!allowedCommands.includes(command)) {
+    return;
   }
 
-  return '';
+  if (command === 'insertImage') {
+    var url = prompt('URL');
+
+    if (url != null && url.match('https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)')) {
+      document.execCommand(command, false, url);
+    }
+  } else {
+    document.execCommand(command);
+  }
+}); // $('.editor__content').on('click', function() {  
+//     if ($(this).is(':empty')) {
+//         $(this).html($('p').trigger('focus'));
+//     }
+// })
+// $('.editor > .editor__content').on('click', setTimeout(format, 50));
+// $('.editor > .editor__content').on('mouseup keydown keyup', function(e) {
+//     if (e.ctrlKey || e.metaKey) {
+//         return;
+//     }
+//     setTimeout(format, 50);
+// });
+// $('.editor > .editor__content').on('paste', function(e) {
+//     e.preventDefault();
+//     document.execCommand('inserttext', false, e.originalEvent.clipboardData.getData('text'));
+// });
+// function format(e) {
+//     console.clear();
+//     console.log('format...');
+//     var currentNode = getCurrentNode();
+//     console.log('currentNode', currentNode)
+//     // $('.editor > .editor__toolbar > button[data-action]')
+//     $('.editor > .editor__toolbar > button').each(function (i, el) {
+//         var action = $(this).data('action');
+//         var tagName = currentNode.tagName.toLowerCase();
+//         // $(this).removeClass('active');
+//         // if (action === 'bold' && (tagName === 'strong' || tagName === 'b')) {
+//         //     $(this).addClass('active');
+//         // } else if (action === 'italic' && tagName === 'i') {
+//         //     $(this).addClass('active');
+//         // } else if (action === 'strikethrough' && tagName === 's') {
+//         //     $(this).addClass('active');
+//         // } else if (action === 'underline' && tagName === 'u') {
+//         //     $(this).addClass('active');
+//         // }
+//         console.log(document.queryCommandState(getSelectedNode()))
+//         if (document.queryCommandState(currentNode)) {
+//             $(this).addClass('active')
+//         } else {
+//             $(this).removeClass('active');
+//         }
+//     });
+// }
+// function observeFormattingl(e) {
+//     if (this.skipFormatObserveOnce)
+//         return void (this.skipFormatObserveOnce = !1);
+//     var t = this.getCurrentNode()
+//       , o = r(t)
+//       , a = this.$editor.get(0);
+//     if (this.inactiveAllButtons(),
+//     r.each(this.opts.activeButtonsStates, r.proxy(function(e, t) {
+//         0 != o.closest(e, a).length && this.setBtnActive(t)
+//     }, this)),
+//     e && (13 == e || 8 == e)) {
+//         var d = this;
+//         r.each(this.opts.activeButtonStateMap, function(e, t) {
+//             try {
+//                 d.document.queryCommandState(t) ? d.setBtnActive(e) : d.setBtnInactive(e)
+//             } catch (t) {}
+//         })
+//     }
+//     var n = o.closest(["p", "div", "h1", "h2", "h3", "h4", "h5", "h6", "blockquote", "td"]);
+//     if ("undefined" != typeof n[0] && "undefined" != typeof n[0].elem && 0 != r(n[0].elem).size()) {
+//         var l = r(n[0].elem).css("text-align");
+//         "right" === l ? this.setBtnActive("alignright") : "center" === l ? this.setBtnActive("aligncenter") : "justify" === l ? this.setBtnActive("justify") : this.setBtnActive("alignleft")
+//     }
+// },
+
+function getCurrentNode() {
+  if (typeof window.getSelection != 'undefined') {
+    var selectedNode = getSelectedNode();
+    return !!selectedNode && selectedNode.parentNode;
+  }
+
+  return typeof document.selection == 'undefined' ? void 0 : getSelection().parentElement();
+}
+
+function getSelectedNode() {
+  if (typeof window.getSelection != 'undefined') {
+    var selection = window.getSelection();
+    return !!(selection && 0 < selection.rangeCount) && selection.getRangeAt(0).commonAncestorContainer;
+  }
+
+  return typeof document.selection == 'undefined' ? void 0 : getSelection();
+}
+
+;
+
+function getSelection() {
+  return this.window.getSelection ? this.window.getSelection() : document.getSelection ? document.getSelection() : document.selection.createRange();
 }
 
 /***/ }),

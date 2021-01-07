@@ -22,11 +22,11 @@ Route::get('/logout', [LoginController::class, 'logout'])->middleware('auth')->n
 
 Route::get('/u/{id}', [UserController::class, 'view'])->name('user-view');
 
-Route::group(['prefix' => 'f', 'middleware' => 'auth'], function() {
+Route::group(['prefix' => 't', 'middleware' => 'auth'], function() {
     Route::get('/create', [ForumController::class, 'create'])->name('forum-thread-create');
-    Route::post('/create', [ForumController::class, 'store']);
+    Route::post('/create', [ForumController::class, 'store'])->middleware('ajax');
 });
 
-Route::group(['prefix' => 'f'], function() {
+Route::group(['prefix' => 't'], function() {
     Route::get('/{id}', [ForumController::class, 'view'])->name('forum-thread-view');
 });

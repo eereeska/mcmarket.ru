@@ -1,0 +1,17 @@
+.section {
+    margin-bottom: var(--margin-6);
+
+    &__title {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 30px;
+        font-weight: 600;
+        margin-bottom: 30px;
+        user-select: none;
+    }
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+}

@@ -16,4 +16,9 @@
     &:not([style]) {
         color: var(--text-color-primary);
     }
+
+    &--large {
+        width: 100%;
+        min-height: calc(var(--sidebar-max-width) + 100px);
+    }
 }

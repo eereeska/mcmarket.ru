@@ -19,15 +19,17 @@ class LoginController extends Controller
             'name' => $request->name,
             'password' => $request->password
         ], true)) {
-            return redirect()->route('home');
+            $request->session()->regenerate();
+
+            return redirect()->intended('home');
         } else {
-            return redirect()->back()->withErrors(['wrong_credentials' => 'Неверный логин или пароль'])->withInput();
+            return back()->withErrors(['wrong_credentials' => 'Неверный логин или пароль'])->withInput();
         }
     }
 
     public function logout()
     {
         Auth::logout();
-        return redirect()->back();
+        return back();
     }
 }

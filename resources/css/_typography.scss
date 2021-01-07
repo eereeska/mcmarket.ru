@@ -6,6 +6,7 @@ h5,
 h6,
 p {
     font-size: 16px;
+    line-height: 26px;
     margin: 0;
 
     &.center {
@@ -27,4 +28,8 @@ p {
     &.mb-30 {
         margin-bottom: 30px;
     }
+}
+
+h1 {
+    font-size: 24px;
 }

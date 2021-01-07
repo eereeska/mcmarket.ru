@@ -1,11 +1,14 @@
 <!DOCTYPE html>
-<html dir="ltr" lang="ru">
+<html dir="ltr" lang="ru" data-csrf="{{ csrf_token() }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ $title ?? 'Minecraft Маркет' }}</title>
+    <title>{{ isset($title) ? $title . ' — Minecraft Маркет' : 'Minecraft Маркет' }}</title>
 
-    {{--  --}}
+    @if (isset($seo['robots']))
+        <meta name="robots" content="{{ $seo['robots'] }}" />
+    @endif
+
     {{-- <meta name="description" content="">
     <meta name="keywords" content="">
 
@@ -37,21 +40,23 @@
     <link rel='shortcut icon' href='//dne4i5cb88590.cloudfront.net/invisionpower-com/monthly_2019_01/favicon.ico' type="image/x-icon"> --}}
     {{--  --}}
 
-	<link rel="canonical" href="{{ $seo['canonical'] ?? url()->current() }}" />
+    <link rel="canonical" href="{{ $seo['canonical'] ?? url()->current() }}" />
+    
+    {{-- @include('misc.metrics') --}}
 
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <script src="{{ asset('js/jquery.min.js') }}"></script>
     @yield('header_scripts')
 </head>
 <body>
     <header>
         @auth
         <div class="main">
-            <a href="{{ route('home') }}" class="logo">Minecraft Маркет</a>
-            <a href="#" class="notifications"></a>
+            <a href="{{ route('home') }}" class="logo" data-ajax>Minecraft Маркет</a>
+            <a href="#" class="notifications icon icon--bell"></a>
             <a href="{{ route('user-view', ['id' => Auth::user()->id ]) }}" class="profile">
-                <div class="avatar" style="background-image: url(https://dne4i5cb88590.cloudfront.net/invisionpower-com/monthly_2020_02/pixiv13975860.thumb.jpg.9b3d08c3bb6bc1838adac3a58d0d4a5e.jpg)">{{ Auth::user()->getInitials() }}</div>
+                <div class="avatar" {{ Auth::user()->avatar ? 'style="background-image: url(' . Auth::user()->avatar . ')"' : '' }}>{{ Auth::user()->getInitials() }}</div>
                 <span>{{ Auth::user()->name }}</span>
             </a>
         </div>
@@ -61,15 +66,16 @@
                 <a href="{{ route('home') }}" class="active">Форум</a>
                 <a href="#">Загрузки</a>
                 <a href="#">Пользователи</a>
-                <a href="{{ route('search') }}" class="search"></a>
+                <a href="{{ route('search') }}" class="search icon icon--search"></a>
+                @guest
+                <a href="{{ route('login') }}" class="login icon icon--login"></a>
+                <a href="{{ route('register') }}" class="register icon icon--register"></a>
+                @endguest
             </nav>
         </div>
     </header>
-    <main id="app" class="page {{ $content_classes ?? '' }}">
-        <div class="content">
-            @yield('content')
-        </div>
-        @yield('sidebar')
+    <main id="root" class="page {{ $page_classes ?? '' }}">
+        @yield('content')
     </main>
     <footer class="footer">
         <div class="links">
@@ -79,7 +85,6 @@
             <a href="#">Политика конфиденциальности</a>
         </div>
     </footer>
-    {{-- <script src="{{ asset('js/app.js') }}"></script> --}}
     <script src="{{ asset('js/app.js') }}"></script>
     @yield('footer_scripts')
 </body>

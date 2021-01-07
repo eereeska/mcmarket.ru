@@ -1,0 +1,44 @@
+.icon {
+    font-size: inherit;
+
+    &::before {
+        font-family: 'Font Awesome 5 Pro';
+        font-weight: inherit;
+    }
+
+    &_light {
+        font-weight: 100;
+    }
+
+    &_regular {
+        font-weight: normal;
+    }
+
+    &_solid {
+        font-weight: 900;
+    }
+
+    &--bell::before {
+        content: '\f0f3';
+    }
+    
+    &--search::before {
+        content: '\f002';
+    }
+    
+    &--login::before {
+        content: '\f090';
+    }
+    
+    &--register::before {
+        content: '\f234';
+    }
+
+    &--comment::before {
+        content: '\f075';
+    }
+
+    &--comments::before {
+        content: '\f086';
+    }
+}

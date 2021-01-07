@@ -15,14 +15,26 @@
     --color-secondary: rgb(102, 102, 115);
     --color-red: #FB7676;
 
-    --white: #F2F6F9;
+    --background: #F1F3FA;
+    --foreground: #E9ECF9;
+    --secondary-foreground: #EBEEF9;
+
     --black: #2A2C34;
+    --white: #F2F6F9;
     --gray: #66686F;
     --red: #FB7676;
+    --primary: #5FA1D0;
 
     --radius-1: 5px;
     --radius-2: 10px;
     --radius-3: 15px;
+
+    --margin-1: 5px;
+    --margin-2: 10px;
+    --margin-3: 15px;
+    --margin-4: 20px;
+    --margin-5: 30px;
+    --margin-6: 60px;
     
     --sidebar-max-width: 300px;
 }
@@ -50,8 +62,6 @@ a {
     }
 }
 
-ul,
-ol {
-    padding: 0;
-    margin: 0;
+img {
+    max-width: 100%;
 }

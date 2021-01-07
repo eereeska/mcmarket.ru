@@ -1,4 +1,4 @@
-@extends('layouts.app', ['content_classes' => 'auth_form'])
+@extends('layouts.app', ['page_classes' => 'auth_form'])
 
 @section('content')
 <div class="section_title">
