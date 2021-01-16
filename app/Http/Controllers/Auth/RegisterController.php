@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\UserSettings;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -37,11 +38,15 @@ class RegisterController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        $user = new User();
-        $user->name = $request->name;
-        $user->password = Hash::make($request->password);
-        $user->ip = $_SERVER['CF_CONNECTING_IP'] ?? $request->ip();
-        $user->save();
+        try {
+            $user = new User();
+            $user->name = $request->name;
+            $user->password = Hash::make($request->password);
+            $user->ip = $_SERVER['CF_CONNECTING_IP'] ?? $request->ip();
+            $user->save();
+        } catch (\Exception $e) {
+            return back()->withErrors(['create_error' => 'Не удалось создать аккаунт'])->withInput();
+        }
 
         Auth::login($user, true);
 

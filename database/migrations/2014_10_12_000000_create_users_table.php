@@ -12,11 +12,13 @@ class CreateUsersTable extends Migration
             $table->id();
             $table->string('name')->unique();
             $table->unsignedSmallInteger('role_id')->default(1);
-            $table->boolean('confirmed')->default(false);
+            $table->foreignId('settings_id')->nullable()->constrained()->onDelete('SET NULL');
+            $table->boolean('verified')->default(false);
             $table->string('ip');
             $table->string('avatar')->nullable();
             $table->string('password')->nullable();
             $table->rememberToken();
+            $table->timestamp('last_seen_at')->nullable();
             $table->timestamps();
         });
     }

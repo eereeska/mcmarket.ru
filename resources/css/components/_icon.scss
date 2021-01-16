@@ -41,4 +41,52 @@
     &--comments::before {
         content: '\f086';
     }
+
+    &--idea::before {
+        content: '\f672';
+    }
+
+    &--plugin::before {
+        content: '\f12e';
+    }
+
+    &--graphic::before {
+        content: '\f53f';
+    }
+
+    &--building::before {
+        content: '\f66f';
+    }
+
+    &--users::before {
+        content: '\f0c0';
+    }
+
+    &--news::before {
+        content: '\f1ea';
+    }
+
+    &--gift::before {
+        content: '\f06b';
+    }
+
+    &--arrow-up::before {
+        content: '\f062';
+    }
+
+    &--arrow-down::before {
+        content: '\f063';
+    }
+
+    &--clock::before {
+        content: '\f017';
+    }
+
+    &--download::before {
+        content: '\f019';
+    }
+
+    &--heart::before {
+        content: '\f004';
+    }
 }

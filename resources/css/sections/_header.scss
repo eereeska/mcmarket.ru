@@ -1,5 +1,6 @@
-header {
+.header {
     position: relative;
+    user-select: none;
     
     &:before {
         content: '';
@@ -24,26 +25,30 @@ header {
         }
     }
 
-    .main {
+    &__main {
         display: flex;
         align-items: center;
         max-width: var(--content-max-width);
         padding: 60px 0;
         margin: 0 auto;
+
+        @media (max-width: 1220px) {
+            padding: 60px;
+        }
     }
 
-    .logo {
+    &__logo {
         font-size: 24px;
         font-weight: bold;
         margin-right: auto;
     }
 
-    .notifications {
+    &__notifications {
         font-size: 18px;
         margin-right: 30px;
     }
 
-    .profile {
+    &__profile {
         display: flex;
         align-items: center;
         gap: 10px;
@@ -56,36 +61,40 @@ header {
         }
     }
 
-    .nav {
+    &__nav {
         background-color: rgba(14, 19, 29, 0.65);
         backdrop-filter: blur(15px);
+    }
 
-        nav {
-            display: flex;
-            align-items: center;
-            max-width: var(--content-max-width);
-            margin: 0 auto;
-    
-            a {
-                display: block;
-                padding: 30px 0;
-                margin-right: 30px;
+    &-nav {
+        display: flex;
+        align-items: center;
+        max-width: var(--content-max-width);
+        margin: 0 auto;
 
-                &:last-child {
-                    margin-right: 0;
-                }
+        @media (max-width: 1220px) {
+            padding: 0 60px;
+        }
+        
+        a {
+            display: block;
+            padding: 30px 0;
+            margin-right: 30px;
 
-                &:before {
-                    font-family: 'Font Awesome 5 Pro';
-                }
-    
-                &.active {
-                    font-weight: bold;
-                }
-    
-                &.search {
-                    margin-left: auto;
-                }
+            &:last-child {
+                margin-right: 0;
+            }
+
+            &:before {
+                font-family: 'Font Awesome 5 Pro';
+            }
+
+            &.active {
+                font-weight: bold;
+            }
+
+            &.search {
+                margin-left: auto;
             }
         }
     }

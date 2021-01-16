@@ -33,3 +33,17 @@ p {
 h1 {
     font-size: 24px;
 }
+
+p {
+    margin: 1em 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    &:first-child {
+        margin-top: 0;
+    }
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+}

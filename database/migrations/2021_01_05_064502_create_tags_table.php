@@ -12,6 +12,7 @@ class CreateTagsTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('title');
+            $table->string('icon');
         });
     }
 

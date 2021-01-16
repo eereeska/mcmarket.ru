@@ -7,6 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Thread extends Model
 {
+    public function taggabble()
+    {
+        return $this->morphTo();
+    }
+
     public function author()
     {
         return $this->belongsTo(User::class);
@@ -14,7 +19,8 @@ class Thread extends Model
 
     public function tags()
     {
-        return $this->hasMany(ThreadTag::class)->with('tag');
+        // return $this->morphToMany(Tag::class, 'thread_tag', null, 'thread_id')->orderBy('title');
+        return $this->belongsToMany(Tag::class, 'thread_tags');
     }
 
     public function replies()

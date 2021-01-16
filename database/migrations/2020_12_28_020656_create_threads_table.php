@@ -15,6 +15,7 @@ class CreateThreadsTable extends Migration
             $table->text('body');
             $table->unsignedInteger('replies_count')->default(0);
             $table->unsignedInteger('views')->default(0);
+            $table->timestamp('last_reply_at')->default(now());
             $table->timestamps();
         });
     }

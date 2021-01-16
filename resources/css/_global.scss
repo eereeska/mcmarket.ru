@@ -18,12 +18,16 @@
     --background: #F1F3FA;
     --foreground: #E9ECF9;
     --secondary-foreground: #EBEEF9;
+    --placeholder: #8D8F97;
+    --border: #DDE1F7;
 
     --black: #2A2C34;
     --white: #F2F6F9;
     --gray: #66686F;
     --red: #FB7676;
-    --primary: #5FA1D0;
+    --green: #5FD0B5;
+    --primary: #5FA1D0; // 558DC1
+    --primary-light: #87B9DC;
 
     --radius-1: 5px;
     --radius-2: 10px;
@@ -35,6 +39,10 @@
     --margin-4: 20px;
     --margin-5: 30px;
     --margin-6: 60px;
+
+    --gap-1: 10px;
+    --gap-2: 15px;
+    --gap-3: 30px;
     
     --sidebar-max-width: 300px;
 }
@@ -54,14 +62,37 @@ body {
 }
 
 a {
-    color: var(--color-primary-70);
+    color: var(--black);
     text-decoration: none;
+    transition: color 0.1s ease-in-out;
 
     &:hover {
-        color: var(--color-primary);
+        color: var(--primary);
     }
 }
 
 img {
     max-width: 100%;
+}
+
+.fluid {
+    display: flex;
+
+    &--wrap {
+        flex-wrap: wrap;
+    }
+}
+
+.gap-1 {
+    gap: var(--gap-1);
+}
+
+.truncate {
+    display: flex;
+
+    h1, h2, h3, h4, h5, h6 {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
 }

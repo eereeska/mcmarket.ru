@@ -93,10 +93,17 @@
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-var allowedCommands = ['bold', 'italic', 'strikethrough', 'underline', 'insertOrderedList', 'insertUnorderedList', 'justifyLeft', 'justifyCenter', 'justifyRight', 'indent', 'outdent', 'superscript', 'subscript', 'removeFormat' // 'insertParagraph',
-// 'insertImage'
-];
-$('div.editor__toolbar > button').on('click', function (e) {
+var allowedCommands = ['bold', 'italic', 'strikethrough', 'underline', 'insertOrderedList', 'insertUnorderedList', 'justifyLeft', 'justifyCenter', 'justifyRight', 'removeFormat'];
+$(document).on('focusout cut', '.editor__content[contenteditable]', function () {
+  if (!$(this).text().trim().length) {
+    $(this).empty();
+  }
+});
+$(document).on('paste', '.editor__content[contenteditable]', function (e) {
+  e.preventDefault();
+  document.execCommand('inserttext', false, e.originalEvent.clipboardData.getData('text/plain'));
+});
+$(document).on('click', '.editor__toolbar > button', function (e) {
   e.preventDefault();
   var command = $(this).data('command');
 
@@ -104,15 +111,7 @@ $('div.editor__toolbar > button').on('click', function (e) {
     return;
   }
 
-  if (command === 'insertImage') {
-    var url = prompt('URL');
-
-    if (url != null && url.match('https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)')) {
-      document.execCommand(command, false, url);
-    }
-  } else {
-    document.execCommand(command);
-  }
+  document.execCommand(command);
 }); // $('.editor__content').on('click', function() {  
 //     if ($(this).is(':empty')) {
 //         $(this).html($('p').trigger('focus'));
@@ -124,10 +123,6 @@ $('div.editor__toolbar > button').on('click', function (e) {
 //         return;
 //     }
 //     setTimeout(format, 50);
-// });
-// $('.editor > .editor__content').on('paste', function(e) {
-//     e.preventDefault();
-//     document.execCommand('inserttext', false, e.originalEvent.clipboardData.getData('text'));
 // });
 // function format(e) {
 //     console.clear();
@@ -180,30 +175,23 @@ $('div.editor__toolbar > button').on('click', function (e) {
 //         "right" === l ? this.setBtnActive("alignright") : "center" === l ? this.setBtnActive("aligncenter") : "justify" === l ? this.setBtnActive("justify") : this.setBtnActive("alignleft")
 //     }
 // },
-
-function getCurrentNode() {
-  if (typeof window.getSelection != 'undefined') {
-    var selectedNode = getSelectedNode();
-    return !!selectedNode && selectedNode.parentNode;
-  }
-
-  return typeof document.selection == 'undefined' ? void 0 : getSelection().parentElement();
-}
-
-function getSelectedNode() {
-  if (typeof window.getSelection != 'undefined') {
-    var selection = window.getSelection();
-    return !!(selection && 0 < selection.rangeCount) && selection.getRangeAt(0).commonAncestorContainer;
-  }
-
-  return typeof document.selection == 'undefined' ? void 0 : getSelection();
-}
-
-;
-
-function getSelection() {
-  return this.window.getSelection ? this.window.getSelection() : document.getSelection ? document.getSelection() : document.selection.createRange();
-}
+// function getCurrentNode() {
+//     if (typeof window.getSelection != 'undefined') {
+//         var selectedNode = getSelectedNode();
+//         return !!selectedNode && selectedNode.parentNode;
+//     }
+//     return typeof document.selection == 'undefined' ? void 0 : getSelection().parentElement();
+// }
+// function getSelectedNode() {
+//     if (typeof window.getSelection != 'undefined') {
+//         var selection = window.getSelection();
+//         return !!(selection && 0 < selection.rangeCount) && selection.getRangeAt(0).commonAncestorContainer;
+//     }
+//     return typeof document.selection == 'undefined' ? void 0 : getSelection();
+// };
+// function getSelection() {
+//     return this.window.getSelection ? this.window.getSelection() : document.getSelection ? document.getSelection() : document.selection.createRange();
+// }
 
 /***/ }),
 

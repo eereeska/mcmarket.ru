@@ -20,12 +20,20 @@ button {
     border-radius: var(--radius-2);
     padding: 24px;
     outline: none;
-    transition: all 0.1s ease;
+    transition: background-color 0.07s ease-in-out, color 0.1s ease-in-out;
     user-select: none;
     cursor: pointer;
 
     &:hover {
         color: var(--color-white);
+    }
+
+    &:active {
+        padding: 26px 24px 22px;
+    }
+
+    & + & {
+        margin-top: var(--margin-4);
     }
 
     &.primary {
@@ -37,7 +45,6 @@ button {
 
         &:active {
             background-color: #6478e0;
-            padding: 26px 24px 22px 24px;
         }
     }
 
@@ -62,6 +69,30 @@ button {
             font-size: 18px;
             color: var(--color-white);
             animation: spin 1.5s linear infinite;
+        }
+    }
+
+    &.success {
+        color: transparent;
+        background-color: var(--green);
+        pointer-events: none;
+        user-select: none;
+        cursor: default;
+        
+        &:before {
+            content: '\f00c';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Font Awesome 5 Pro';
+            font-weight: 100;
+            font-size: 18px;
+            color: var(--color-white);
         }
     }
 }

@@ -2,6 +2,10 @@
     max-width: var(--sidebar-max-width);
     width: 100%;
 
+    @media (max-width: 1220px) {
+        max-width: unset;
+    }
+
     &__inner {
 
         &--sticky {

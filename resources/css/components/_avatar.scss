@@ -17,8 +17,13 @@
         color: var(--text-color-primary);
     }
 
-    &--large {
+    &.large {
+        font-size: 3em;
         width: 100%;
         min-height: calc(var(--sidebar-max-width) + 100px);
+
+        & + .button {
+            margin-top: var(--margin-5);
+        }
     }
 }

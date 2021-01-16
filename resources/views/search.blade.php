@@ -1,7 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
-<form method="post" action="/">
-    <input type="search" placeholder="Введите слово или фразу для поиска...">
-</form>
+<div class="content">
+    <form method="post" action="{{ route('search') }}">
+        <input type="search" placeholder="Введите слово или фразу для поиска...">
+    </form>
+</div>
 @endsection

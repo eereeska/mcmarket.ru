@@ -3,6 +3,7 @@
     align-items: center;
     gap: var(--margin-3);
     margin-bottom: var(--margin-5);
+    user-select: none;
 
     &_compact {
         margin-bottom: var(--margin-4);
@@ -12,9 +13,12 @@
         margin-bottom: 0;
     }
 
-    &__icon {
+    &__icon,
+    .avatar {
         width: 60px;
+        min-width: 60px;
         height: 60px;
+        min-height: 60px;
         text-align: center;
         line-height: 60px;
         background-color: var(--foreground);
@@ -28,10 +32,13 @@
     }
 
     &__value {
-
+        font-weight: 600;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
     &__desc {
-
+        color: var(--gray);
     }
 }

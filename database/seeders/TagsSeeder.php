@@ -12,43 +12,53 @@ class TagsSeeder extends Seeder
         DB::table('tags')->insert([
             [
                 'name' => 'discussions',
-                'title' => 'Обсуждения'
+                'title' => 'Обсуждения',
+                'icon' => 'comments'
             ],
             [
                 'name' => 'ideas',
-                'title' => 'Идеи'
+                'title' => 'Идеи',
+                'icon' => 'idea'
             ],
             [
                 'name' => 'plugins',
-                'title' => 'Плагины'
+                'title' => 'Плагины',
+                'icon' => 'plugin'
             ],
             [
                 'name' => 'graphics',
-                'title' => 'Графика'
+                'title' => 'Графика',
+                'icon' => 'graphic'
             ],
             [
                 'name' => 'building',
-                'title' => 'Строительство'
+                'title' => 'Строительство',
+                'icon' => 'building'
             ],
             [
                 'name' => 'accounts',
-                'title' => 'Аккаунты'
+                'title' => 'Аккаунты',
+                'icon' => 'users'
             ],
             [
                 'name' => 'news',
-                'title' => 'Новости'
+                'title' => 'Новости',
+                'icon' => 'news'
             ],
             [
                 'name' => 'giveaways',
-                'title' => 'Розыгрыши'
+                'title' => 'Розыгрыши',
+                'icon' => 'gift'
             ],
             [
                 'name' => 'buying',
-                'title' => 'Покупка'
+                'title' => 'Покупка',
+                'icon' => 'arrow-down'
             ],
             [
                 'name' => 'selling',
-                'title' => 'Продажа'
+                'title' => 'Продажа',
+                'icon' => 'arrow-up'
             ]
         ]);
     }

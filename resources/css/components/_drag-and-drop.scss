@@ -1,0 +1,30 @@
+.file-upload {
+    position: relative;
+    display: flex;
+    user-select: none;
+
+    &__original {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        opacity: 0;
+        cursor: pointer;
+    }
+
+    &__label {
+        width: 100%;
+        text-align: center;
+        padding: 24px var(--margin-6);
+        border: 2px dashed var(--border);
+        border-radius: var(--radius-2);
+        transition: border 0.1s ease-in-out;
+        cursor: pointer;
+    }
+
+    &.is-active &__label,
+    &:hover &__label {
+        border-color: var(--color-primary-50);
+    }
+}

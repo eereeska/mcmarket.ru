@@ -1,9 +1,9 @@
 input {
     font: inherit;
-    color: var(--text-color-primary);
+    color: var(--black);
     width: 100%;
-    background-color: var(--color-primary-05);
-    border: 1px solid var(--color-primary-10);
+    background-color: var(--foreground);
+    border: 1px solid var(--border);
     border-radius: var(--radius-2);
     padding: 24px;
     outline: none;
@@ -15,6 +15,7 @@ input {
 
     &::placeholder {
         font: inherit;
+        color: var(--placeholder);
     }
 
     & + input {
