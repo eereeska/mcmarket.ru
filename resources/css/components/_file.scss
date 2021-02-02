@@ -1,6 +1,7 @@
-.file-upload {
+.file {
     position: relative;
     display: flex;
+    transition: opacity 0.3s ease-in-out;
     user-select: none;
 
     &__original {
@@ -23,8 +24,13 @@
         cursor: pointer;
     }
 
-    &.is-active &__label,
-    &:hover &__label {
+    &.is-dragenter:not(.is-uploading) &__label,
+    &:hover:not(.is-uploading) &__label {
         border-color: var(--color-primary-50);
+    }
+
+    &.is-uploading {
+        opacity: 0.4;
+        cursor: default;
     }
 }

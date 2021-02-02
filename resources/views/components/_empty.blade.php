@@ -1,0 +1,1 @@
+<p class="alert empty small">Здесь пока ничего нет</p>

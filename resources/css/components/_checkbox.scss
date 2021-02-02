@@ -1,6 +1,9 @@
 .checkbox {
     user-select: none;
-    cursor: pointer;
+
+    & + .select {
+        margin-top: var(--margin-5);
+    }
 
     input {
         position: absolute;
@@ -8,6 +11,10 @@
         height: 0;
         margin: 0;
         opacity: 0;
+        cursor: pointer;
+    }
+
+    &__label {
         cursor: pointer;
     }
 
@@ -30,6 +37,7 @@
             background-color: var(--foreground);
             border: 1px solid var(--border);
             border-radius: 5px;
+            cursor: pointer;
     
             &:after {
                 content: '\f00c';
@@ -47,6 +55,10 @@
             }
         }
 
+        &:hover .checkbox__mark {
+            background-color: var(--border);
+        }
+
         input:checked ~ .checkbox__mark:after {
             opacity: 1;
             transform: translateY(0);
@@ -54,11 +66,6 @@
     }
 
     &.tag {
-        
-        &.fluid {
-            flex-grow: 1;
-        }
-
         .checkbox__label {
             color: var(--black);
             display: flex;
@@ -75,18 +82,26 @@
                 font-weight: normal;
                 margin-right: 12px;
             }
+        }
 
-            &:hover {
-                border: 1px solid var(--color-primary-10);
-            }
-            
-            &:focus {
-                border: 1px solid var(--color-primary-50);
-            }
+        &:not(.disabled) .checkbox__label:hover {
+            border: 1px solid var(--color-primary-10);
+        }
 
-            &:active {
-                padding: 13px 12px 11px 12px;
+        &:not(.disabled) .checkbox__label:active {
+            padding: 13px 12px 11px 12px;
+        }
+
+        &.fluid {
+            flex-grow: 1;
+
+            .checkbox__label {
+                flex-grow: 1;
             }
+        }
+
+        &.readonly {
+            cursor: default;
         }
     
         // &.active {
@@ -97,6 +112,13 @@
         input:checked ~ .checkbox__label {
             color: var(--primary);
             border: 1px solid var(--primary);
+        }
+    }
+
+    &.disabled {
+        .checkbox__mark,
+        .checkbox__label {
+            cursor: default;
         }
     }
 }

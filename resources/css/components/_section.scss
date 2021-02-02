@@ -1,14 +1,27 @@
 .section {
     margin-bottom: var(--margin-6);
 
-    &__title {
+    &__header {
         display: flex;
+        align-items: center;
         justify-content: space-between;
-        flex-wrap: wrap;
-        gap: 30px;
+        gap: var(--gap-3);
+    }
+
+    &__title {
         font-weight: 600;
-        margin-bottom: 30px;
+        margin-right: auto;
         user-select: none;
+
+        &--required::after {
+            content: '*';
+            color: var(--red);
+            margin-left: var(--margin-1);
+        }
+    }
+
+    &__header + &__content {
+        margin-top: var(--margin-5);
     }
 
     &.compact {

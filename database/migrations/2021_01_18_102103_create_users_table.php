@@ -11,9 +11,10 @@ class CreateUsersTable extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique();
-            $table->unsignedSmallInteger('role_id')->default(1);
-            $table->foreignId('settings_id')->nullable()->constrained()->onDelete('SET NULL');
+            $table->foreignId('role_id')->nullable()->default(1)->constrained('roles')->nullOnDelete();
+            $table->foreignId('settings_id')->nullable()->constrained('user_settings')->nullOnDelete();
             $table->boolean('verified')->default(false);
+            $table->float('balance', 8, 2, true)->default(0);
             $table->string('ip');
             $table->string('avatar')->nullable();
             $table->string('password')->nullable();

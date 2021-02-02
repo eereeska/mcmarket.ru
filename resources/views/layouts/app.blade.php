@@ -59,27 +59,27 @@
 </head>
 <body>
     <header class="header">
-        @auth
-            <div class="header__main">
-                <a href="{{ route('home') }}" class="header__logo">Minecraft Маркет</a>
-                <a href="#" class="header__notifications icon icon--bell"></a>
-                <a href="{{ route('user-show', ['name' => Auth::user()->name ]) }}" class="header__profile">
-                    @include('components._avatar', ['user' => Auth::user()])
-                    <span>{{ Auth::user()->name }}</span>
+        <div class="header__inner">
+            <div class="header__left">
+                <a href="{{ route('home') }}" class="header__logo">MCMarket</a>
+                <nav class="header__nav">
+                    <a href="#" @if (request()->is('u*')) class="active" @endif>Пользователи</a>
+                    <a href="{{ route('groups-index') }}" @if (request()->is('group*')) class="active" @endif>Сообщества</a>
+                    @if (Auth::guest())
+                    <a href="{{ route('login') }}" @if (request()->is('login')) class="active" @endif>Вход</a>
+                    <a href="{{ route('register') }}" @if (request()->is('register')) class="active" @endif>Регистрация</a>
+                    @endif
+                </nav>
+            </div>
+            @if (Auth::check())
+            <div class="header__right">
+                <a href="{{ route('notifications') }}" class="header__notifications icon icon--bell" data-modal data-notifications-count="{{ auth()->user()->unreadNotifications()->count() }}"></a>
+                <a href="{{ route('user-show', ['name' => auth()->user()->name ]) }}" class="header__profile">
+                    @include('components._avatar', ['user' => auth()->user()])
+                    <span>{{ auth()->user()->name }}</span>
                 </a>
             </div>
-        @endauth
-        <div class="header__nav">
-            <nav class="header-nav">
-                <a href="{{ route('home') }}" @if (request()->is('/')) class="active" @endif>Форум</a>
-                <a href="#" @if (request()->is('/')) class="active" @endif>Загрузки</a>
-                <a href="#" @if (request()->is('u*')) class="active" @endif>Пользователи</a>
-                <a href="{{ route('search') }}" class="search icon icon--search"></a>
-                @guest
-                    <a href="{{ route('login') }}" class="login icon icon--login"></a>
-                    <a href="{{ route('register') }}" class="register icon icon--register"></a>
-                @endguest
-            </nav>
+            @endif
         </div>
     </header>
     <main id="root" class="page {{ $page_classes ?? '' }}">

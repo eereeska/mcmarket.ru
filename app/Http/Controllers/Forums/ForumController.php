@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Forums;
 use App\Http\Controllers\Controller;
 use App\Models\Tag;
 use App\Models\Thread;
+use App\Models\ThreadReply;
 use App\Models\ThreadTag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
@@ -70,17 +71,12 @@ class ForumController extends Controller
             ]);
         }
 
-        // return redirect()->route('forum-thread-view', ['id' => $thread->id]);
-
-        return response()->json([
-            'success' => true,
-            'redirect' => route('forum-thread-show', ['id' => $thread->id])
-        ]);
+        return redirect()->route('forum-thread-show', ['id' => $thread->id]);
     }
 
     public function show(Request $request, $id)
     {
-        $thread = Thread::where('id', $id)->first();
+        $thread = Thread::where('id', $id)->with('replies')->withCount('replies')->first();
 
         if (!$thread) {
             abort(404);
@@ -99,14 +95,44 @@ class ForumController extends Controller
         ]);
     }
 
+    public function reply(Request $request, $id)
+    {
+        $validator = Validator::make($request->all(), [
+            'body' => ['required', 'min:1', 'max:50000']
+        ], [
+            'body.required' => 'Введите сообщение',
+            'body.min' => 'Слишком короткое сообщение',
+            'body.max' => 'Слишком длинное сообщение'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'message' => $validator->errors()->first()
+            ]);
+        }
+
+        $thread = Thread::where('id', $id)->firstOrFail();
+
+        $reply = new ThreadReply();
+        $reply->thread_id = $thread->id;
+        $reply->author_id = $request->user()->id;
+        $reply->body = $this->nl2p(trim($request->body), false);
+        $reply->save();
+
+        return response()->json([
+            'success' => true
+        ]);
+    }
+
     private function nl2p($string, $line_breaks = true, $xml = true)
     {
         $string = strip_tags($string);
         
         if ($line_breaks == true) {
-            return '<p>' . preg_replace(["/([\n]{2,})/i", "/([^>])\n([^<])/i"], ["</p>\n<p>", '${1}<br' . ($xml == true ? ' /' : '') . '>${2}'], trim($string)) . '</p>';
+            return trim('<p>' . preg_replace(["/([\n]{2,})/i", "/([^>])\n([^<])/i"], ["</p>\n<p>", '${1}<br' . ($xml == true ? ' /' : '') . '>${2}'], trim($string)) . '</p>');
         } else {
-            return '<p>' . preg_replace(["/([\n]{2,})/i", "/([\r\n]{3,})/i", "/([^>])\n([^<])/i"], ["</p>\n<p>", "</p>\n<p>", '${1}<br' . ($xml === true ? ' /' : '') . '>${2}'], trim($string)) . '</p>'; 
+            return trim('<p>' . preg_replace(["/([\n]{2,})/i", "/([\r\n]{3,})/i", "/([^>])\n([^<])/i"], ["</p>\n<p>", "</p>\n<p>", '${1}<br' . ($xml === true ? ' /' : '') . '>${2}'], trim($string)) . '</p>'); 
         }
     }
 }

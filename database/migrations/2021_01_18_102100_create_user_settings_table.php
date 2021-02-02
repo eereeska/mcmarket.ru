@@ -10,11 +10,10 @@ class CreateUserSettingsTable extends Migration
     {
         Schema::create('user_settings', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->string('about')->nullable();
+            $table->text('about')->nullable();
             $table->boolean('is_search_engine_visible')->default(true);
             $table->boolean('is_online_status_visible')->default(true);
-            $table->boolean('is_activity_visible')->default(true);  
+            $table->enum('groups_visible', ['all', 'mine', 'none'])->default('mine');  
         });
     }
 

@@ -1,6 +1,16 @@
 .list {
     transition: opacity 0.3s ease-in-out;
 
+    &_table {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--gap-1);
+
+        > * {
+            flex-grow: 1;
+        }
+    }
+
     &.loading {
         opacity: 0.4;
         pointer-events: none;

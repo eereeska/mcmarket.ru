@@ -10,7 +10,7 @@ class CreateThreadsTable extends Migration
     {
         Schema::create('threads', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('author_id');
+            $table->foreignId('author_id')->nullable()->constrained('users')->nullOnDelete();
             $table->string('title');
             $table->text('body');
             $table->unsignedInteger('replies_count')->default(0);

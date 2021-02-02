@@ -37,14 +37,27 @@ button {
     }
 
     &.primary {
-        background-color: var(--color-primary);
+        background-color: var(--primary);
 
         &:hover {
-            background-color: #7486e3;
+            background-color: var(--primary-light);
         }
 
         &:active {
-            background-color: #6478e0;
+            background-color: var(--primary-dark);
+        }
+    }
+
+    &.green {
+        color: var(--black);
+        background-color: var(--green);
+
+        &:hover {
+            background-color: var(--green-light);
+        }
+
+        &:active {
+            background-color: var(--green-dark);
         }
     }
 

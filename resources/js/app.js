@@ -5,10 +5,16 @@ window.axios = require('axios');
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 require('./rte');
+require('./forum');
+require('./modal');
 
 var messages = {
     requestError: 'Произошла ошибка при обработке запроса. Попробуйте позже.'
 }
+
+$(document).on('input', 'textarea.auto-resize', function() {
+    $(this).css('height', $(this).[0].scrollHeight + 10);
+});
 
 $(document).on('change', 'form[data-action="search"] input, form[data-action="search"] select', function(e) {
     var $form = $(this).closest('form[data-action="search"]');
@@ -55,6 +61,9 @@ $('[data-action="form-submit"]').on('click', function(e) {
         return;
     }
 
+    $form.trigger('submit');
+    return;
+
     axios.post($form.attr('action'), $form.serialize()).then(function(response) {
         if (response.data.success) {
             if ($form.data('redirect')) {
@@ -74,6 +83,38 @@ $('[data-action="form-submit"]').on('click', function(e) {
         $clicked.removeClass('loading');
     }).catch(function(error) {
         alert(messages.requestError);
+    });
+});
+
+$('[data-action="request"]').on('click', function(e) {
+    e.preventDefault();
+
+    var $clicked = $(this);
+
+    $clicked.addClass('loading');
+
+    if (!$clicked.data('url')) {
+        return;
+    }
+
+    axios({
+        method: $clicked.data('method') || 'post',
+        url: $clicked.data('url')
+    }).then(function(response) {
+        if (response.data.success) {
+            setTimeout(function() {
+                $clicked.removeClass('success');
+                $clicked.text($clicked.text());
+            }, 2000);
+
+            $clicked.addClass('success');
+        } else {
+            alert(response.data.message || messages.requestError);
+        }
+    }).catch(function() {
+        alert(messages.requestError);
+    }).finally(function() {
+        $clicked.removeClass('loading');
     });
 });
 
@@ -189,16 +230,22 @@ $(document).on('click', '.tabs > .tabs__tab', function(e) {
 
 // DRAG AND DROP
 
-$(document).on('dragenter focus click', '.file-upload.drop > .file-upload__original', function() {
-    $(this).parent().addClass('is-active');
+$(document).on('dragenter focus click', '.file > .file__original', function() {
+    $(this).parent().addClass('is-dragenter');
 });
 
-$(document).on('dragleave blur drop', '.file-upload.drop > .file-upload__original', function() {
-    $(this).parent().removeClass('is-active');
+$(document).on('dragleave blur drop', '.file > .file__original', function(e) {
+    $(this).parent().removeClass('is-dragenter');
+
+    if ($(this).hasClass('is-uploading')) {
+        e.preventDefault();
+        e.stopImmediatePropagation();
+    }
 });
 
-$(document).on('change', '.file-upload.drop > .file-upload__original', function() {
-    var $label = $(this).next('.file-upload__label');
+$(document).on('change', '.file > .file__original', function() {
+    var $container = $(this).parent('.file');
+    var $label = $(this).next('.file__label');
 
     if (!$label.data('original-label')) {
         $label.data('original-label', $label.text().trim());
@@ -213,26 +260,46 @@ $(document).on('change', '.file-upload.drop > .file-upload__original', function(
     } else {
         $label.text($label.data('original-label'));
     }
-console.log(1)
-    if ($(this).data('file-upload')) {
-        console.log(2)
+
+    if ($(this).data('upload-path')) {
         var data = new FormData();
 
         data.append($(this).attr('name'), files[0]);
+
+        $container.addClass('is-uploading');
         
-        axios.post($(this).data('file-upload'), data).then(function(response) {
-            console.log(response)
+        axios.post($(this).data('upload-path'), data).then(function(response) {
+            if (response.data.success) {
+                if ($container.data('image-preview')) {
+                    $($container.data('image-preview')).removeAttr('style').css('background-image', 'url(' + response.data.path + ')')
+                }
+            } else {
+                alert(response.data.message || messages.requestError);
+            }
         }).catch(function(error) {
             console.log(error)
         }).finally(function() {
-
+            $container.removeClass('is-uploading');
         });
     }
 
     console.log(files)
-    console.log($(this).val())
 });
 
 // DRAG AND DROP END
 
-// FILE UPLOAD
+// HIDDEN CONTENT
+
+$(document).on('click', 'input[type="radio"]', function() {
+    var $radio = $(this);
+
+    $('[data-show-if="radio-checked"][data-target-name="' + $radio.attr('name') + '"]').each(function() {
+        if ($(this).data('target-value').trim() != $radio.val().trim()) {
+            $(this).removeClass('hidden--visible');
+        } else {
+            $(this).addClass('hidden--visible');
+        }
+    });
+});
+
+// HIDDEN CONTENT END

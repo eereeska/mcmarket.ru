@@ -40,5 +40,21 @@
 
     &__desc {
         color: var(--gray);
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--gap-1);
+    }
+
+    &__hidden {
+        opacity: 0;
+        transform: translateX(-5px);
+        transition: opacity 0.1s ease-in-out, transform 0.1s ease-in-out;
+        pointer-events: none;
+    }
+
+    &:hover &__hidden.data__hidden--hover {
+        opacity: 1;
+        transform: translateX(0);
+        pointer-events: unset;
     }
 }

@@ -17,7 +17,7 @@
         <section class="section">
             <h2 class="section__title">Теги</h2>
             <div class="fluid fluid--wrap gap-1">
-                @include('components.tags', ['tags' => $tags])
+                @include('components._tags', ['tags' => $tags, 'class' => 'fluid'])
             </div>
         </section>
         <section class="section">

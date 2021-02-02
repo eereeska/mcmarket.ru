@@ -11,12 +11,14 @@
 @import './components/form';
 @import './components/input';
 @import './components/textarea';
-@import './components/drag-and-drop';
-@import './components/checkbox';
 @import './components/select';
+@import './components/checkbox';
+@import './components/radio';
 @import './components/button';
+@import './components/file';
 
 @import './components/section';
+@import './components/article';
 
 @import './components/icon';
 @import './components/badge';
@@ -28,7 +30,12 @@
 @import './components/list';
 @import './components/data';
 @import './components/tabs';
+@import './components/comment';
 
 @import './components/editor';
+@import './components/breadcrumb';
+
+@import './components/hidden';
+@import './components/modal';
 
 @import './forum';

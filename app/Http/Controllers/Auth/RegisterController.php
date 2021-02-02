@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\UserSettings;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -38,18 +39,25 @@ class RegisterController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        try {
-            $user = new User();
-            $user->name = $request->name;
-            $user->password = Hash::make($request->password);
-            $user->ip = $_SERVER['CF_CONNECTING_IP'] ?? $request->ip();
-            $user->save();
-        } catch (\Exception $e) {
-            return back()->withErrors(['create_error' => 'Не удалось создать аккаунт'])->withInput();
-        }
+        DB::transaction(function() use ($request) {
+            try {
+                $settings = new UserSettings();
+                $settings->save();
+    
+                $user = new User();
+                $user->settings_id = $settings->id;
+                $user->name = $request->name;
+                $user->password = Hash::make($request->password);
+                $user->ip = $_SERVER['CF_CONNECTING_IP'] ?? $request->ip();
+                $user->save();
+                
+                Auth::login($user, true);
 
-        Auth::login($user, true);
-
-        return redirect()->route('home');
+                return redirect()->route('home');
+            } catch (\Exception $e) {
+                dd($e);
+                return back()->withErrors(['create_error' => 'Не удалось создать аккаунт'])->withInput();
+            }
+        });
     }
 }

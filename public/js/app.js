@@ -10957,9 +10957,16 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 __webpack_require__(/*! ./rte */ "./resources/js/rte.js");
 
+__webpack_require__(/*! ./forum */ "./resources/js/forum.js");
+
+__webpack_require__(/*! ./modal */ "./resources/js/modal.js");
+
 var messages = {
   requestError: 'Произошла ошибка при обработке запроса. Попробуйте позже.'
 };
+$(document).on('input', 'textarea.auto-resize', function () {
+  $(this).css('height', $(this)[0].scrollHeight + 10);
+});
 $(document).on('change', 'form[data-action="search"] input, form[data-action="search"] select', function (e) {
   var $form = $(this).closest('form[data-action="search"]');
 
@@ -10999,6 +11006,8 @@ $('[data-action="form-submit"]').on('click', function (e) {
     return;
   }
 
+  $form.trigger('submit');
+  return;
   axios.post($form.attr('action'), $form.serialize()).then(function (response) {
     if (response.data.success) {
       if ($form.data('redirect')) {
@@ -11017,6 +11026,34 @@ $('[data-action="form-submit"]').on('click', function (e) {
     $clicked.removeClass('loading');
   })["catch"](function (error) {
     alert(messages.requestError);
+  });
+});
+$('[data-action="request"]').on('click', function (e) {
+  e.preventDefault();
+  var $clicked = $(this);
+  $clicked.addClass('loading');
+
+  if (!$clicked.data('url')) {
+    return;
+  }
+
+  axios({
+    method: $clicked.data('method') || 'post',
+    url: $clicked.data('url')
+  }).then(function (response) {
+    if (response.data.success) {
+      setTimeout(function () {
+        $clicked.removeClass('success');
+        $clicked.text($clicked.text());
+      }, 2000);
+      $clicked.addClass('success');
+    } else {
+      alert(response.data.message || messages.requestError);
+    }
+  })["catch"](function () {
+    alert(messages.requestError);
+  })["finally"](function () {
+    $clicked.removeClass('loading');
   });
 }); // AJAX PAGE CHANGE
 // $(document).on('click', 'a[data-ajax]', function(e) {
@@ -11106,14 +11143,20 @@ $(document).on('click', '.tabs > .tabs__tab', function (e) {
 }); // TABS END
 // DRAG AND DROP
 
-$(document).on('dragenter focus click', '.file-upload.drop > .file-upload__original', function () {
-  $(this).parent().addClass('is-active');
+$(document).on('dragenter focus click', '.file > .file__original', function () {
+  $(this).parent().addClass('is-dragenter');
 });
-$(document).on('dragleave blur drop', '.file-upload.drop > .file-upload__original', function () {
-  $(this).parent().removeClass('is-active');
+$(document).on('dragleave blur drop', '.file > .file__original', function (e) {
+  $(this).parent().removeClass('is-dragenter');
+
+  if ($(this).hasClass('is-uploading')) {
+    e.preventDefault();
+    e.stopImmediatePropagation();
+  }
 });
-$(document).on('change', '.file-upload.drop > .file-upload__original', function () {
-  var $label = $(this).next('.file-upload__label');
+$(document).on('change', '.file > .file__original', function () {
+  var $container = $(this).parent('.file');
+  var $label = $(this).next('.file__label');
 
   if (!$label.data('original-label')) {
     $label.data('original-label', $label.text().trim());
@@ -11129,23 +11172,133 @@ $(document).on('change', '.file-upload.drop > .file-upload__original', function 
     $label.text($label.data('original-label'));
   }
 
-  console.log(1);
-
-  if ($(this).data('file-upload')) {
-    console.log(2);
+  if ($(this).data('upload-path')) {
     var data = new FormData();
     data.append($(this).attr('name'), files[0]);
-    axios.post($(this).data('file-upload'), data).then(function (response) {
-      console.log(response);
+    $container.addClass('is-uploading');
+    axios.post($(this).data('upload-path'), data).then(function (response) {
+      if (response.data.success) {
+        if ($container.data('image-preview')) {
+          $($container.data('image-preview')).removeAttr('style').css('background-image', 'url(' + response.data.path + ')');
+        }
+      } else {
+        alert(response.data.message || messages.requestError);
+      }
     })["catch"](function (error) {
       console.log(error);
-    })["finally"](function () {});
+    })["finally"](function () {
+      $container.removeClass('is-uploading');
+    });
   }
 
   console.log(files);
-  console.log($(this).val());
 }); // DRAG AND DROP END
-// FILE UPLOAD
+// HIDDEN CONTENT
+
+$(document).on('click', 'input[type="radio"]', function () {
+  var $radio = $(this);
+  $('[data-show-if="radio-checked"][data-target-name="' + $radio.attr('name') + '"]').each(function () {
+    if ($(this).data('target-value').trim() != $radio.val().trim()) {
+      $(this).removeClass('hidden--visible');
+    } else {
+      $(this).addClass('hidden--visible');
+    }
+  });
+}); // HIDDEN CONTENT END
+
+/***/ }),
+
+/***/ "./resources/js/forum.js":
+/*!*******************************!*\
+  !*** ./resources/js/forum.js ***!
+  \*******************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+$(document).on('input', '.forum .comment__body--editable', function (e) {
+  var $input = $(this);
+  var $avatar = $input.parent().parent().find('.avatar').clone(false);
+  var text = $input.text().trim();
+  var html = $input.html().trim();
+  var rows = [];
+
+  if (text.length) {
+    console.log('html befotre', html); // html = html.replace(/\<(.*?)\>(.*?)\<\/(.*?)\>/gi, '</p>$2<p>');
+    // html = html.replace(/\*\*(.*?)\*\*/gi, '<b>$1</b>');
+    // html = '<p>' + html + '</p>';
+    // console.log('html after', html)
+    // $(this).children().each(function() {
+    //     rows.push($(this).text());
+    // });
+    // alert(text)
+
+    if ($('#replies .comment_preview').length > 0) {
+      $('#replies .comment_preview .comment__body').html(text);
+    } else {
+      var $preview = $('<div class="comment comment_preview"></div>');
+      $preview.html("\n                <div class=\"avatar\" style=\"".concat($avatar.attr('style'), "\"></div>\n                <div class=\"comment__info\">\n                <h3 class=\"comment__label\">\u041F\u0440\u0435\u0434\u043F\u0440\u043E\u0441\u043C\u043E\u0442\u0440</h3>\n                <div class=\"comment__body\">").concat(text, "</div>"));
+      $('#replies').append($preview);
+    }
+  } else {
+    $('#replies .comment_preview').remove();
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/modal.js":
+/*!*******************************!*\
+  !*** ./resources/js/modal.js ***!
+  \*******************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+$(document).on('click', '[data-modal]', function (e) {
+  if ($(this).is('a')) {
+    e.preventDefault();
+    $modal = createNewModal();
+    $modal.addClass('is-loading');
+    axios.get($(this).attr('href')).then(function (response) {
+      $modal.html(response.data.html);
+      $modal.parent().addClass('is-visible');
+    })["catch"](function () {})["finally"](function () {
+      $modal.removeClass('is-loading');
+    });
+  }
+});
+$(document).on('click', '.modal__background', function (e) {
+  e.preventDefault();
+  closeModal($(this));
+});
+
+function createNewModal() {
+  if (!$('.modals').length) {
+    $('body').append($('<div class="modals"></div>'));
+  }
+
+  $modals = $('.modals');
+  $wrapper = $('<div class="modal"><div class="modal__background"></div></div>');
+  $modal = $('<div class="modal__inner"></div>');
+  $wrapper.append($modal);
+  $modals.append($wrapper);
+  $('html, body').css({
+    overflow: 'hidden',
+    height: '100%'
+  });
+  return $modal;
+}
+
+function closeModal($target) {
+  $target.closest('.modal').removeClass('is-visible');
+  $('html, body').css({
+    overflow: 'unset',
+    height: 'unset'
+  });
+
+  if (!$('.modal.is-visible').length) {
+    $('.modals').remove();
+  }
+}
 
 /***/ }),
 
@@ -11156,105 +11309,15 @@ $(document).on('change', '.file-upload.drop > .file-upload__original', function 
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-var allowedCommands = ['bold', 'italic', 'strikethrough', 'underline', 'insertOrderedList', 'insertUnorderedList', 'justifyLeft', 'justifyCenter', 'justifyRight', 'removeFormat'];
-$(document).on('focusout cut', '.editor__content[contenteditable]', function () {
-  if (!$(this).text().trim().length) {
-    $(this).empty();
-  }
-});
-$(document).on('paste', '.editor__content[contenteditable]', function (e) {
+// $(document).on('focusout cut', '[contenteditable]', function() {
+//     if (!$(this).text().trim().length) {
+//         $(this).empty();
+//     }
+// });
+$(document).on('paste', '[contenteditable]', function (e) {
   e.preventDefault();
   document.execCommand('inserttext', false, e.originalEvent.clipboardData.getData('text/plain'));
 });
-$(document).on('click', '.editor__toolbar > button', function (e) {
-  e.preventDefault();
-  var command = $(this).data('command');
-
-  if (!allowedCommands.includes(command)) {
-    return;
-  }
-
-  document.execCommand(command);
-}); // $('.editor__content').on('click', function() {  
-//     if ($(this).is(':empty')) {
-//         $(this).html($('p').trigger('focus'));
-//     }
-// })
-// $('.editor > .editor__content').on('click', setTimeout(format, 50));
-// $('.editor > .editor__content').on('mouseup keydown keyup', function(e) {
-//     if (e.ctrlKey || e.metaKey) {
-//         return;
-//     }
-//     setTimeout(format, 50);
-// });
-// function format(e) {
-//     console.clear();
-//     console.log('format...');
-//     var currentNode = getCurrentNode();
-//     console.log('currentNode', currentNode)
-//     // $('.editor > .editor__toolbar > button[data-action]')
-//     $('.editor > .editor__toolbar > button').each(function (i, el) {
-//         var action = $(this).data('action');
-//         var tagName = currentNode.tagName.toLowerCase();
-//         // $(this).removeClass('active');
-//         // if (action === 'bold' && (tagName === 'strong' || tagName === 'b')) {
-//         //     $(this).addClass('active');
-//         // } else if (action === 'italic' && tagName === 'i') {
-//         //     $(this).addClass('active');
-//         // } else if (action === 'strikethrough' && tagName === 's') {
-//         //     $(this).addClass('active');
-//         // } else if (action === 'underline' && tagName === 'u') {
-//         //     $(this).addClass('active');
-//         // }
-//         console.log(document.queryCommandState(getSelectedNode()))
-//         if (document.queryCommandState(currentNode)) {
-//             $(this).addClass('active')
-//         } else {
-//             $(this).removeClass('active');
-//         }
-//     });
-// }
-// function observeFormattingl(e) {
-//     if (this.skipFormatObserveOnce)
-//         return void (this.skipFormatObserveOnce = !1);
-//     var t = this.getCurrentNode()
-//       , o = r(t)
-//       , a = this.$editor.get(0);
-//     if (this.inactiveAllButtons(),
-//     r.each(this.opts.activeButtonsStates, r.proxy(function(e, t) {
-//         0 != o.closest(e, a).length && this.setBtnActive(t)
-//     }, this)),
-//     e && (13 == e || 8 == e)) {
-//         var d = this;
-//         r.each(this.opts.activeButtonStateMap, function(e, t) {
-//             try {
-//                 d.document.queryCommandState(t) ? d.setBtnActive(e) : d.setBtnInactive(e)
-//             } catch (t) {}
-//         })
-//     }
-//     var n = o.closest(["p", "div", "h1", "h2", "h3", "h4", "h5", "h6", "blockquote", "td"]);
-//     if ("undefined" != typeof n[0] && "undefined" != typeof n[0].elem && 0 != r(n[0].elem).size()) {
-//         var l = r(n[0].elem).css("text-align");
-//         "right" === l ? this.setBtnActive("alignright") : "center" === l ? this.setBtnActive("aligncenter") : "justify" === l ? this.setBtnActive("justify") : this.setBtnActive("alignleft")
-//     }
-// },
-// function getCurrentNode() {
-//     if (typeof window.getSelection != 'undefined') {
-//         var selectedNode = getSelectedNode();
-//         return !!selectedNode && selectedNode.parentNode;
-//     }
-//     return typeof document.selection == 'undefined' ? void 0 : getSelection().parentElement();
-// }
-// function getSelectedNode() {
-//     if (typeof window.getSelection != 'undefined') {
-//         var selection = window.getSelection();
-//         return !!(selection && 0 < selection.rangeCount) && selection.getRangeAt(0).commonAncestorContainer;
-//     }
-//     return typeof document.selection == 'undefined' ? void 0 : getSelection();
-// };
-// function getSelection() {
-//     return this.window.getSelection ? this.window.getSelection() : document.getSelection ? document.getSelection() : document.selection.createRange();
-// }
 
 /***/ }),
 

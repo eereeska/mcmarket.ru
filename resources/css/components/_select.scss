@@ -1,6 +1,7 @@
 .select {
     position: relative;
     font-family: inherit;
+    user-select: none;
 
     &__original {
         display: none;

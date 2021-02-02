@@ -89,4 +89,76 @@
     &--heart::before {
         content: '\f004';
     }
+
+    &--coin::before {
+        content: '\f85c';
+    }
+
+    &--coins::before {
+        content: '\f51e';
+    }
+
+    &--server::before {
+        content: '\f233';
+    }
+
+    &--eye::before {
+        content: '\f06e';
+    }
+
+    &--sliders-h::before {
+        content: '\f1de';
+    }
+
+    &--skull::before {
+        content: '\f54c';
+    }
+
+    &--map::before {
+        content: '\f279';
+    }
+
+    &--web::before {
+        content: '\f121';
+    }
+
+    &--desktop::before {
+        content: '\f390';
+    }
+
+    &--layers::before {
+        content: '\f5fd';
+    }
+
+    &--info::before {
+        content: '\f129';
+    }
+
+    &--file::before {
+        content: '\f15b';
+    }
+
+    &--file-plus::before {
+        content: '\f319';
+    }
+
+    &--weight-hanging::before {
+        content: '\f5cd';
+    }
+
+    &--virus::before {
+        content: '\e074';
+    }
+
+    &--virus-slash::before {
+        content: '\e075';
+    }
+
+    &--shield-virus::before {
+        content: '\e06c';
+    }
+
+    &--sync-alt::before {
+        content: '\f2f1';
+    }
 }

@@ -24,7 +24,7 @@
                 
             </h2>
             <div class="fluid fluid--wrap gap-1">
-                @include('components.tags', ['tags' => $tags, 'fluid' => true])
+                @include('components._tags', ['tags' => $tags, 'class' => 'fluid'])
             </div>
         </form>
     </section>

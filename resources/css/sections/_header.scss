@@ -1,51 +1,74 @@
 .header {
     position: relative;
+    background-color: var(--pure-white);
+    margin-bottom: var(--mb-6);
+    border-bottom: 1px solid var(--border);
     user-select: none;
-    
-    &:before {
-        content: '';
-        position: absolute;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
-        background-image: url('../images/header_bg.png');
-        background-color: #0b1018;
-        background-repeat: no-repeat;
-        background-size: cover;
-        background-position: center 45%;
-        z-index: -1;
-    }
 
-    a {
-        color: var(--color-white);
+    // a {
+    //     color: var(--white);
+    // }
 
-        &:hover {
-            color: #fff;
-        }
-    }
-
-    &__main {
+    &__inner {
         display: flex;
         align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: var(--gap-6);
         max-width: var(--content-max-width);
-        padding: 60px 0;
+        padding: var(--margin-4) 0;
         margin: 0 auto;
 
         @media (max-width: 1220px) {
-            padding: 60px;
+            padding: var(--margin-4) var(--margin-6);
         }
+    }
+
+    &__left,
+    &__right {
+        display: flex;
+        align-items: center;
+        flex-grow: 1;
+        flex-wrap: wrap;
+    }
+
+    &__left {
+        gap: var(--gap-6);
+        justify-content: space-between;
+    }
+
+    &__right {
+        justify-content: flex-end;
     }
 
     &__logo {
         font-size: 24px;
         font-weight: bold;
-        margin-right: auto;
     }
 
     &__notifications {
+        position: relative;
         font-size: 18px;
         margin-right: 30px;
+
+        &[data-notifications-count] {
+            &::after {
+                content: attr(data-notifications-count);
+                position: absolute;
+                top: -10px;
+                right: -10px;
+                width: 20px;
+                height: 20px;
+                text-align: center;
+                font-size: 12px;
+                color: var(--white);
+                line-height: 20px;
+                background-color: var(--red);
+                border-radius: 100px;
+                white-space: nowrap;
+                overflow: hidden;
+            }
+        }
     }
 
     &__profile {
@@ -62,39 +85,19 @@
     }
 
     &__nav {
-        background-color: rgba(14, 19, 29, 0.65);
-        backdrop-filter: blur(15px);
-    }
-
-    &-nav {
         display: flex;
         align-items: center;
-        max-width: var(--content-max-width);
-        margin: 0 auto;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: var(--gap-3);
 
-        @media (max-width: 1220px) {
-            padding: 0 60px;
-        }
-        
         a {
             display: block;
-            padding: 30px 0;
-            margin-right: 30px;
+            color: var(--gray);
 
-            &:last-child {
-                margin-right: 0;
-            }
-
-            &:before {
-                font-family: 'Font Awesome 5 Pro';
-            }
-
+            &:hover,
             &.active {
-                font-weight: bold;
-            }
-
-            &.search {
-                margin-left: auto;
+                color: var(--black);
             }
         }
     }

@@ -3,20 +3,17 @@
 namespace App\Models;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
-    use Notifiable;
-
     protected $fillable = [
-        'name',
-        'password'
+        'name'
     ];
 
     protected $hidden = [
         'password',
-        'remember_token'
+        'remember_token',
+        'ip'
     ];
 
     protected $casts = [
@@ -25,9 +22,39 @@ class User extends Authenticatable
         'last_seen_at' => 'datetime'
     ];
 
+    public function notifications()
+    {
+        return $this->hasMany(Notification::class);
+    }
+
+    public function unreadNotifications()
+    {
+        return $this->notifications()->where('read_at', null);
+    }
+
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
+    }
+
     public function settings()
     {
         return $this->belongsTo(UserSettings::class);
+    }
+
+    public function followers()
+    {
+        return $this->belongsToMany(User::class, 'user_followers');
+    }
+
+    public function groups()
+    {
+        return $this->belongsToMany(Group::class, 'group_members');
+    }
+
+    public function ownGroups()
+    {
+        return $this->belongsToMany(Group::class, null, 'id', 'owner_id');
     }
 
     public function getAvatar()
