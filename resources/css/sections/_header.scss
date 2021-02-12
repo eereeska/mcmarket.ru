@@ -3,7 +3,6 @@
     background-color: var(--pure-white);
     margin-bottom: var(--mb-6);
     border-bottom: 1px solid var(--border);
-    user-select: none;
 
     // a {
     //     color: var(--white);
@@ -46,14 +45,14 @@
         font-weight: bold;
     }
 
-    &__notifications {
+    &__conversations {
         position: relative;
         font-size: 18px;
         margin-right: 30px;
 
-        &[data-notifications-count] {
+        &[data-count] {
             &::after {
-                content: attr(data-notifications-count);
+                content: attr(data-count);
                 position: absolute;
                 top: -10px;
                 right: -10px;

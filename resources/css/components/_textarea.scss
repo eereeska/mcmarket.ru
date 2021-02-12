@@ -2,7 +2,7 @@ textarea {
     font: inherit;
     color: var(--black);
     width: 100%;
-    min-height: 150px;
+    min-height: 300px;
     background-color: var(--foreground);
     border: 1px solid var(--border);
     border-radius: var(--radius-2);
@@ -19,6 +19,10 @@ textarea {
     &::placeholder {
         font: inherit;
         color: var(--placeholder);
+    }
+
+    &[type="hidden"] {
+        display: none;
     }
 
     & + input {

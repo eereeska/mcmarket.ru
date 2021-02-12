@@ -3,10 +3,26 @@
     align-items: center;
     gap: var(--margin-3);
     margin-bottom: var(--margin-5);
-    user-select: none;
+    transform: opacity 0.3s ease-in-out;
 
     &_compact {
         margin-bottom: var(--margin-4);
+    }
+
+    &.is-loading {
+        pointer-events: none;
+        opacity: 0.7;
+
+        .data__icon {
+            position: relative;
+            background-image: unset;
+            
+            &::before {
+                content: '\f2f1';
+                display: inline-block;
+                animation: spin 2s linear infinite;
+            }
+        }
     }
 
     &:last-child {

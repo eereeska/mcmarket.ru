@@ -71,6 +71,7 @@ body {
     height: 100%;
     color: var(--text-color-primary);
     margin: 0;
+    user-select: none;
 
     &::-webkit-scrollbar {
         width: 5px;
@@ -104,6 +105,7 @@ a {
 }
 
 img {
+    display: block;
     max-width: 100%;
 }
 

@@ -2,8 +2,10 @@
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
-use App\Http\Controllers\FileController;
-use App\Http\Controllers\Forums\ForumController;
+use App\Http\Controllers\Conversations\ConversationController;
+use App\Http\Controllers\Files\FileController;
+use App\Http\Controllers\Files\FilePurchaseController;
+use App\Http\Controllers\FileVersionController;
 use App\Http\Controllers\GroupController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\UserController;
@@ -35,9 +37,6 @@ Route::post('/register', [RegisterController::class, 'register'])->middleware('g
 Route::get('/logout', [LoginController::class, 'logout'])->middleware('auth')->name('logout');
 
 Route::group(['middleware' => 'auth'], function() {
-    Route::get('/notifications', [UserController::class, 'notifications'])->name('notifications');
-    Route::get('/notifications/mark-read', [UserController::class, 'notificationsMarkRead'])->name('notifications-mark-read');
-    Route::get('/notifications/delete', [UserController::class, 'notificationsDelete'])->name('notifications-delete');
     Route::get('/settings', [UserController::class, 'settings'])->name('settings');
     Route::post('/settings', [UserController::class, 'updateSettings']);
 });
@@ -46,11 +45,11 @@ Route::group(['prefix' => 'upload', 'middleware' => 'auth'], function() {
     Route::post('/avatar', [UserController::class, 'uploadAvatar'])->name('upload-avatar');
 });
 
-Route::group(['prefix' => 'u/{name}'], function() {
-    Route::get('/', [UserController::class, 'show'])->name('user-show');
+Route::group(['prefix' => 'u/{user:name}'], function() {
+    Route::get('/', [UserController::class, 'show'])->name('user.show');
 
     Route::group(['middleware' => 'auth'], function() {
-        Route::post('/follow', [UserController::class, 'follow'])->name('user-follow');
+        Route::post('/follow', [UserController::class, 'follow'])->name('user.follow');
     });
 });
 
@@ -67,24 +66,33 @@ Route::group(['prefix' => 'group'], function() {
     Route::get('/{slug}', [GroupController::class, 'show'])->name('group-show');
 });
 
-Route::group(['prefix' => 't'], function() {
+Route::group(['prefix' => 'file'], function() {
     Route::group(['middleware' => 'auth'], function() {
-        Route::get('/create', [ForumController::class, 'create'])->name('forum-thread-create');
-        Route::post('/create', [ForumController::class, 'store']);
+        Route::get('/submit', [FileController::class, 'submit'])->name('file.submit');
+        Route::post('/submit', [FileController::class, 'store'])->name('file.store');
 
-        Route::post('/{id}/reply', [ForumController::class, 'reply'])->name('forum-thread-reply');
+        Route::group(['prefix' => '/{file}'], function() {
+            Route::get('/download', [FileController::class, 'download'])->name('file.download');
+            Route::get('/purchase', [FilePurchaseController::class, 'create'])->name('file.purchase');
+            Route::post('/purchase', [FilePurchaseController::class, 'store']);
+            Route::get('/edit', [FileController::class, 'edit'])->name('file.edit');
+            Route::post('/edit', [FileController::class, 'update'])->name('file.update');
+            Route::post('/delete', [FileController::class, 'destroy'])->middleware('ajax')->name('file.delete');
+            Route::post('/media', [FileController::class, 'addMedia'])->middleware('ajax')->name('file.media');
+            Route::post('/media/{media}/delete', [FileController::class, 'deleteMedia'])->middleware('ajax')->name('file.media.delete');
+
+            Route::group(['prefix' => '/version'], function() {
+                Route::get('/submit', [FileVersionController::class, 'submit'])->name('file.version.submit');
+                Route::post('/submit', [FileVersionController::class, 'store']);
+            });
+        });
     });
 
-    Route::get('/{id}', [ForumController::class, 'show'])->name('forum-thread-show');
+    Route::get('/{file}', [FileController::class, 'show'])->name('file.show');
 });
 
-Route::group(['prefix' => 'files'], function() {
-    Route::group(['middleware' => 'auth'], function() {
-        Route::get('/submit', [FileController::class, 'submit'])->name('files-submit');
-        Route::post('/submit', [FileController::class, 'store']);
-    });
+Route::get('/conversations', [ConversationController::class, 'index'])->middleware('auth')->name('conversations.index');
 
-    Route::get('/{id}', [FileController::class, 'show'])->name('file-show');
+Route::group(['prefix' => 'conversation', 'middleware' => 'auth'], function() {
+    Route::get('/{id}', [ConversationController::class, 'show'])->name('conversation.show');
 });
-
-Route::get('/file/{id}/download', [FileController::class, 'download'])->middleware('auth')->name('file-download');

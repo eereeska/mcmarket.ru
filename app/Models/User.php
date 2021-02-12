@@ -22,16 +22,6 @@ class User extends Authenticatable
         'last_seen_at' => 'datetime'
     ];
 
-    public function notifications()
-    {
-        return $this->hasMany(Notification::class);
-    }
-
-    public function unreadNotifications()
-    {
-        return $this->notifications()->where('read_at', null);
-    }
-
     public function role()
     {
         return $this->belongsTo(Role::class);
@@ -39,7 +29,17 @@ class User extends Authenticatable
 
     public function settings()
     {
-        return $this->belongsTo(UserSettings::class);
+        return $this->hasOne(UserSettings::class, 'user_id', 'id');
+    }
+
+    public function files()
+    {
+        return $this->belongsToMany(File::class);
+    }
+
+    public function purchasedFiles()
+    {
+        return $this->belongsToMany(File::class, 'file_purchases', 'user_id', 'id');
     }
 
     public function followers()
@@ -55,6 +55,24 @@ class User extends Authenticatable
     public function ownGroups()
     {
         return $this->belongsToMany(Group::class, null, 'id', 'owner_id');
+    }
+
+    public function participiedConversations()
+    {
+        return $this->belongsToMany(Conversation::class, 'conversation_participants', 'user_id', 'id');
+    }
+
+    public function conversations()
+    {
+        return $this->hasMany(ConversationParticipant::class)->pluck('conversation');
+    }
+
+    public function hasPurchasedFile($file)
+    {
+        return FilePurchase::where([
+            'file_id' => $file->id,
+            'user_id' => $this->id
+        ])->exists();
     }
 
     public function getAvatar()

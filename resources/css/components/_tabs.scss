@@ -4,7 +4,6 @@
     gap: var(--gap-3);
     border-bottom: 2px solid var(--foreground);
     margin-bottom: var(--margin-5);
-    user-select: none;
 
     &__tab {
         position: relative;
@@ -42,6 +41,7 @@
             position: absolute;
             right: 0;
             left: 0;
+            flex-grow: 1;
             opacity: 0;
             transform: translateY(5px);
             transition: opacity 0.1s ease-in-out, transform 0.2s ease-in-out;

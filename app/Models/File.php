@@ -6,8 +6,22 @@ use Illuminate\Database\Eloquent\Model;
 
 class File extends Model
 {
+    protected $fillable = [
+        'category',
+        'title',
+        'short_title',
+        'type',
+        'description',
+        'version',
+        'custom_url',
+        'donation_url',
+        'keywords',
+        'version_updated_at'
+    ];
+
     protected $casts = [
-        'vt_stats' => 'json'
+        'vt_stats' => 'json',
+        'version_updated_at' => 'datetime'
     ];
     
     public function category()
@@ -18,6 +32,11 @@ class File extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function purchases()
+    {
+        return $this->hasMany(FilePurchase::class);
     }
     
     public function media()

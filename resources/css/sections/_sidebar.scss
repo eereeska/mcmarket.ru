@@ -5,12 +5,4 @@
     @media (max-width: 1220px) {
         max-width: unset;
     }
-
-    &__inner {
-
-        &--sticky {
-            position: sticky;
-            top: 60px;
-        }
-    }
 }

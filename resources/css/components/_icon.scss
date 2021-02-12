@@ -86,6 +86,10 @@
         content: '\f019';
     }
 
+    &--upload::before {
+        content: '\f093';
+    }
+
     &--heart::before {
         content: '\f004';
     }
@@ -160,5 +164,29 @@
 
     &--sync-alt::before {
         content: '\f2f1';
+    }
+
+    &--edit::before {
+        content: '\f044';
+    }
+
+    &--trash-alt::before {
+        content: '\f2ed';
+    }
+
+    &--report::before {
+        content: '\f024';
+    }
+
+    &--save::before {
+        content: '\f0c7';
+    }
+
+    &--bars::before {
+        content: '\f0c9';
+    }
+
+    &--cart::before {
+        content: '\f07a';
     }
 }

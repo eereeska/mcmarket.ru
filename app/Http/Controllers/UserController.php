@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Thread;
+use App\Models\File;
 use App\Models\User;
 use App\Models\UserFollower;
 use Illuminate\Http\Request;
@@ -23,7 +23,7 @@ class UserController extends Controller
             abort(404);
         }
 
-        $user->threads = Thread::where('author_id', $user->id)->latest()->paginate(10);
+        $user->files = File::where('user_id', $user->id)->latest()->paginate(10);
 
         return view('user.show', [
             'user' => $user

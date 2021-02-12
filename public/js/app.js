@@ -10948,12 +10948,42 @@ process.umask = function() { return 0; };
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
+function _createForOfIteratorHelper(o, allowArrayLike) { var it; if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
 var _require = __webpack_require__(/*! axios */ "./node_modules/axios/index.js"),
     axios = _require["default"];
 
 window.$ = window.jQuery = __webpack_require__(/*! jquery/dist/jquery.slim */ "./node_modules/jquery/dist/jquery.slim.js");
 window.axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+
+$.fn.insertAtCaret = function (text) {
+  return this.each(function () {
+    if (document.selection && this.tagName == 'TEXTAREA') {
+      this.focus();
+      sel = document.selection.createRange();
+      sel.text = text;
+      this.focus();
+    } else if (this.selectionStart || this.selectionStart == '0') {
+      startPos = this.selectionStart;
+      endPos = this.selectionEnd;
+      scrollTop = this.scrollTop;
+      this.value = this.value.substring(0, startPos) + text + this.value.substring(endPos, this.value.length);
+      this.focus();
+      this.selectionStart = startPos + text.length;
+      this.selectionEnd = startPos + text.length;
+      this.scrollTop = scrollTop;
+    } else {
+      this.value += text;
+      this.focus();
+      this.value = this.value;
+    }
+  });
+};
 
 __webpack_require__(/*! ./rte */ "./resources/js/rte.js");
 
@@ -10964,6 +10994,9 @@ __webpack_require__(/*! ./modal */ "./resources/js/modal.js");
 var messages = {
   requestError: 'Произошла ошибка при обработке запроса. Попробуйте позже.'
 };
+
+__webpack_require__(/*! ./modules/loadMore */ "./resources/js/modules/loadMore.js");
+
 $(document).on('input', 'textarea.auto-resize', function () {
   $(this).css('height', $(this)[0].scrollHeight + 10);
 });
@@ -11028,33 +11061,71 @@ $('[data-action="form-submit"]').on('click', function (e) {
     alert(messages.requestError);
   });
 });
-$('[data-action="request"]').on('click', function (e) {
+$(document).on('click', '[data-action="request"]', function (e) {
   e.preventDefault();
   var $clicked = $(this);
-  $clicked.addClass('loading');
 
-  if (!$clicked.data('url')) {
+  if (!$clicked.data('url') && !$clicked.is('a')) {
     return;
   }
 
+  if ($clicked.data('confirm')) {
+    if (!confirm($clicked.data('confirm').trim())) {
+      return;
+    }
+  }
+
+  $clicked.addClass('is-loading');
   axios({
-    method: $clicked.data('method') || 'post',
-    url: $clicked.data('url')
+    method: $clicked.data('method') || 'get',
+    url: $clicked.is('a') ? $clicked.attr('href') : $clicked.data('url')
   }).then(function (response) {
     if (response.data.success) {
-      setTimeout(function () {
-        $clicked.removeClass('success');
-        $clicked.text($clicked.text());
-      }, 2000);
-      $clicked.addClass('success');
+      if (typeof response.data.redirect !== 'undefined') {
+        window.location.href = response.data.redirect;
+      } else {
+        setTimeout(function () {
+          $clicked.removeClass('success');
+          $clicked.text($clicked.text());
+        }, 2000);
+        $clicked.addClass('success');
+      }
     } else {
       alert(response.data.message || messages.requestError);
     }
   })["catch"](function () {
     alert(messages.requestError);
   })["finally"](function () {
-    $clicked.removeClass('loading');
+    $clicked.removeClass('is-loading');
   });
+});
+$(document).on('click', 'nav.pagination .pagination__link', function (e) {
+  e.preventDefault();
+  var $clicked = $(this);
+
+  if (!$clicked.is('a')) {
+    return;
+  }
+
+  var $content = $clicked.parent().parent();
+  $content.addClass('loading');
+  axios.get($clicked.attr('href')).then(function (response) {
+    $clicked.parent().parent().replaceWith(response.data);
+  })["catch"](function (e) {
+    console.log(e);
+  })["finally"](function () {
+    $content.removeClass('loading');
+  });
+});
+$(document).on('click', '[data-action="insert-text"]', function (e) {
+  e.preventDefault();
+  $target = $($(this).data('target'));
+
+  if (!$target) {
+    return;
+  }
+
+  $target.insertAtCaret($(this).data('value').trim());
 }); // AJAX PAGE CHANGE
 // $(document).on('click', 'a[data-ajax]', function(e) {
 //     e.preventDefault();
@@ -11154,7 +11225,8 @@ $(document).on('dragleave blur drop', '.file > .file__original', function (e) {
     e.stopImmediatePropagation();
   }
 });
-$(document).on('change', '.file > .file__original', function () {
+$(document).on('change', '.file > .file__original', function (e) {
+  var $input = $(this);
   var $container = $(this).parent('.file');
   var $label = $(this).next('.file__label');
 
@@ -11162,7 +11234,11 @@ $(document).on('change', '.file > .file__original', function () {
     $label.data('original-label', $label.text().trim());
   }
 
-  var files = $(this).prop('files');
+  var files = $input.prop('files');
+
+  if (files.length < 1) {
+    return;
+  }
 
   if ($(this).attr('multiple') && files.length > 0) {
     $label.text('Выбрано ' + files.length + ' файл(-а, -ов)');
@@ -11172,14 +11248,35 @@ $(document).on('change', '.file > .file__original', function () {
     $label.text($label.data('original-label'));
   }
 
-  if ($(this).data('upload-path')) {
+  if ($input.data('auto-upload')) {
+    e.preventDefault();
     var data = new FormData();
-    data.append($(this).attr('name'), files[0]);
+
+    var _iterator = _createForOfIteratorHelper(files),
+        _step;
+
+    try {
+      for (_iterator.s(); !(_step = _iterator.n()).done;) {
+        file = _step.value;
+        data.append($input.attr('name'), file);
+      }
+    } catch (err) {
+      _iterator.e(err);
+    } finally {
+      _iterator.f();
+    }
+
     $container.addClass('is-uploading');
-    axios.post($(this).data('upload-path'), data).then(function (response) {
+    axios.post($input.data('auto-upload'), data).then(function (response) {
       if (response.data.success) {
-        if ($container.data('image-preview')) {
-          $($container.data('image-preview')).removeAttr('style').css('background-image', 'url(' + response.data.path + ')');
+        if (response.data.preview.length) {
+          $preview = $container.prev('.media');
+
+          if ($preview.length) {
+            $preview.replaceWith(response.data.preview);
+          } else {
+            $container.before(response.data.preview);
+          }
         }
       } else {
         alert(response.data.message || messages.requestError);
@@ -11188,10 +11285,10 @@ $(document).on('change', '.file > .file__original', function () {
       console.log(error);
     })["finally"](function () {
       $container.removeClass('is-uploading');
+      $input.val('');
+      $label.text($label.data('original-label'));
     });
   }
-
-  console.log(files);
 }); // DRAG AND DROP END
 // HIDDEN CONTENT
 
@@ -11302,6 +11399,41 @@ function closeModal($target) {
 
 /***/ }),
 
+/***/ "./resources/js/modules/loadMore.js":
+/*!******************************************!*\
+  !*** ./resources/js/modules/loadMore.js ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var _require = __webpack_require__(/*! axios */ "./node_modules/axios/index.js"),
+    axios = _require["default"];
+
+document.addEventListener('click', function (e) {
+  if (e.target && e.target.dataset.action == 'load-more') {
+    e.preventDefault();
+    var $clicked = e.target;
+    var $target = document.querySelector($clicked.dataset.target);
+
+    if (!$target) {
+      return;
+    }
+
+    $clicked.classList.add('loading');
+    axios.get($clicked.tagName.toLowerCase() == 'a' ? $clicked.href : $clicked.dataset('url')).then(function (response) {
+      if (response.data.success) {
+        $target.innerHTML += response.data.html;
+      }
+    })["catch"](function () {
+      $clicked.classList.remove('loading');
+    })["finally"](function () {
+      $clicked.remove();
+    });
+  }
+});
+
+/***/ }),
+
 /***/ "./resources/js/rte.js":
 /*!*****************************!*\
   !*** ./resources/js/rte.js ***!
@@ -11309,14 +11441,78 @@ function closeModal($target) {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-// $(document).on('focusout cut', '[contenteditable]', function() {
-//     if (!$(this).text().trim().length) {
-//         $(this).empty();
-//     }
-// });
-$(document).on('paste', '[contenteditable]', function (e) {
-  e.preventDefault();
-  document.execCommand('inserttext', false, e.originalEvent.clipboardData.getData('text/plain'));
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var Editor = /*#__PURE__*/function () {
+  function Editor(editor) {
+    _classCallCheck(this, Editor);
+
+    this.editor = editor;
+    this.name = this.editor.dataset.name;
+    this.input = this.initInput();
+
+    if (this.input.value.length > 0) {
+      this.editor.innerHTML = this.input.value;
+    }
+
+    document.execCommand('defaultParagraphSeparator', false, 'p');
+    editor.addEventListener('keyup', this.inputHandler.bind(this));
+    editor.addEventListener('focus', this.inputHandler.bind(this));
+    editor.addEventListener('paste', this.pasteHandler.bind(this));
+  }
+
+  _createClass(Editor, [{
+    key: "initInput",
+    value: function initInput() {
+      var input = this.editor.parentNode.querySelector('input[name="' + this.name + '"]');
+
+      if (!input || input.length < 1) {
+        input = document.createElement('input');
+        input.setAttribute('type', 'hidden');
+        input.setAttribute('name', this.name);
+        input.required = this.editor.dataset.required;
+        this.editor.parentNode.appendChild(input);
+      }
+
+      return input;
+    }
+  }, {
+    key: "inputHandler",
+    value: function inputHandler() {
+      if (this.editor.innerHTML === '<br>') {
+        this.editor.innerHTML = '';
+      }
+
+      if (!this.editor.innerHTML.match(/<.*>/)) {
+        setTimeout(function () {
+          document.execCommand('formatBlock', false, 'p');
+        }, 0);
+      }
+
+      this.updateInput();
+    }
+  }, {
+    key: "pasteHandler",
+    value: function pasteHandler(e) {
+      e.preventDefault();
+      document.execCommand('insertHTML', false, e.clipboardData.getData('text/plain'));
+    }
+  }, {
+    key: "updateInput",
+    value: function updateInput() {
+      this.input.value = this.editor.innerHTML.trim();
+    }
+  }]);
+
+  return Editor;
+}();
+
+document.querySelectorAll('[contenteditable][data-name]').forEach(function (editor) {
+  new Editor(editor);
 });
 
 /***/ }),

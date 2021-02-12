@@ -12,15 +12,10 @@
     border-radius: var(--radius-2);
     overflow: hidden;
     transition: background-image 0.15s ease-in-out;
-    user-select: none;
 
     &.large {
         font-size: 3em;
         width: 100%;
         min-height: calc(var(--sidebar-max-width) + 100px);
-
-        & + .button {
-            margin-top: var(--margin-5);
-        }
     }
 }

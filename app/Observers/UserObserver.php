@@ -9,7 +9,9 @@ class UserObserver
 {
     public function created(User $user)
     {
-        //
+        $settings = new UserSettings();
+        $settings->user_id = $user->id;
+        $settings->save();
     }
 
     public function updated(User $user)
@@ -29,6 +31,6 @@ class UserObserver
 
     public function forceDeleted(User $user)
     {
-       //
+        //
     }
 }

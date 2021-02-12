@@ -39,13 +39,9 @@ class RegisterController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        DB::transaction(function() use ($request) {
+        return DB::transaction(function() use ($request) {
             try {
-                $settings = new UserSettings();
-                $settings->save();
-    
                 $user = new User();
-                $user->settings_id = $settings->id;
                 $user->name = $request->name;
                 $user->password = Hash::make($request->password);
                 $user->ip = $_SERVER['CF_CONNECTING_IP'] ?? $request->ip();

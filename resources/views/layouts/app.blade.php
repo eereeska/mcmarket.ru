@@ -3,23 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ isset($title) ? $title . ' — Minecraft Маркет' : 'Minecraft Маркет' }}</title>
+    <title>@yield('meta.title', 'Minecraft Маркет')</title>
 
-    @yield('meta.robots')
-
-    @if (isset($seo['description']))
-        <meta name="description" content="{{ strlen($seo['description']) > 157 ? substr($seo['description'], 0, 50) . '...' : $seo['description'] }}">
-        <meta property="og:description" content="{{ $seo['description'] }}">
-    @else
-        <meta name="description" content="Настоящий Маркет в мире Minecraft: Покупайте, продавайте, устраивайте розыгрыши и раздавайте любые товары и услуги, связанные с игрой Minecraft">
-        <meta property="og:description" content="Настоящий Маркет в мире Minecraft: Покупайте, продавайте, устраивайте розыгрыши и раздавайте любые товары и услуги, связанные с игрой Minecraft">
+    @hasSection ('meta.robots')
+    <meta name="robots" content="@yield('meta.robots')">
     @endif
 
-    @if (isset($seo['keywords']))
-        <meta name="keywords" content="{{ $seo['keywords'] }}">
-    @endif
-
+    <meta name="description" content="@yield('meta.description', 'Настоящий Маркет в мире Minecraft: Покупайте, продавайте, устраивайте розыгрыши и раздавайте любые товары и услуги, связанные с игрой Minecraft')">
+    <meta name="keywords" content="@yield('meta.keywords', 'Minecraft, Market, Майнкрафт, Маркет')">
+    
     <meta property="og:site_name" content="Minecraft Маркет">
+    <meta property="og:description" content="@yield('meta.description', 'Настоящий Маркет в мире Minecraft: Покупайте, продавайте, устраивайте розыгрыши и раздавайте любые товары и услуги, связанные с игрой Minecraft')">
     <meta property="og:locale" content="ru_RU">
     <meta property="og:type" content="object">
     <meta name="twitter:card" content="summary_large_image" />
@@ -30,10 +24,14 @@
     <meta name="application-name" content="Minecraft Маркет">
     <meta name="apple-mobile-web-app-title" content="Minecraft Маркет">
 
+    <link rel="canonical" href="{{ url()->current() }}" />
+
     <link rel='shortcut icon' href='{{ asset('favicon.ico') }}' type="image/x-icon">
     <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
 
-    {{-- <meta property="og:image" content="https://dne4i5cb88590.cloudfront.net/invisionpower-com/monthly_2019_09/og.jpg.5e6c57e8dfa140ce4ac18f1e757d3b45.jpg">
+    @yield('meta.og:image')
+
+    {{-- 
     <meta property="og:url" content="https://invisioncommunity.com/forums/topic/459918-kindness-plugin/">
     <meta property="og:updated_time" content="2020-12-27T08:43:06Z">
 
@@ -73,8 +71,8 @@
             </div>
             @if (Auth::check())
             <div class="header__right">
-                <a href="{{ route('notifications') }}" class="header__notifications icon icon--bell" data-modal data-notifications-count="{{ auth()->user()->unreadNotifications()->count() }}"></a>
-                <a href="{{ route('user-show', ['name' => auth()->user()->name ]) }}" class="header__profile">
+                {{-- <a href="{{ route('conversations.index') }}" class="header__conversations icon icon--comments"></a> --}}
+                <a href="{{ route('user.show', ['user' => auth()->user() ]) }}" class="header__profile">
                     @include('components._avatar', ['user' => auth()->user()])
                     <span>{{ auth()->user()->name }}</span>
                 </a>

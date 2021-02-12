@@ -1,14 +1,11 @@
-@extends('layouts.app', [
-    'title' => 'Добавление файла'
-])
+@extends('layouts.app')
 
-@section('meta.robots')
-<meta name="robots" content="noindex" />
-@endsection
+@section('meta.title', 'Добавление файла')
+@section('meta.robots', 'noindex')
 
 @section('content')
 <div class="content">
-    <form id="files-submit-form" method="post" action="{{ route('files-submit') }}" enctype="multipart/form-data">
+    <form id="file-submit-form" method="post" action="{{ route('file.submit') }}" enctype="multipart/form-data">
         @csrf
         <section class="section">
             <div class="section__header">
@@ -100,14 +97,14 @@
                 </label>
             </div>
         </section>
-        <section class="section">
+        {{-- <section class="section">
             <div class="section__header">
                 <h2 class="section__title">Комментарий для администрации</h2>
             </div>
             <div class="section__content">
                 <textarea name="comment" placeholder="">{{ old('comment') }}</textarea>
             </div>
-        </section>
+        </section> --}}
         {{-- <section class="section">
             <h2 class="section__title section__title--required">Обложка</h2>
             <label class="file">
@@ -141,7 +138,7 @@
     </form>
 </div>
 <aside class="sidebar">
-    <div class="sidebar__inner sidebar__inner--sticky">
+    <section class="section section--sticky">
         <section class="section">
             <div class="section__header">
                 <h2 class="section__title">Полезная информация</h2>
@@ -155,8 +152,8 @@
             @foreach ($errors->all() as $error)
             <p class="alert red small">{{ $error }}</p>
             @endforeach
-            <button data-action="form-submit" data-target="#files-submit-form" class="button primary">Отправить на проверку</button>
+            <button data-action="form-submit" data-target="#file-submit-form" class="button primary">Отправить на проверку</button>
         </section>
-    </div>
+    </section>
 </aside>
 @endsection

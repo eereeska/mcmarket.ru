@@ -12,7 +12,6 @@ class DatabaseSeeder extends Seeder
 
         $this->call([
             RolesSeeder::class,
-            TagsSeeder::class,
             FileCategoriesSeeder::class
         ]);
     }

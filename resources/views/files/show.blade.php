@@ -1,52 +1,102 @@
-@extends('layouts.app', [
-    'page_classes' => 'file',
-    'title' => $file->title
-])
+@extends('layouts.app')
+
+@if ($file->type == 'free')
+@section('meta.title', 'Бесплатно » ' . $file->short_title . ' (' . $file->category->title . ')')
+@elseif ($file->type == 'nulled')
+@section('meta.title', 'Nulled » ' . $file->short_title . ' (' . $file->category->title . ')')
+@elseif ($file->type == 'paid')
+@section('meta.title', 'Платно » ' . $file->short_title . ' (' . $file->category->title . ')')
+@else
+@section('meta.title', $file->short_title . ' (' . $file->category->title . ')')
+@endif
+
+@if ($file->description)
+@section('meta.description', strlen($file->description_raw) > 150 ? preg_replace('/\r|\n/', '', substr($file->description_raw, 0, 150)) . '...' : $file->description_raw)
+@endif
+
+@if ($file->keywords)
+@section('meta.keywords', '{{ $file->keywords }}')
+@endif
+
+@if ($file->cover_path)
+@section('meta.og:image')
+<meta property="og:image" content="{{ asset('covers/' . $file->cover_path) }}">
+@endsection
+@endif
 
 @section('content')
 <div class="content">
     <section class="section">
         <div class="section__header">
             <ul class="breadcrumb">
-                <li class="breadcrumb__item"><a href="#category">{{ $file->category ? $file->category->title : 'Без категории' }}</a></li>
+                <li class="breadcrumb__item"><a href="{{ route('home', ['category' => $file->category->name]) }}">{{ $file->category->title }}</a></li>
+                @if ($file->is_visible)
                 <li class="breadcrumb__item breadcrumb__item--active"><h1>{{ $file->short_title }}</h1></li>
+                @else
+                <li class="breadcrumb__item breadcrumb__item--active"><h1>{{ $file->short_title }} <span class="muted">(скрыт)</span></h1></li>
+                @endif
             </ul>
             @if ($file->version)
             <span class="muted">{{ $file->version }}</span>
             @endif
         </div>
-    </section>
-    @if ($file->description)
-    <section class="section">
-        <div class="section__header">
-            <h2 class="section__title">Описание</h2>
-        </div>
         <div class="section__content">
-            {!! $file->description !!}
+            @if ($file->description)
+            <article class="article">
+                {!! nl2br($file->description) !!}
+            </article>
+            @else
+            <p class="alert red">Заполните описание</p>
+            @endif
         </div>
     </section>
-    @endif
 </div>
 <aside class="sidebar">
-    <div class="sidebar__inner sidebar__inner--sticky">
+    <section class="section">
+        @if ($file->cover_path)
+        <img class="cover" src="{{ asset('covers/' . $file->cover_path) }}" alt="{{ $file->title }}"></img>
+        @else
+        <p class="alert red">Добавьте обложку</p>
+        @endif
+    </section>
+    <section class="section section--sticky">
         @if (auth()->check())
-        @if (is_null($file->description) or $file->media_count < 1)
         <section class="section">
             <div class="section__header">
-                <h2 class="section__title">Файл скрыт для других</h2>
+                <h2 class="section__title">Действия</h2>
             </div>
             <div class="section__content">
-                @if (is_null($file->description))
-                <p>Пожалуйста, заполните <span>Описание</span></p>
+                @if (auth()->user()->id != $file->user_id and !auth()->user()->hasPurchasedFile($file))
+                <a href="{{ route('file.purchase', ['file' => $file]) }}" class="data data_compact">
+                    <div class="data__icon icon icon--cart"></div>
+                    <div class="data__info">
+                        <h3 class="data__value">Купить</h3>
+                    </div>
+                </a>
+                @else
+                <a href="{{ route('file.download', ['file' => $file]) }}" class="data data_compact">
+                    <div class="data__icon icon icon--download"></div>
+                    <div class="data__info">
+                        <h3 class="data__value">Скачать</h3>
+                    </div>
+                </a>
                 @endif
-                @if ($file->media_count < 1)
-                <p>Пожалуйста, добавьте хотя бы одно изображение</p>
+                @if ($file->user_id == auth()->user()->id)
+                <a href="{{ route('file.edit', ['file' => $file]) }}" class="data data_compact">
+                    <div class="data__icon icon icon--edit"></div>
+                    <div class="data__info">
+                        <h3 class="data__value">Редактировать</h3>
+                    </div>
+                </a>
+                @else
+                <a href="#" class="data data_compact">
+                    <div class="data__icon icon icon--report"></div>
+                    <div class="data__info">
+                        <h3 class="data__value">Пожаловаться</h3>
+                    </div>
+                </a>
                 @endif
             </div>
-        </section>
-        @endif
-        <section class="section">
-            <a href="{{ route('file-download', ['id' => $file->id]) }}" class="button green">Скачать</a>
         </section>
         @endif
         <section class="section">
@@ -60,83 +110,67 @@
                 @endif
             </div>
             <div class="section__content">
-                <div class="data">
+                <a href="{{ route('user.show', ['user' => $file->user]) }}" class="data">
                     @include('components._avatar', ['user' => $file->user])
                     <div class="data__info">
-                        <h3 class="data__value"><a href="{{ route('user-show', ['name' => $file->user->name]) }}">{{ $file->user->name }}</a></h3>
+                        <h3 class="data__value">{{ $file->user->name }}</h3>
                     </div>
-                </div>
+                </a>
             </div>
         </section>
-        {{-- <section class="section">
-            <h2 class="section__title">Ссылки</h2>
-        </section> --}}
+        @if ($file->donation_url)
+        <section class="section">
+            <div class="section__header">
+                <h2 class="section__title">Ссылки</h2>
+            </div>
+            <div class="section__content">
+                <a href="{{ $file->donation_url }}" class="data data_compact">
+                    <div class="data__icon icon icon--coin"></div>
+                    <div class="data__info">
+                        <h3 class="data__value">Поддержать автора</h3>
+                    </div>
+                </a>
+            </div>
+        </section>
+        @endif
         <section class="section">
             <div class="section__header">
                 <h2 class="section__title">Информация</h2>
             </div>
             <div class="section__content">
+                @include('components.files.sidebar._info', ['file' => $file])
+            </div>
+        </section>
+        <section class="section">
+            <div class="section__header">
+                <h2 class="section__title">Статистика</h2>
+            </div>
+            <div class="section__content">
                 <div class="data data_compact">
                     <div class="data__icon icon icon--eye"></div>
                     <div class="data__info">
-                        <h3 class="data__value">{{ $file->views }}</h3>
-                        <div class="data__desc">@choice('Просмотр|Просмотра|Просмотров', $file->views)</div>
+                        <h3 class="data__value">{{ number_format($file->views_count, 0, ' ', ' ') }}</h3>
+                        <div class="data__desc">@choice('Просмотр|Просмотра|Просмотров', $file->views_count)</div>
                     </div>
                 </div>
                 <div class="data data_compact">
                     <div class="data__icon icon icon--download"></div>
                     <div class="data__info">
-                        <h3 class="data__value">{{ $file->downloads }}</h3>
-                        <div class="data__desc">@choice('Скачивание|Скачивания|Скачиваний', $file->downloads)</div>
+                        <h3 class="data__value">{{ number_format($file->downloads_count, 0, ' ', ' ') }}</h3>
+                        <div class="data__desc">@choice('Скачивание|Скачивания|Скачиваний', $file->downloads_count)</div>
                     </div>
                 </div>
+                @if ($file->type == 'paid')
                 <div class="data data_compact">
-                    <div class="data__icon icon icon--file"></div>
+                    <div class="data__icon icon icon--cart"></div>
                     <div class="data__info">
-                        <h3 class="data__value">.{{ $file->extension }}</h3>
-                        <div class="data__desc">Расширение</div>
+                        <h3 class="data__value">{{ $file->purchases_count }}</h3>
+                        <div class="data__desc">@choice('Покупка|Покупки|Покупок', $file->purchases_count)</div>
                     </div>
                 </div>
-                <div class="data data_compact">
-                    <div class="data__icon icon icon--weight-hanging"></div>
-                    <div class="data__info">
-                        <h3 class="data__value">{{ $file->getSizeForHumans() }}</h3>
-                        <div class="data__desc">Размер</div>
-                    </div>
-                </div>
-                {{-- @if ($file->type != 'paid')
-                <a href="https://www.virustotal.com/gui/file/{{ $file->vt_hash }}/detection" rel="nofollow" target="_blank" class="data data_compact">
-                    <div class="data__icon icon icon--virus"></div>
-                    <div class="data__info">
-                        @if ($file->vt_status == 'completed')
-                        <h3 class="data__value">{{ ($file->vt_stats['harmless'] + $file->vt_stats['malicious'] + $file->vt_stats['suspicious']) . '/' . ($file->vt_stats['undetected'] + $file->vt_stats['failure']) }}</h3>
-                        @elseif ($file->vt_status  == 'queued')
-                        <h3 class="data__value">В очереди на проверку</h3>
-                        @elseif ($file->vt_status == 'in-progress')
-                        <h3 class="data__value">Проверяется...</h3>
-                        @else
-                        <h3 class="data__value">Неизвестный статус</h3>
-                        @endif
-                        <div class="data__desc">VirusTotal</div>
-                    </div>
-                </a>
-                @endif --}}
-                <div class="data data_compact">
-                    <div class="data__icon icon icon--sync-alt"></div>
-                    <div class="data__info">
-                        <h3 class="data__value">{{ $file->updated_at->format('d.m.Y h:i:s') }}</h3>
-                        <div class="data__desc">Обновлён</div>
-                    </div>
-                </div>
-                <div class="data data_compact">
-                    <div class="data__icon icon icon--clock"></div>
-                    <div class="data__info">
-                        <h3 class="data__value">{{ $file->created_at->format('d.m.Y h:i:s') }}</h3>
-                        <div class="data__desc">Загружен</div>
-                    </div>
-                </div>
+                @endif
             </div>
         </section>
-    </div>
+    </section>
 </aside>
 @endsection

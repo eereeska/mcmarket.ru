@@ -2,7 +2,6 @@ p.alert {
     position: relative;
     padding: 15px 15px 15px 45px;
     border-radius: var(--radius-2);
-    user-select: none;
 
     &:before {
         content: '\f06a';

@@ -1,0 +1,10 @@
+.buttons {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-2);
+
+    &_inline {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+}

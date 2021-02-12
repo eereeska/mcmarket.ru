@@ -11,7 +11,7 @@ class UserLastSeen
 {
     public function handle(Request $request, Closure $next)
     {
-        if (Auth::check()) {
+        if (Auth::check() and !$request->ajax()) {
             User::where('id', Auth::user()->id)->update(['last_seen_at' => now()]);
         }
 
