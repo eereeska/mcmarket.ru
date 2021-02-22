@@ -5,4 +5,12 @@
     @media (max-width: 1220px) {
         max-width: unset;
     }
+
+    &_trim {
+        max-width: var(--sidebar-max-width);
+
+        &_with_icon {
+            max-width: calc(var(--sidebar-max-width) - var(--margin-6) - var(--gap-2));
+        }
+    }
 }

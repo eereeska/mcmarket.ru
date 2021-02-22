@@ -1,0 +1,8 @@
+.label {
+    display: block;
+    margin-bottom: var(--margin-3);
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+}

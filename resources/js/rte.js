@@ -4,21 +4,24 @@ class Editor {
         this.name = this.editor.dataset.name;
         this.input = this.initInput();
 
-        if (this.input.value.length > 0) {
-            this.editor.innerHTML = this.input.value;
-        }
-
         document.execCommand('defaultParagraphSeparator', false, 'p');
 
         editor.addEventListener('keyup', this.inputHandler.bind(this));
         editor.addEventListener('focus', this.inputHandler.bind(this));
         editor.addEventListener('paste', this.pasteHandler.bind(this));
+
+        for (button of this.editor.parentNode.querySelectorAll('.editor__toolbar > button')) {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.execCommand(e.target.dataset.command, false);
+            });
+        }
     }
 
     initInput() {
         var input = this.editor.parentNode.querySelector('input[name="' + this.name + '"]');
 
-        if (!input || input.length < 1) {
+        if (!input) {
             input = document.createElement('input');
             input.setAttribute('type', 'hidden');
             input.setAttribute('name', this.name);
@@ -27,6 +30,8 @@ class Editor {
             
             this.editor.parentNode.appendChild(input);
         }
+
+        input.value = this.editor.innerHTML.trim();
 
         return input;
     }
@@ -42,19 +47,15 @@ class Editor {
             }, 0);
         }
 
-        this.updateInput();
+        this.input.value = this.editor.innerHTML.trim();
     }
 
     pasteHandler(e) {
         e.preventDefault();
         document.execCommand('insertHTML', false, e.clipboardData.getData('text/plain'));
     }
-
-    updateInput() {
-        this.input.value = this.editor.innerHTML.trim();
-    }
 }
 
-document.querySelectorAll('[contenteditable][data-name]').forEach(function(editor) {
+for (editor of document.querySelectorAll('[contenteditable][data-name]')) {
     new Editor(editor);
-});
+}

@@ -20,6 +20,10 @@
             margin-right: var(--gap-1);
         }
 
+        & + &_price::before {
+            content: '\f51e';
+        }
+
         &--active {
             color: var(--black);
             font-weight: bold;

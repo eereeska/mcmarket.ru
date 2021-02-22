@@ -4,14 +4,19 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Conversations\ConversationController;
 use App\Http\Controllers\Files\FileController;
+use App\Http\Controllers\Files\FileMediaController;
 use App\Http\Controllers\Files\FilePurchaseController;
-use App\Http\Controllers\FileVersionController;
+use App\Http\Controllers\Files\FileUpdateController;
 use App\Http\Controllers\GroupController;
+use App\Http\Controllers\Search\UserSearchController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', [FileController::class, 'index'])->name('home');
+Route::match(['get', 'post'], '/', [FileController::class, 'index'])->name('home');
+Route::get('/test', function() {
+    return view('test');
+});
 
 Route::get('/contact', function() {
     return view('help.contact');
@@ -27,6 +32,11 @@ Route::get('/privacy', function() {
 
 Route::get('/search', [SearchController::class, 'index'])->name('search');
 Route::post('/search', [SearchController::class, 'search']);
+
+
+Route::group(['prefix' => 'search', 'middleware' => 'auth'], function() {
+    Route::post('/users', [UserSearchController::class, 'search'])->name('search.users');
+});
 
 Route::get('/login', [LoginController::class, 'index'])->middleware('guest')->name('login');
 Route::post('/login', [LoginController::class, 'login'])->middleware('guest');
@@ -71,24 +81,24 @@ Route::group(['prefix' => 'file'], function() {
         Route::get('/submit', [FileController::class, 'submit'])->name('file.submit');
         Route::post('/submit', [FileController::class, 'store'])->name('file.store');
 
-        Route::group(['prefix' => '/{file}'], function() {
+        Route::group(['prefix' => '/{id}'], function() {
             Route::get('/download', [FileController::class, 'download'])->name('file.download');
             Route::get('/purchase', [FilePurchaseController::class, 'create'])->name('file.purchase');
             Route::post('/purchase', [FilePurchaseController::class, 'store']);
             Route::get('/edit', [FileController::class, 'edit'])->name('file.edit');
-            Route::post('/edit', [FileController::class, 'update'])->name('file.update');
+            Route::post('/edit', [FileController::class, 'update']);
             Route::post('/delete', [FileController::class, 'destroy'])->middleware('ajax')->name('file.delete');
-            Route::post('/media', [FileController::class, 'addMedia'])->middleware('ajax')->name('file.media');
-            Route::post('/media/{media}/delete', [FileController::class, 'deleteMedia'])->middleware('ajax')->name('file.media.delete');
+            Route::post('/media', [FileMediaController::class, 'store'])->middleware('ajax')->name('file.media');
+            Route::post('/media/{media}/delete', [FileMediaController::class, 'destroy'])->middleware('ajax')->name('file.media.delete');
 
-            Route::group(['prefix' => '/version'], function() {
-                Route::get('/submit', [FileVersionController::class, 'submit'])->name('file.version.submit');
-                Route::post('/submit', [FileVersionController::class, 'store']);
+            Route::group(['prefix' => '/update'], function() {
+                Route::get('/submit', [FileUpdateController::class, 'submit'])->name('file.update.submit');
+                Route::post('/submit', [FileUpdateController::class, 'store'])->name('file.update.store');
             });
         });
     });
 
-    Route::get('/{file}', [FileController::class, 'show'])->name('file.show');
+    Route::get('/{id}', [FileController::class, 'show'])->name('file.show');
 });
 
 Route::get('/conversations', [ConversationController::class, 'index'])->middleware('auth')->name('conversations.index');

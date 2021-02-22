@@ -13,7 +13,7 @@ class CreateUserTables extends Migration
             $table->string('name')->unique();
             $table->string('title');
             $table->boolean('can_access_acp')->default(false);
-            $table->boolean('can_approve_file_submit')->default(false);
+            $table->boolean('can_approve_files')->default(false);
             $table->timestamps();
         });
 

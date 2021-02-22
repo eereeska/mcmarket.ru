@@ -16,10 +16,19 @@
     <meta property="og:description" content="@yield('meta.description', 'Настоящий Маркет в мире Minecraft: Покупайте, продавайте, устраивайте розыгрыши и раздавайте любые товары и услуги, связанные с игрой Minecraft')">
     <meta property="og:locale" content="ru_RU">
     <meta property="og:type" content="object">
+    <meta property="og:url" content="{{ url()->current() }}">
+    @hasSection ('meta.og:updated_time')
+    <meta name="og:updated_time" content="@yield('meta.og:updated_time')">
+    @endif
+    @hasSection ('meta.og:image')
+    <meta name="og:image" content="@yield('meta.og:image')">
+    @endif
+
     <meta name="twitter:card" content="summary_large_image" />
 
     <meta name="theme-color" content="#F1F3FA">
     <meta name="msapplication-TileColor" content="#5FA1D0">
+    <meta name="msapplication-starturl" content="/">
 
     <meta name="application-name" content="Minecraft Маркет">
     <meta name="apple-mobile-web-app-title" content="Minecraft Маркет">
@@ -29,11 +38,7 @@
     <link rel='shortcut icon' href='{{ asset('favicon.ico') }}' type="image/x-icon">
     <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
 
-    @yield('meta.og:image')
-
     {{-- 
-    <meta property="og:url" content="https://invisioncommunity.com/forums/topic/459918-kindness-plugin/">
-    <meta property="og:updated_time" content="2020-12-27T08:43:06Z">
 
     <link rel="first" href="https://invisioncommunity.com/forums/topic/458304-ms-ie-warning/" />
 	<link rel="prev" href="https://invisioncommunity.com/forums/topic/458304-ms-ie-warning/" />
@@ -44,11 +49,7 @@
 
     <link rel="manifest" href="https://invisioncommunity.com/manifest.webmanifest/">
     <meta name="msapplication-config" content="https://invisioncommunity.com/browserconfig.xml/">
-    <meta name="msapplication-starturl" content="/forums/">
-    
 
-    <link rel="canonical" href="{{ $seo['canonical'] ?? url()->current() }}" /> --}}
-    
     {{-- @include('misc.metrics') --}}
 
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
@@ -80,7 +81,7 @@
             @endif
         </div>
     </header>
-    <main id="root" class="page {{ $page_classes ?? '' }}">
+    <main class="page">
         @yield('content')
     </main>
     <footer class="footer">
@@ -95,7 +96,7 @@
             </div>
         </div>
     </footer>
-    <script src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ asset('js/vue.js') }}"></script>
     @yield('footer_scripts')
 </body>
 </html>

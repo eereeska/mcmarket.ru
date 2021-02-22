@@ -7,12 +7,9 @@ use App\Http\Requests\FileSubmitRequest;
 use App\Http\Requests\FileUpdateRequest;
 use App\Models\File;
 use App\Models\FileCategory;
-use App\Models\FileMedia;
-use App\Models\FilePurchase;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
 
@@ -22,9 +19,9 @@ class FileController extends Controller
     {
         $categories = $this->getCategories();
 
-        $files = File::when($request->has('category') and in_array($request->category, $categories->pluck('name')->toArray()), function($query) use ($request, $categories) {
-            return $query->where('category_id', $categories->where('name', $request->category)->pluck('id'));
-        })->with(['category', 'user'])->orderBy('created_at', 'desc')->paginate(20)->appends($request->only('category'));
+        $files = $this->getFilteredFiles($request, $categories);
+
+        // TODO: cache files
 
         if ($request->ajax()) {
             return response()->json(view('components.files._files', [
@@ -47,7 +44,7 @@ class FileController extends Controller
 
     public function store(FileSubmitRequest $request)
     {
-        $user = $request->user();
+        $user = auth()->user();
 
         $request_file = $request->file('file');
         $request_file_extension = $request_file->getClientOriginalExtension();
@@ -55,12 +52,18 @@ class FileController extends Controller
         // if ($request->type != 'paid') {
         //     $vt_analyse_response = Http::withHeaders([
         //         'x-apikey' => $this->vt_key
-        //     ])->attach('file', file_get_contents($request_file), $request->short_title)->post('https://www.virustotal.com/api/v3/files');
+        //     ])->attach('file', file_get_contents($request_file), $request->name)->post('https://www.virustotal.com/api/v3/files');
     
         //     if ($vt_analyse_response->failed() or array_key_exists('error', $vt_analyse_response->json())) {
         //         return back()->withErrors(['vt_error' => 'Не удалось загрузить файл для проверки на VirusTotal'])->withInput($request->all());
         //     }
         // }
+
+        $path = $this->save($request_file);
+
+        if (!$path) {
+            return back()->withErrors(['store_error' => 'Не удалось сохранить файл'])->withInput($request->all());
+        }
 
         $category = FileCategory::where('name', $request->category)->first();
 
@@ -68,44 +71,37 @@ class FileController extends Controller
         $file->category_id = $category->id;
         $file->user_id = $user->id;
         $file->title = $request->title;
-        $file->short_title = $request->short_title;
-        $file->slug = Str::slug($file->short_title);
+        $file->name = $request->name;
         $file->type = $request->type;
         $file->size = $request_file->getSize();
+        $file->path = $path;
         $file->extension = $request_file_extension;
 
         if ($request->type == 'paid') {
             $file->price = $request->price;
-        } else if (isset($vt_analyse_response)) {
-            $file->vt_id = $vt_analyse_response->json()['data']['id'];
         }
 
         $file->save();
 
-        if (!$request_file->storeAs('files', $file->id . '.' . $request_file_extension)) {
-            $file->delete();
-            return back()->withErrors(['store_error' => 'Не удалось сохранить файл на сервере'])->withInput($request->all());
-        }
-
-        return redirect()->route('file-show', ['file' => $file]);
+        return redirect()->route('file.show', ['id' => $file->id]);
     }
 
     public function show(Request $request, $id)
     {
-        $user = $request->user();
         $file = Cache::remember('file.' . $id, now()->addHour(), function() use ($id) {
-            return File::where('id', $id)->with(['category', 'media', 'user'])->withCount(['media', 'purchases'])->firstOrFail();
+            return File::where('id', $id)->with(['category', 'media', 'user'])->withCount(['media', 'purchases'])->first();
         });
 
-        $cache_key = 'file.' . $id . '.view.' . ($_SERVER['CF_CONNECTING_IP'] ?? $request->ip());
-
-        if (!Cache::has($cache_key)) {
-            Cache::put($cache_key, $id, now()->addHour());
-
-            $file->increment('views_count');
+        if (!$file) {
+            return redirect()->route('home');
         }
 
-        $file->description_raw = strip_tags($file->description);
+        $view_cache_key = 'file.' . $id . '.view.' . ($_SERVER['CF_CONNECTING_IP'] ?? $request->ip());
+
+        if (!Cache::has($view_cache_key)) {
+            Cache::put($view_cache_key, $id, now()->addHour());
+            $file->increment('views_count');
+        }
 
         // $this->updateVirusTotalStatus($file);
 
@@ -114,21 +110,38 @@ class FileController extends Controller
         ]);
     }
 
-    public function download(Request $request, File $file)
+    public function download(Request $request, $id)
     {
-        if ($file->type == 'paid' and !$request->user()->hasPurchasedFile($file)) {
+        $user = $request->user();
+        $file = File::where('id', $id)->first();
+
+        if (!$file) {
+            return redirect()->route('home')->withErrors(['file_not_found' => 'Запрашиваемый файл не найден']);
+        }
+
+        if ($user->id != $file->user_id and (!$file->is_visible or !$file->is_approved)) {
+            return redirect()->route('file.show', ['id' => $file->id])->withErrors(['cant_download' => 'Запрашиваемый файл ещё не был одобрен администрацией']);
+        }
+        
+        if ($user->id != $file->user_id and $file->type == 'paid' and !$request->user()->hasPurchasedFile($file)) {
             return back()->withErrors(['purchase_required' => 'Вы должны сначала приобрести указанный файл']);
+        }
+
+        if (!Storage::exists($file->path)) {
+            return back()->withErrors(['file_missing' => 'Файл отсутствует на сервере']);
         }
 
         $file->increment('downloads_count');
 
-        return response()->download(storage_path('app/' . $file->path), $file->short_title . '.' . $file->extension);
+        return response()->download(storage_path('app/' . $file->path), ($file->version ? $file->name . ' - ' . $file->version : $file->name) . '.' . $file->extension);
     }
 
-    public function edit(File $file)
+    public function edit($id)
     {
-        if ($file->user_id != auth()->user()->id) {
-            abort(403);
+        $file = File::where('id', $id)->where('user_id', auth()->user()->id)->withCount('media')->first();
+
+        if (!$file) {
+            return back();
         }
 
         return view('files.edit', [
@@ -139,25 +152,23 @@ class FileController extends Controller
 
     public function update(FileUpdateRequest $request, $id)
     {
-        $user = $request->user();
+        $file = File::where('id', $id)->where('user_id', auth()->user()->id)->first();
 
-        $file = File::where('id', $id)->where('user_id', $user->id)->withCount('media')->firstOrFail();
+        if (!$file) {
+            return back()->withErrors(['not_found' => 'Вы не можете редактировать указанный файл'])->withInput($request->validated());
+        }
 
         $file->title = trim($request->title);
-        $file->short_title = trim($request->short_title);
-        $file->type = $request->type;
-        $file->price = $request->price;
-
-        if ($request->has('description')) {
-            $file->description = empty($request->description) ? null : trim($request->description);
+        $file->name = trim($request->name);
+        $file->description = $this->normalizeDescription($request->description);
+        $file->type = trim($request->type);
+        
+        if ($file->type == 'paid') {
+            $file->price = $request->price ?? null;
         }
 
         if ($request->has('version')) {
             $file->version = trim($request->version);
-        }
-
-        if ($request->has('custom_url')) {
-            $file->slug = Str::slug(trim($request->custom_url));
         }
 
         if ($request->has('donation_url')) {
@@ -170,116 +181,42 @@ class FileController extends Controller
 
         if ($request->has('cover')) {
             $cover = $request->file('cover');
-            $cover_height = Image::make($cover)->height();
 
             if (!is_null($file->cover_path)) {
                 Storage::delete($file->cover_path);
             }
 
+            // TODO: переделать сохранение обложки
+
             $path = Str::random(40) . '.' . $cover->getClientOriginalExtension();
 
-            Image::make($cover)->fit(300, $cover_height > 300 ? ($cover_height < 3000 ? $cover_height : 3000) : 300)->save(storage_path('app/public/covers/' . $path));
+            Image::make($cover)->fit(300, 300)->save(storage_path('app/public/covers/' . $path));
 
             $file->cover_path = $path;
         }
 
-        $file->is_visible = !is_null($file->description);
+        $file->is_visible = (!is_null($file->description) and !empty($file->description));
 
         $file->save();
 
         Cache::forget('file.' . $file->id);
 
-        return redirect()->route('file.show', ['file' => $file]);
+        return redirect()->route('file.show', ['id' => $file->id]);
     }
 
-    public function addMedia(Request $request, $id)
+    public function destroy($id)
     {
-        $validator = Validator::make($request->all(), [
-            'media-images' => ['nullable'],
-            'media-images.*' => ['image', 'max:5020']
-        ], [
-            'media-images.*.image' => 'Один из загруженных файлов не является изображением',
-            'media-images.*.max' => 'Максимальный размер загружаемого изображения: 5 МБ'
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json([
-                'success' => false,
-                'message' => $validator->errors()->first()
-            ]);
-        }
-
-        $user = $request->user();
-        $file = File::where('id', $id)->where('user_id', $user->id)->withCount('media')->firstOrFail();
-
-        if ($file->media_count >= 20) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Вы не можеет добавлять более 20 медиа-файлов'
-            ]);
-        }
-
-        if ($request->has('media-images')) {
-            foreach ($request->file('media-images') as $image) {
-                $name = Str::random(40) . '.' . $image->getClientOriginalExtension();
-
-                $image->storeAs('public/media', $name);
-
-                $media = new FileMedia();
-                $media->file_id = $file->id;
-                $media->name = $name;
-                $media->type = 'image';
-                $media->save();
-            }
-        }
-
-        return response()->json([
-            'success' => true,
-            'preview' => view('components.files._media', [
-                'media' => FileMedia::where('file_id', $file->id)->get()
-            ])->render()
-        ]);
-    }
-
-    public function deleteMedia(Request $request, $file_id, $id)
-    {
-        $media = FileMedia::where('file_id', $file_id)->where('id', $id)->with('file')->firstOrFail();
-        $user = $request->user();
-
-        if ($media->file->user_id != $user->id) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Вы не можете удалить этот медиа-файл'
-            ]);
-        }
-
-        if (Storage::delete('public/media/' . $media->name)) {
-            $media->delete();
-        } else {
-            return response()->json([
-                'success' => false,
-                'message' => 'Не удалось удалить файл'
-            ]);
-        }
-
-        return response()->json([
-            'success' => true
-        ]);
-    }
-
-    public function destroy(Request $request, $id)
-    {
-        $user = $request->user();
         $file = File::where('id', $id)->first();
 
-        if ($user->id != $file->user_id) {
+        if (auth()->user()->id != $file->user_id) {
             return response()->json([
                 'success' => false,
                 'message' => 'Вы не можете удалить указанный файл'
             ]);
         }
 
-        Storage::delete('app/files/' . $file->id . '.' . $file->extension);
+        Storage::delete('app/files/' . $file->path . '.' . $file->extension);
+
         $file->delete();
 
         return response()->json([
@@ -299,6 +236,54 @@ class FileController extends Controller
         return round($bytes, 2) . ' ' . $units[$i];
     }
 
+    private function getFilteredFiles(Request $request, $categories = null) {
+        if (is_null($categories)) {
+            $categories = $this->getCategories();
+        }
+
+        // TODO: cache
+
+        $user = $request->user();
+
+        $files = File::query();
+
+        $files = $files->where([
+            'is_visible' => true,
+            'is_approved' => true
+        ]);
+
+        if (!is_null($user)) {
+            $files = $files->orWhere('user_id', $user->id);
+        }
+
+        $files = $files->when(in_array($request->get('category'), $categories->pluck('name')->toArray()), function($query) use ($request, $categories) {
+            return $query->where('category_id', $categories->where('name', $request->category)->pluck('id'));
+        });
+
+        $files = $files->when(in_array($request->get('type'), ['free', 'paid', 'nulled']), function ($query) use ($request) {
+            return $query->where('type', $request->type);
+        });
+
+        $sort = [
+            'update_up' => 'version_updated_at',
+            'update_down' => 'version_updated_at',
+            'new_up' => 'created_at',
+            'new_down' => 'created_at',
+            'downloads_up' => 'downloads_count',
+            'downloads_down' => 'downloads_count',
+            'views_up' => 'views_count',
+            'views_down' => 'views_count'
+        ];
+
+        $files = $files->when(array_key_exists($request->get('sort'), $sort), function ($query) use ($request, $sort) {
+            return $query->orderBy($sort[$request->sort], substr($request->sort, -strlen($request->sort)) === 'up' ? 'asc' : 'desc');
+        }, function($query) {
+            return $query->orderBy('version_updated_at', 'desc');
+        });
+
+        return $files->with(['category', 'user'])->paginate(2)->appends($request->only(['category', 'type', 'sort']));
+    }
+
     private function getCategories($fresh = false)
     {
         $cache_key = 'file.categories';
@@ -312,34 +297,46 @@ class FileController extends Controller
         });
     }
 
-    private function generateFileName($file)
+    public static function normalizeDescription($description)
     {
-        
-    }
+        $description = trim($description);
 
-    private function formatDescription($file, $description)
-    {
-        $description = strip_tags($description);
+        $allowed_tags = [
+            'p', 'b', 'u', 's', 'ul', 'li', 'ol', 'br'
+        ];
 
-        $description = preg_replace('/\*\*(.*?)\*\*/mi', '<b>${1}</b>', $description);
-        $description = preg_replace('~\[media=(.*?)\]~s', '<img src="${1}" alt="' . $file->short_title . '" />', $description);
-        $description = trim('<p>' . preg_replace(["/([\n]{2,})/i", "/([\r\n]{3,})/i", "/([^>])\n([^<])/i"], ["</p>\n<p>", "</p>\n<p>", '${1}<br />${2}'], trim($description)) . '</p>');
+        $description = strip_tags($description, $allowed_tags);
+
+        $description = preg_replace('/<([a-z][a-z0-9]*)[^>]*?(\/?)>/i', '<$1$2>', $description);
+        $description = preg_replace('/\<p\>\<\/p\>/i', '', $description);
+        $description = preg_replace('/\<p\>\<br\>\<\/p\>/i', '', $description);
+        $description = preg_replace('/\<p\>\<br \/\>\<\/p\>/i', '', $description);
+
+        if (empty($description)) {
+            return null;
+        }
+
+        // $description = preg_replace('/\<(.*?)\>\s\<\/(.*?)\>/mi', '', $description);
+        // $description = preg_replace('/\*\*(.*?)\*\*/mi', '<b>${1}</b>', $description);
+        // $description = preg_replace('~\[media=(.*?)\]~s', '<img src="${1}" alt="' . $file->name . '" />', $description);
+        // $description = trim('<p>' . preg_replace(["/([\n]{2,})/i", "/([\r\n]{3,})/i", "/([^>])\n([^<])/i"], ["</p>\n<p>", "</p>\n<p>", '${1}<br />${2}'], trim($description)) . '</p>');
 
         return trim($description);
     }
 
-    private function nl2p($string, $line_breaks = true, $xml = true)
+    public static function save($file, $old = null)
     {
-        $string = strip_tags($string);
-        
-        if ($line_breaks == true) {
-            $string = trim('<p>' . preg_replace(["/([\n]{2,})/i", "/([^>])\n([^<])/i"], ["</p>\n<p>", '${1}<br' . ($xml == true ? ' /' : '') . '>${2}'], trim($string)) . '</p>');
-        } else {
-            $string = trim('<p>' . preg_replace(["/([\n]{2,})/i", "/([\r\n]{3,})/i", "/([^>])\n([^<])/i"], ["</p>\n<p>", "</p>\n<p>", '${1}<br' . ($xml === true ? ' /' : '') . '>${2}'], trim($string)) . '</p>'); 
+        if (!is_null($old)) {
+            Storage::delete($old);
         }
 
-        $string = preg_replace('/\*\*(.*?)\*\*/i', '<b>${1}</b>', $string);
+        $name = Str::random(40);
+        $extension = $file->getClientOriginalExtension();
 
-        return $string;
+        if (Storage::exists('files/' . $name . '.' . $extension)) {
+            return self::save($file, $old);
+        }
+
+        return Storage::putFileAs('files', $file, $name . '.' . $extension);
     }
 }

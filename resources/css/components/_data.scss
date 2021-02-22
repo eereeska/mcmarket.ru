@@ -1,9 +1,11 @@
 .data {
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
     gap: var(--margin-3);
     margin-bottom: var(--margin-5);
     transform: opacity 0.3s ease-in-out;
+    overflow: hidden;
 
     &_compact {
         margin-bottom: var(--margin-4);
@@ -29,21 +31,30 @@
         margin-bottom: 0;
     }
 
-    &__icon,
-    .avatar {
+    &__icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
         width: 60px;
         min-width: 60px;
         height: 60px;
         min-height: 60px;
-        text-align: center;
-        line-height: 60px;
         background-color: var(--foreground);
         border-radius: var(--radius-2);
+
+        &--small {
+            width: 30px;
+            min-width: 30px;
+            height: 30px;
+            min-height: 30px;
+            border-radius: var(--radius-1);
+        }
     }
 
     &__info {
         display: flex;
         flex-direction: column;
+        flex-grow: 1;
         gap: var(--margin-1);
     }
 

@@ -17,22 +17,20 @@ class CreateFileTables extends Migration
 
         Schema::create('files', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->nullable()->constrained()->nullOnDelete();
+            $table->foreignId('user_id')->nullable()->constrained('users')->nullOnDelete();
             $table->foreignId('category_id')->nullable()->constrained('file_categories')->nullOnDelete();
             $table->string('title');
-            $table->string('short_title');
-            $table->string('slug');
+            $table->string('name');
             $table->enum('type', ['free', 'paid', 'nulled']);
-            $table->float('price', 8, 2, true)->default(0);
-            $table->integer('size');
+            $table->string('path');
+            $table->unsignedInteger('size');
+            $table->float('price', 8, 2, true)->nullable();
             $table->string('cover_path')->nullable();
-            $table->string('name')->nullable();
-            $table->longText('description')->nullable();
+            $table->mediumText('description')->nullable();
             $table->string('keywords')->nullable();
             $table->string('version')->nullable();
             $table->string('extension')->nullable();
             $table->string('donation_url')->nullable();
-            $table->string('external_path')->nullable();
             $table->string('vt_id')->nullable();
             $table->enum('vt_status', ['cmopleted', 'queued', 'in-progress'])->nullable();
             $table->json('vt_stats')->nullable();
@@ -42,15 +40,6 @@ class CreateFileTables extends Migration
             $table->boolean('is_visible')->default(false);
             $table->boolean('is_approved')->default(false);
             $table->timestamp('version_updated_at')->useCurrent();
-            $table->timestamps();
-        });
-
-        Schema::create('file_versions', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('file_id')->constrained()->cascadeOnDelete();
-            $table->string('version')->nullable();
-            $table->longText('description_raw')->nullable();
-            $table->longText('description_html')->nullable();
             $table->timestamps();
         });
 
@@ -74,7 +63,6 @@ class CreateFileTables extends Migration
     {
         Schema::dropIfExists('file_categories');
         Schema::dropIfExists('files');
-        Schema::dropIfExists('file_versions');
         Schema::dropIfExists('file_purchases');
         Schema::dropIfExists('file_media');
     }

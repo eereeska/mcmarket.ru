@@ -1,27 +1,17 @@
 @extends('layouts.app')
 
-@if ($file->type == 'free')
-@section('meta.title', 'Бесплатно » ' . $file->short_title . ' (' . $file->category->title . ')')
-@elseif ($file->type == 'nulled')
-@section('meta.title', 'Nulled » ' . $file->short_title . ' (' . $file->category->title . ')')
-@elseif ($file->type == 'paid')
-@section('meta.title', 'Платно » ' . $file->short_title . ' (' . $file->category->title . ')')
-@else
-@section('meta.title', $file->short_title . ' (' . $file->category->title . ')')
-@endif
+@section('meta.title', $file->getTabTitle())
 
 @if ($file->description)
-@section('meta.description', strlen($file->description_raw) > 150 ? preg_replace('/\r|\n/', '', substr($file->description_raw, 0, 150)) . '...' : $file->description_raw)
+@section('meta.description', substr(strip_tags($file->description), 0, 150))
 @endif
 
 @if ($file->keywords)
-@section('meta.keywords', '{{ $file->keywords }}')
+@section('meta.keywords', $file->keywords)
 @endif
 
 @if ($file->cover_path)
-@section('meta.og:image')
-<meta property="og:image" content="{{ asset('covers/' . $file->cover_path) }}">
-@endsection
+@section('meta.og:image', asset('covers/' . $file->cover_path))
 @endif
 
 @section('content')
@@ -31,9 +21,9 @@
             <ul class="breadcrumb">
                 <li class="breadcrumb__item"><a href="{{ route('home', ['category' => $file->category->name]) }}">{{ $file->category->title }}</a></li>
                 @if ($file->is_visible)
-                <li class="breadcrumb__item breadcrumb__item--active"><h1>{{ $file->short_title }}</h1></li>
+                <li class="breadcrumb__item breadcrumb__item--active"><h1>{{ $file->name }}</h1></li>
                 @else
-                <li class="breadcrumb__item breadcrumb__item--active"><h1>{{ $file->short_title }} <span class="muted">(скрыт)</span></h1></li>
+                <li class="breadcrumb__item breadcrumb__item--active"><h1>{{ $file->name }} <span class="muted">(скрыт)</span></h1></li>
                 @endif
             </ul>
             @if ($file->version)
@@ -43,7 +33,7 @@
         <div class="section__content">
             @if ($file->description)
             <article class="article">
-                {!! nl2br($file->description) !!}
+                {!! $file->description !!}
             </article>
             @else
             <p class="alert red">Заполните описание</p>
@@ -67,14 +57,14 @@
             </div>
             <div class="section__content">
                 @if (auth()->user()->id != $file->user_id and !auth()->user()->hasPurchasedFile($file))
-                <a href="{{ route('file.purchase', ['file' => $file]) }}" class="data data_compact">
+                <a href="{{ route('file.purchase', ['id' => $file->id]) }}" class="data data_compact">
                     <div class="data__icon icon icon--cart"></div>
                     <div class="data__info">
                         <h3 class="data__value">Купить</h3>
                     </div>
                 </a>
                 @else
-                <a href="{{ route('file.download', ['file' => $file]) }}" class="data data_compact">
+                <a href="{{ route('file.download', ['id' => $file->id]) }}" class="data data_compact">
                     <div class="data__icon icon icon--download"></div>
                     <div class="data__info">
                         <h3 class="data__value">Скачать</h3>
@@ -82,7 +72,7 @@
                 </a>
                 @endif
                 @if ($file->user_id == auth()->user()->id)
-                <a href="{{ route('file.edit', ['file' => $file]) }}" class="data data_compact">
+                <a href="{{ route('file.edit', ['id' => $file->id]) }}" class="data data_compact">
                     <div class="data__icon icon icon--edit"></div>
                     <div class="data__info">
                         <h3 class="data__value">Редактировать</h3>
@@ -101,19 +91,17 @@
         @endif
         <section class="section">
             <div class="section__header">
-                @if ($file->type === 'free')
-                <h2 class="section__title">Автор</h2>
-                @elseif ($file->type === 'paid')
+                @if ($file->type === 'paid')
                 <h2 class="section__title">Продавец</h2>
-                @elseif ($file->type === 'nulled')
-                <h2 class="section__title">Поделился</h2>
+                @else
+                <h2 class="section__title">Автор</h2>
                 @endif
             </div>
             <div class="section__content">
                 <a href="{{ route('user.show', ['user' => $file->user]) }}" class="data">
-                    @include('components._avatar', ['user' => $file->user])
+                    <div class="data__icon avatar" style="background-image: url({{ $file->user->getAvatar() }})"></div>
                     <div class="data__info">
-                        <h3 class="data__value">{{ $file->user->name }}</h3>
+                        <h3 class="data__value sidebar_trim_with_icon">{{ $file->user->name }}</h3>
                     </div>
                 </a>
             </div>

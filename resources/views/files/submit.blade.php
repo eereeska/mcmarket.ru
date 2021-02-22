@@ -14,7 +14,11 @@
             <div class="section__content">
                 @foreach ($categories as $category)
                 <label class="radio">
+                    @if (request()->category == $category->name)
+                    <input type="radio" name="category" value="{{ $category->name }}" class="radio__original" checked>
+                    @else
                     <input type="radio" name="category" value="{{ $category->name }}" class="radio__original">
+                    @endif
                     <span class="radio__mark"></span>
                     <span class="radio__label">{{ $category->title }}</span>
                 </label>
@@ -26,15 +30,15 @@
                 <h2 class="section__title section__title--required">Заголовок</h2>
             </div>
             <div class="section__content">
-                <input type="text" name="title" placeholder="Отображается в заголовке страницы и в поиске" value="{{ old('title') }}" maxlength="60" autocapitalize="none" autocorrect="off" autocomplete="off" required>
+                <input type="text" name="title" placeholder="Отображается в заголовке страницы и при выдаче в поиске" value="{{ old('title') }}" maxlength="60" autocapitalize="none" autocorrect="off" autocomplete="off" required>
             </div>
         </section>
         <section class="section">
             <div class="section__header">
-                <h2 class="section__title section__title--required">Короткий заголовок (название)</h2>
+                <h2 class="section__title section__title--required">Название</h2>
             </div>
             <div class="section__content">
-                <input type="text" name="short_title" placeholder="Отображается на главной странице, в названии файла" value="{{ old('short_title') }}" maxlength="20" autocapitalize="none" autocorrect="off" autocomplete="off" required>
+                <input type="text" name="name" placeholder="Отображается на главной странице и в названии файла" value="{{ old('name') }}" maxlength="20" autocapitalize="none" autocorrect="off" autocomplete="off" required>
             </div>
         </section>
         {{-- <section class="section">

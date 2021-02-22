@@ -1,7 +1,9 @@
-@extends('layouts.app', ['page_classes' => 'auth_form'])
+@extends('layouts.app')
+
+@section('meta.title', 'Регистрация')
 
 @section('content')
-<div class="content">
+<div class="content content_auth-form">
     <div class="section_title">
         <h4>Регистрация</h4>
         <a href="{{ route('login') }}">Уже есть аккаунт?</a>

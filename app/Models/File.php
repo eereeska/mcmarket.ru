@@ -9,11 +9,11 @@ class File extends Model
     protected $fillable = [
         'category',
         'title',
-        'short_title',
+        'name',
         'type',
         'description',
+        'path',
         'version',
-        'custom_url',
         'donation_url',
         'keywords',
         'version_updated_at'
@@ -53,5 +53,16 @@ class File extends Model
         }
 
         return round($this->size, 2) . ' ' . $units[$i];
+    }
+
+    public function getTabTitle()
+    {
+        $types = [
+            'free' => 'Бесплатно',
+            'paid' => 'Платно',
+            'nulled' => 'Nulled'
+        ];
+
+        return $types[$this->type] . ' » ' . ($this->category ? $this->category->title . ' » ' : '') . $this->title . ($this->version ? ' ' . $this->version . ' ' : '');
     }
 }

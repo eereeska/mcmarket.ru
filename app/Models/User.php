@@ -67,6 +67,11 @@ class User extends Authenticatable
         return $this->hasMany(ConversationParticipant::class)->pluck('conversation');
     }
 
+    public function hasRole($role)
+    {
+        return ($this->roles && $this->roles->pluck('name')->contains($role));
+    }
+
     public function hasPurchasedFile($file)
     {
         return FilePurchase::where([
@@ -77,7 +82,7 @@ class User extends Authenticatable
 
     public function getAvatar()
     {
-        return asset('avatars/' . $this->avatar);
+        return $this->avatar ? asset('avatars/' . $this->avatar) : asset('images/default_avatar.svg');
     }
 
     public function getInitials($length = 1)

@@ -35,11 +35,16 @@
             line-height: 30px;
             width: 30px;
             height: 30px;
+            transition: color 0.05s ease;
             cursor: pointer;
 
             &:before {
                 font-family: 'Font Awesome 5 Pro';
                 font-size: 18px;
+            }
+
+            &:active {
+                color: var(--primary-dark);
             }
 
             &.active {
