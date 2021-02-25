@@ -7,6 +7,7 @@ use App\Http\Controllers\Files\FileController;
 use App\Http\Controllers\Files\FileMediaController;
 use App\Http\Controllers\Files\FilePurchaseController;
 use App\Http\Controllers\Files\FileUpdateController;
+use App\Http\Controllers\Files\UserFileController;
 use App\Http\Controllers\GroupController;
 use App\Http\Controllers\Search\UserSearchController;
 use App\Http\Controllers\SearchController;
@@ -76,9 +77,13 @@ Route::group(['prefix' => 'group'], function() {
     Route::get('/{slug}', [GroupController::class, 'show'])->name('group-show');
 });
 
+Route::group(['prefix' => 'files'], function() {
+    Route::get('/my', [UserFileController::class, 'index'])->middleware('auth')->name('files.my');
+});
+
 Route::group(['prefix' => 'file'], function() {
     Route::group(['middleware' => 'auth'], function() {
-        Route::get('/submit', [FileController::class, 'submit'])->name('file.submit');
+        Route::get('/submit', [FileController::class, 'submit'])->middleware('permission:can_submit_new_files')->name('file.submit');
         Route::post('/submit', [FileController::class, 'store'])->name('file.store');
 
         Route::group(['prefix' => '/{id}'], function() {

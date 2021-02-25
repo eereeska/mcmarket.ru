@@ -64,7 +64,7 @@
                     </div>
                 </a>
                 @else
-                <a href="{{ route('file.download', ['id' => $file->id]) }}" class="data data_compact">
+                <a href="{{ route('file.download', ['id' => $file->id]) }}" target="_blank" class="data data_compact">
                     <div class="data__icon icon icon--download"></div>
                     <div class="data__info">
                         <h3 class="data__value">Скачать</h3>

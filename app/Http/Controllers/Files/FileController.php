@@ -96,6 +96,12 @@ class FileController extends Controller
             return redirect()->route('home');
         }
 
+        $user = $request->user();
+
+        if (!$user and ($file->user_id != $user and ($file->is_visible or $file->is_approved))) {
+            return redirect()->route('home');
+        }
+
         $view_cache_key = 'file.' . $id . '.view.' . ($_SERVER['CF_CONNECTING_IP'] ?? $request->ip());
 
         if (!Cache::has($view_cache_key)) {
@@ -133,7 +139,9 @@ class FileController extends Controller
 
         $file->increment('downloads_count');
 
-        return response()->download(storage_path('app/' . $file->path), ($file->version ? $file->name . ' - ' . $file->version : $file->name) . '.' . $file->extension);
+        return response()->download(storage_path('app/' . $file->path), ($file->version ? $file->name . ' - ' . $file->version : $file->name) . '.' . $file->extension, [
+            'Cache-Control' => 'no-cache, must-revalidate'
+        ]);
     }
 
     public function edit($id)
@@ -195,7 +203,7 @@ class FileController extends Controller
             $file->cover_path = $path;
         }
 
-        $file->is_visible = (!is_null($file->description) and !empty($file->description));
+        $file->is_visible = (!is_null($file->description) and !empty(strip_tags($file->description)));
 
         $file->save();
 
@@ -243,8 +251,6 @@ class FileController extends Controller
 
         // TODO: cache
 
-        $user = $request->user();
-
         $files = File::query();
 
         $files = $files->where([
@@ -252,9 +258,9 @@ class FileController extends Controller
             'is_approved' => true
         ]);
 
-        if (!is_null($user)) {
-            $files = $files->orWhere('user_id', $user->id);
-        }
+        $files = $files->when($request->get('from'), function($query) use ($request) {
+            return $query->where('user_id', $request->from);
+        });
 
         $files = $files->when(in_array($request->get('category'), $categories->pluck('name')->toArray()), function($query) use ($request, $categories) {
             return $query->where('category_id', $categories->where('name', $request->category)->pluck('id'));
@@ -281,7 +287,9 @@ class FileController extends Controller
             return $query->orderBy('version_updated_at', 'desc');
         });
 
-        return $files->with(['category', 'user'])->paginate(2)->appends($request->only(['category', 'type', 'sort']));
+        return $files->with(['category', 'user' => function($query) {
+            return $query->select(['id', 'name', 'avatar']);
+        }])->paginate(2)->appends($request->only(['category', 'type', 'sort']));
     }
 
     private function getCategories($fresh = false)

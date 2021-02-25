@@ -1,5 +1,9 @@
-@extends('errors::minimal')
+@extends('layouts.app')
 
-@section('title', __('Service Unavailable'))
-@section('code', '503')
-@section('message', __('Service Unavailable'))
+@section('meta.title', 'Ого')
+
+@section('content')
+<div class="content">
+    <p class="alert small red">Сайт находится на техобслуживании. Приносим свои извинения и обещаем скоро вернуться!</p>
+</div>
+@endsection

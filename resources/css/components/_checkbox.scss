@@ -55,7 +55,7 @@
         }
 
         &:hover .checkbox__mark {
-            background-color: var(--border);
+            background-color: var(--secondary-foreground);
         }
 
         input:checked ~ .checkbox__mark:after {

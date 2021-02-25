@@ -39,16 +39,18 @@
 </a>
 @endif --}}
 <div class="data data_compact">
-    <div class="data__icon icon icon--sync-alt"></div>
-    <div class="data__info">
-        <h3 class="data__value" title="{{ $file->version_updated_at->format('d.m.Y h:i:s') }}">{{ $file->version_updated_at->ago() }}</h3>
-        <div class="data__desc">Обновлён</div>
-    </div>
-</div>
-<div class="data data_compact">
     <div class="data__icon icon icon--clock"></div>
     <div class="data__info">
         <h3 class="data__value" {{ $file->version_updated_at->format('d.m.Y h:i:s') }}>{{ $file->created_at->ago() }}</h3>
         <div class="data__desc">Загружен</div>
     </div>
 </div>
+@if ($file->version_updated_at)
+<div class="data data_compact">
+    <div class="data__icon icon icon--sync-alt"></div>
+    <div class="data__info">
+        <h3 class="data__value" title="{{ $file->version_updated_at->format('d.m.Y h:i:s') }}">{{ $file->version_updated_at->ago() }}</h3>
+        <div class="data__desc">Обновлён</div>
+    </div>
+</div>
+@endif

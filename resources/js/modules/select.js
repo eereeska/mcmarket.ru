@@ -1,4 +1,4 @@
-import { default as mcm } from "../mcm";
+import mcm from "../mcm";
 
 var Select = function(select) {
     this.root = select;
@@ -24,28 +24,28 @@ Select.prototype.initSearch = function() {
     var self = this;
     var root = this.root;
 
-    this.search.addEventListener('focus', function() {
+    mcm.on('focus', this.search, function() {
         if (root.querySelectorAll('.select__option').length > 0) {
             root.classList.add('select_active');
         }
     });
 
-    this.search.addEventListener('blur', function() {
+    mcm.on('blur', this.search, function() {
         root.classList.remove('select_active');
     });
 
-    this.search.addEventListener('keyup', this.filter.bind(self));
+    mcm.on('keyup', this.search, this.filter.bind(self));
 
     if (this.search.hasAttribute('data-url')) {
-        this.search.addEventListener('keydown', function(e) {
+        mcm.on('keydown', this.search, function(e) {
             if (e.key === 'Enter') {
                 e.preventDefault();
 
-                if (self.search.hasAttribute('minlength') && self.search.value.trim().length < self.search.getAttribute('minlength')) {
+                if (this.hasAttribute('minlength') && this.value.trim().length < this.getAttribute('minlength')) {
                     return;
                 }
 
-                mcm.request('post', self.search.getAttribute('data-url'), {
+                mcm.request('post', this.getAttribute('data-url'), {
                     query: this.value.trim()
                 }).then(function(response) {
                     root.querySelector('.select__options').innerHTML = response.data.result;
@@ -58,12 +58,19 @@ Select.prototype.initSearch = function() {
             }
         });
     }
+
+    mcm.on('input', this.search, function() {
+        if (this.value.length < 1) {
+            self.selected.innerHTML = self.defaultSelected;
+            self.updateValue('', false);
+        }
+    });
 }
 
 Select.prototype.initSelected = function() {
     var root = this.root;
 
-    this.selected.addEventListener('click', function(e) {
+    mcm.on('click', this.selected, function(e) {
         e.preventDefault();
         root.classList.toggle('select_active');
     });
@@ -73,7 +80,7 @@ Select.prototype.initOptions = function() {
     var self = this;
     var root = this.root;
 
-    root.querySelector('.select__options').addEventListener('click', function(e) {
+    mcm.on('click', root.querySelector('.select__options'), function(e) {
         e.preventDefault();
 
         root.classList.remove('select_active');
@@ -84,7 +91,7 @@ Select.prototype.initOptions = function() {
             if (option.contains(e.target)) {
                 option.classList.add('select__option_selected');
                 self.updateSelected(option.nodeType != 3 ? option.innerHTML : option.textContent);
-                self.updateValue(option.dataset.value ? option.dataset.value : null);
+                self.updateValue(option.dataset.value, true);
             }
         });
     });
@@ -93,32 +100,34 @@ Select.prototype.initOptions = function() {
 Select.prototype.filter = function() {
     var self = this;
 
-    self.root.querySelectorAll('.select__option').forEach(function(option) {
+    this.root.querySelectorAll('.select__option').forEach(function(option) {
         if (option.textContent.trim().toLowerCase().indexOf(self.search.value.trim().toLowerCase()) > -1) {
             option.style.display = '';
         } else {
             option.style.display = 'none';
         }
     });
-
-    if (self.value.value.trim().length < 1) {
-        self.selected.innerHTML = self.defaultSelected;
-    }
 }
 
 Select.prototype.updateSelected = function(value) {
     this.selected.innerHTML = value.trim();
 }
 
-Select.prototype.updateValue = function(value) {
+Select.prototype.updateValue = function(value, trigger) {
+    var old = this.value.value;
+
     this.value.value = value.trim();
+
+    if (this.value != old && trigger) {
+        this.value.dispatchEvent(new Event('change'));
+    }
 }
 
 mcm.qsa('.select').forEach(function(select) {
     new Select(select);
 });
 
-mcm.on('click', function(e) {
+mcm.on('click', window, function(e) {
     mcm.qsa('.select.select_active').forEach(function(select) {
         if (!select.contains(e.target)) {
             select.classList.remove('select_active');

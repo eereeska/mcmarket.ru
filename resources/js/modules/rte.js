@@ -1,3 +1,5 @@
+import mcm from "../mcm";
+
 class Editor {
     constructor(editor) {
         this.editor = editor;
@@ -10,12 +12,12 @@ class Editor {
         editor.addEventListener('focus', this.inputHandler.bind(this));
         editor.addEventListener('paste', this.pasteHandler.bind(this));
 
-        for (button of this.editor.parentNode.querySelectorAll('.editor__toolbar > button')) {
+        this.editor.parentNode.querySelectorAll('.editor__toolbar > button').forEach(function(button) {
             button.addEventListener('click', function(e) {
                 e.preventDefault();
                 document.execCommand(e.target.dataset.command, false);
             });
-        }
+        });
     }
 
     initInput() {
@@ -56,6 +58,6 @@ class Editor {
     }
 }
 
-for (editor of document.querySelectorAll('[contenteditable][data-name]')) {
+mcm.qsa('[contenteditable][data-name]').forEach(function(editor) {
     new Editor(editor);
-}
+});

@@ -1837,8 +1837,15 @@ module.exports = {
 /*!*****************************!*\
   !*** ./resources/js/app.js ***!
   \*****************************/
-/***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _modules_smartAttributes__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modules/smartAttributes */ "./resources/js/modules/smartAttributes.js");
+/* harmony import */ var _modules_rte__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/rte */ "./resources/js/modules/rte.js");
+/* harmony import */ var _modules_files__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/files */ "./resources/js/modules/files.js");
+/* harmony import */ var _modules_select__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/select */ "./resources/js/modules/select.js");
+/* harmony import */ var _modules_hide__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./modules/hide */ "./resources/js/modules/hide.js");
 // const { default: axios } = require('axios');
 // window.$ = window.jQuery = require('jquery/dist/jquery.slim');
 // window.axios = require('axios');
@@ -1869,22 +1876,11 @@ module.exports = {
 // require('./modules/ajaxSearch');
 // require('./modules/select');
 // require('./rte');
-(function () {
-  __webpack_require__(/*! ./modules/select */ "./resources/js/modules/select.js");
-})(); // (function(window, document) {
-//     class mcm {
-//         constructor() {
-//             this.qsa = (selector) => document.querySelectorAll(selector);
-//             this.on = (event, callback) => document.addEventListener(event, callback);
-//         }
-//         qs(selector) {
-//             return document.querySelector(selector).bind(document);
-//         }
-//     }
-//     console.log(mcm.qs('.select'))
-//     require('./modules/select').default(mcm)
-// })(window, document);
-// var messages = {
+
+
+
+
+ // var messages = {
 //     requestError: 'Произошла ошибка при обработке запроса. Попробуйте позже.'
 // }
 // require('./modules/loadMore');
@@ -2050,77 +2046,6 @@ module.exports = {
 //     $($(this).attr('href')).addClass('active-tab');
 // })
 // // TABS END
-// // DRAG AND DROP
-// $(document).on('dragenter focus click', '.file > .file__original', function() {
-//     $(this).parent().addClass('is-dragenter');
-// });
-// $(document).on('dragleave blur drop', '.file > .file__original', function(e) {
-//     $(this).parent().removeClass('is-dragenter');
-//     if ($(this).hasClass('is-uploading')) {
-//         e.preventDefault();
-//         e.stopImmediatePropagation();
-//     }
-// });
-// $(document).on('change', '.file > .file__original', function(e) {
-//     var $input = $(this);
-//     var $container = $(this).parent('.file');
-//     var $label = $(this).next('.file__label');
-//     if (!$label.data('original-label')) {
-//         $label.data('original-label', $label.text().trim());
-//     }
-//     var files = $input.prop('files');
-//     if (files.length < 1) {
-//         return;
-//     }
-//     if ($(this).attr('multiple') && files.length > 0) {
-//         $label.text('Выбрано ' + files.length + ' файл(-а, -ов)');
-//     } else if (files.length > 0) {
-//         $label.text(files[0].name);
-//     } else {
-//         $label.text($label.data('original-label'));
-//     }
-//     if ($input.data('auto-upload')) {
-//         e.preventDefault();
-//         var data = new FormData();
-//         for (file of files) {
-//             data.append($input.attr('name'), file);
-//         }
-//         $container.addClass('is-uploading');
-//         axios.post($input.data('auto-upload'), data).then(function(response) {
-//             if (response.data.success) {
-//                 if (response.data.preview.length) {
-//                     $preview = $container.prev('.media');
-//                     if ($preview.length) {
-//                         $preview.replaceWith(response.data.preview);
-//                     } else {
-//                         $container.before(response.data.preview);
-//                     }
-//                 }
-//             } else {
-//                 alert(response.data.message || messages.requestError);
-//             }
-//         }).catch(function(error) {
-//             console.log(error)
-//         }).finally(function() {
-//             $container.removeClass('is-uploading');
-//             $input.val('');
-//             $label.text($label.data('original-label'));
-//         });
-//     }
-// });
-// // DRAG AND DROP END
-// // HIDDEN CONTENT
-// $(document).on('click', 'input[type="radio"]', function() {
-//     var $radio = $(this);
-//     $('[data-show-if="radio-checked"][data-target-name="' + $radio.attr('name') + '"]').each(function() {
-//         if ($(this).data('target-value').trim() != $radio.val().trim()) {
-//             $(this).removeClass('hidden--visible');
-//         } else {
-//             $(this).addClass('hidden--visible');
-//         }
-//     });
-// });
-// // HIDDEN CONTENT END
 
 /***/ }),
 
@@ -2138,37 +2063,250 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (new function mcm() {
-  this.qs = document.querySelector.bind(document);
-  this.qsa = document.querySelectorAll.bind(document);
 
-  this.on = function (event, callback) {
-    return document.addEventListener(event, callback);
-  };
+var mcm = function mcm() {
+  this.hi = 'Что ты тут забыл? :/';
+};
 
-  this.request = function (method, url, data) {
-    var a = axios__WEBPACK_IMPORTED_MODULE_0___default()({
-      method: method,
-      url: url,
-      data: data,
-      headers: {
-        'X-CSRF-TOKEN': document.documentElement.dataset.csrf
+mcm.prototype.qs = document.querySelector.bind(document);
+mcm.prototype.qsa = document.querySelectorAll.bind(document);
+
+mcm.prototype.on = function (event, target, callback) {
+  if (typeof target == 'string' || target instanceof String) {
+    document.addEventListener(event, function (e) {
+      if (e.target.matches(target)) {
+        callback.bind(e.target)(e);
       }
     });
-    a["catch"](function (error) {
-      var _error$response;
+  } else {
+    target.addEventListener(event, callback);
+  }
+};
 
-      if (((_error$response = error.response) === null || _error$response === void 0 ? void 0 : _error$response.status) == 419) {
-        alert('Срок действия CSRF токена истёк Пожалуйста, обновите страницу и попробуйте снова');
-      } else {
-        var _error$response2;
+mcm.prototype.request = function (method, url, data) {
+  var a = axios__WEBPACK_IMPORTED_MODULE_0___default()({
+    method: method,
+    url: url,
+    data: data,
+    headers: {
+      'X-Requested-With': 'XMLHttpRequest',
+      'X-CSRF-TOKEN': document.documentElement.dataset.csrf
+    }
+  });
+  a["catch"](function (error) {
+    var _error$response;
 
-        alert(((_error$response2 = error.response) === null || _error$response2 === void 0 ? void 0 : _error$response2.data.message) || 'Произошла ошибка во время обработки запроса. Пожалуйста, попробуйте позже');
-      }
+    if (((_error$response = error.response) === null || _error$response === void 0 ? void 0 : _error$response.status) == 419) {
+      alert('Срок действия CSRF токена истёк Пожалуйста, обновите страницу и попробуйте снова');
+    } else {
+      var _error$response2;
+
+      alert(((_error$response2 = error.response) === null || _error$response2 === void 0 ? void 0 : _error$response2.data.message) || 'Произошла ошибка во время обработки запроса. Пожалуйста, попробуйте позже');
+    }
+  });
+  return a;
+};
+
+mcm.prototype.parseHTML = function (string) {
+  var t = document.createElement('template');
+  t.innerHTML = string;
+  return t.content.cloneNode(true);
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (new mcm());
+
+/***/ }),
+
+/***/ "./resources/js/modules/files.js":
+/*!***************************************!*\
+  !*** ./resources/js/modules/files.js ***!
+  \***************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _mcm__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../mcm */ "./resources/js/mcm.js");
+ // $(document).on('dragenter focus click', '.file > .file__original', function() {
+//     $(this).parent().addClass('is-dragenter');
+// });
+// $(document).on('dragleave blur drop', '.file > .file__original', function(e) {
+//     $(this).parent().removeClass('is-dragenter');
+//     if ($(this).hasClass('is-uploading')) {
+//         e.preventDefault();
+//         e.stopImmediatePropagation();
+//     }
+// });
+
+_mcm__WEBPACK_IMPORTED_MODULE_0__.default.qsa('.file > .file__original').forEach(function (input) {
+  // mcm.on('dragenter', input, function() {
+  // });
+  _mcm__WEBPACK_IMPORTED_MODULE_0__.default.on('change', input, function (e) {
+    var $label = this.parentNode.querySelector('span.file__label');
+
+    if (!$label.hasAttribute('data-original')) {
+      $label.setAttribute('data-original', $label.textContent.trim());
+    }
+
+    var files = this.files;
+
+    if (this.hasAttribute('multiple') && files.length > 0) {
+      $label.textContent = 'Выбрано ' + files.length + ' файл(-а, -ов)';
+    } else if (files.length > 0) {
+      $label.textContent = files[0].name;
+    } else {
+      $label.textContent = $label.getAttribute('data-original');
+      $label.removeAttribute('data-original');
+      return;
+    } // if ($input.data('auto-upload')) {
+    //     e.preventDefault();
+    //     var data = new FormData();
+    //     for (file of files) {
+    //         data.append($input.attr('name'), file);
+    //     }
+    //     $container.addClass('is-uploading');
+    //     axios.post($input.data('auto-upload'), data).then(function(response) {
+    //         if (response.data.success) {
+    //             if (response.data.preview.length) {
+    //                 $preview = $container.prev('.media');
+    //                 if ($preview.length) {
+    //                     $preview.replaceWith(response.data.preview);
+    //                 } else {
+    //                     $container.before(response.data.preview);
+    //                 }
+    //             }
+    //         } else {
+    //             alert(response.data.message || messages.requestError);
+    //         }
+    //     }).catch(function(error) {
+    //         console.log(error)
+    //     }).finally(function() {
+    //         $container.removeClass('is-uploading');
+    //         $input.val('');
+    //         $label.text($label.data('original-label'));
+    //     });
+    // }
+
+  });
+});
+
+/***/ }),
+
+/***/ "./resources/js/modules/hide.js":
+/*!**************************************!*\
+  !*** ./resources/js/modules/hide.js ***!
+  \**************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _mcm__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../mcm */ "./resources/js/mcm.js");
+
+_mcm__WEBPACK_IMPORTED_MODULE_0__.default.on('change', 'input[type="radio"], input[type="checkbox"]', function (e) {
+  var hiddenID = this.getAttribute('data-show-if-checked');
+  var $target = hiddenID ? _mcm__WEBPACK_IMPORTED_MODULE_0__.default.qs('[data-hidden-id="' + hiddenID + '"]') : null;
+  _mcm__WEBPACK_IMPORTED_MODULE_0__.default.qsa('input[type="radio"], input[type="checkbox"]').forEach(function (input) {
+    if (input.checked && $target) {
+      $target.classList.add('hidden_visible');
+    } else {
+      _mcm__WEBPACK_IMPORTED_MODULE_0__.default.qsa('[data-hidden-id]').forEach(function (hidden) {
+        if (hiddenID == hidden.getAttribute('data-hidden-id')) {
+          hidden.classList.add('hidden_visible');
+        } else {
+          hidden.classList.remove('hidden_visible');
+        }
+      });
+    }
+  });
+});
+_mcm__WEBPACK_IMPORTED_MODULE_0__.default.qsa('[data-hidden-id]').forEach(function (hidden) {
+  if (_mcm__WEBPACK_IMPORTED_MODULE_0__.default.qs('[data-show-if-checked="' + hidden.getAttribute('data-hidden-id') + '"]:checked')) {
+    hidden.classList.add('hidden_visible');
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/modules/rte.js":
+/*!*************************************!*\
+  !*** ./resources/js/modules/rte.js ***!
+  \*************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _mcm__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../mcm */ "./resources/js/mcm.js");
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+
+
+var Editor = /*#__PURE__*/function () {
+  function Editor(editor) {
+    _classCallCheck(this, Editor);
+
+    this.editor = editor;
+    this.name = this.editor.dataset.name;
+    this.input = this.initInput();
+    document.execCommand('defaultParagraphSeparator', false, 'p');
+    editor.addEventListener('keyup', this.inputHandler.bind(this));
+    editor.addEventListener('focus', this.inputHandler.bind(this));
+    editor.addEventListener('paste', this.pasteHandler.bind(this));
+    this.editor.parentNode.querySelectorAll('.editor__toolbar > button').forEach(function (button) {
+      button.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.execCommand(e.target.dataset.command, false);
+      });
     });
-    return a;
-  };
-}());
+  }
+
+  _createClass(Editor, [{
+    key: "initInput",
+    value: function initInput() {
+      var input = this.editor.parentNode.querySelector('input[name="' + this.name + '"]');
+
+      if (!input) {
+        input = document.createElement('input');
+        input.setAttribute('type', 'hidden');
+        input.setAttribute('name', this.name);
+        input.required = this.editor.dataset.required;
+        this.editor.parentNode.appendChild(input);
+      }
+
+      input.value = this.editor.innerHTML.trim();
+      return input;
+    }
+  }, {
+    key: "inputHandler",
+    value: function inputHandler() {
+      if (this.editor.innerHTML === '<br>') {
+        this.editor.innerHTML = '';
+      }
+
+      if (!this.editor.innerHTML.match(/<.*>/)) {
+        setTimeout(function () {
+          document.execCommand('formatBlock', false, 'p');
+        }, 0);
+      }
+
+      this.input.value = this.editor.innerHTML.trim();
+    }
+  }, {
+    key: "pasteHandler",
+    value: function pasteHandler(e) {
+      e.preventDefault();
+      document.execCommand('insertHTML', false, e.clipboardData.getData('text/plain'));
+    }
+  }]);
+
+  return Editor;
+}();
+
+_mcm__WEBPACK_IMPORTED_MODULE_0__.default.qsa('[contenteditable][data-name]').forEach(function (editor) {
+  new Editor(editor);
+});
 
 /***/ }),
 
@@ -2206,26 +2344,26 @@ var Select = function Select(select) {
 Select.prototype.initSearch = function () {
   var self = this;
   var root = this.root;
-  this.search.addEventListener('focus', function () {
+  _mcm__WEBPACK_IMPORTED_MODULE_0__.default.on('focus', this.search, function () {
     if (root.querySelectorAll('.select__option').length > 0) {
       root.classList.add('select_active');
     }
   });
-  this.search.addEventListener('blur', function () {
+  _mcm__WEBPACK_IMPORTED_MODULE_0__.default.on('blur', this.search, function () {
     root.classList.remove('select_active');
   });
-  this.search.addEventListener('keyup', this.filter.bind(self));
+  _mcm__WEBPACK_IMPORTED_MODULE_0__.default.on('keyup', this.search, this.filter.bind(self));
 
   if (this.search.hasAttribute('data-url')) {
-    this.search.addEventListener('keydown', function (e) {
+    _mcm__WEBPACK_IMPORTED_MODULE_0__.default.on('keydown', this.search, function (e) {
       if (e.key === 'Enter') {
         e.preventDefault();
 
-        if (self.search.hasAttribute('minlength') && self.search.value.trim().length < self.search.getAttribute('minlength')) {
+        if (this.hasAttribute('minlength') && this.value.trim().length < this.getAttribute('minlength')) {
           return;
         }
 
-        _mcm__WEBPACK_IMPORTED_MODULE_0__.default.request('post', self.search.getAttribute('data-url'), {
+        _mcm__WEBPACK_IMPORTED_MODULE_0__.default.request('post', this.getAttribute('data-url'), {
           query: this.value.trim()
         }).then(function (response) {
           root.querySelector('.select__options').innerHTML = response.data.result;
@@ -2238,11 +2376,18 @@ Select.prototype.initSearch = function () {
       }
     });
   }
+
+  _mcm__WEBPACK_IMPORTED_MODULE_0__.default.on('input', this.search, function () {
+    if (this.value.length < 1) {
+      self.selected.innerHTML = self.defaultSelected;
+      self.updateValue('', false);
+    }
+  });
 };
 
 Select.prototype.initSelected = function () {
   var root = this.root;
-  this.selected.addEventListener('click', function (e) {
+  _mcm__WEBPACK_IMPORTED_MODULE_0__.default.on('click', this.selected, function (e) {
     e.preventDefault();
     root.classList.toggle('select_active');
   });
@@ -2251,7 +2396,7 @@ Select.prototype.initSelected = function () {
 Select.prototype.initOptions = function () {
   var self = this;
   var root = this.root;
-  root.querySelector('.select__options').addEventListener('click', function (e) {
+  _mcm__WEBPACK_IMPORTED_MODULE_0__.default.on('click', root.querySelector('.select__options'), function (e) {
     e.preventDefault();
     root.classList.remove('select_active');
     root.querySelectorAll('.select__option').forEach(function (option) {
@@ -2260,7 +2405,7 @@ Select.prototype.initOptions = function () {
       if (option.contains(e.target)) {
         option.classList.add('select__option_selected');
         self.updateSelected(option.nodeType != 3 ? option.innerHTML : option.textContent);
-        self.updateValue(option.dataset.value ? option.dataset.value : null);
+        self.updateValue(option.dataset.value, true);
       }
     });
   });
@@ -2268,34 +2413,100 @@ Select.prototype.initOptions = function () {
 
 Select.prototype.filter = function () {
   var self = this;
-  self.root.querySelectorAll('.select__option').forEach(function (option) {
+  this.root.querySelectorAll('.select__option').forEach(function (option) {
     if (option.textContent.trim().toLowerCase().indexOf(self.search.value.trim().toLowerCase()) > -1) {
       option.style.display = '';
     } else {
       option.style.display = 'none';
     }
   });
-
-  if (self.value.value.trim().length < 1) {
-    self.selected.innerHTML = self.defaultSelected;
-  }
 };
 
 Select.prototype.updateSelected = function (value) {
   this.selected.innerHTML = value.trim();
 };
 
-Select.prototype.updateValue = function (value) {
+Select.prototype.updateValue = function (value, trigger) {
+  var old = this.value.value;
   this.value.value = value.trim();
+
+  if (this.value != old && trigger) {
+    this.value.dispatchEvent(new Event('change'));
+  }
 };
 
 _mcm__WEBPACK_IMPORTED_MODULE_0__.default.qsa('.select').forEach(function (select) {
   new Select(select);
 });
-_mcm__WEBPACK_IMPORTED_MODULE_0__.default.on('click', function (e) {
+_mcm__WEBPACK_IMPORTED_MODULE_0__.default.on('click', window, function (e) {
   _mcm__WEBPACK_IMPORTED_MODULE_0__.default.qsa('.select.select_active').forEach(function (select) {
     if (!select.contains(e.target)) {
       select.classList.remove('select_active');
+    }
+  });
+});
+
+/***/ }),
+
+/***/ "./resources/js/modules/smartAttributes.js":
+/*!*************************************************!*\
+  !*** ./resources/js/modules/smartAttributes.js ***!
+  \*************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _mcm__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../mcm */ "./resources/js/mcm.js");
+
+_mcm__WEBPACK_IMPORTED_MODULE_0__.default.qsa('[data-submit]').forEach(function (item) {
+  _mcm__WEBPACK_IMPORTED_MODULE_0__.default.on('click', item, function (e) {
+    e.preventDefault();
+    var $target = _mcm__WEBPACK_IMPORTED_MODULE_0__.default.qs(this.getAttribute('data-submit').trim());
+
+    if (!$target) {
+      return;
+    }
+
+    $target.dispatchEvent(new Event('submit'));
+  });
+});
+_mcm__WEBPACK_IMPORTED_MODULE_0__.default.qsa('[data-on-change]').forEach(function (item) {
+  var action = item.getAttribute('data-on-change');
+  _mcm__WEBPACK_IMPORTED_MODULE_0__.default.on('change', item, function (e) {
+    e.preventDefault();
+
+    if (action == 'submit') {
+      var form = this.closest('form');
+
+      if (!form) {
+        return;
+      }
+
+      form.dispatchEvent(new Event('submit'));
+    }
+  });
+});
+_mcm__WEBPACK_IMPORTED_MODULE_0__.default.qsa('form').forEach(function (item) {
+  var action = item.getAttribute('data-on-submit') || null;
+  _mcm__WEBPACK_IMPORTED_MODULE_0__.default.on('submit', item, function (e) {
+    if (action == 'request') {
+      var _item$getAttribute;
+
+      e.preventDefault();
+      var results = _mcm__WEBPACK_IMPORTED_MODULE_0__.default.qs(item.getAttribute('data-results'));
+
+      if (!results) {
+        return;
+      }
+
+      results.setAttribute('data-loading', true);
+      _mcm__WEBPACK_IMPORTED_MODULE_0__.default.request(item.getAttribute('method') || 'post', (_item$getAttribute = item.getAttribute('action')) !== null && _item$getAttribute !== void 0 ? _item$getAttribute : item.getAttribute('data-action'), new FormData(item)).then(function (response) {
+        results.innerHTML = response.data;
+      })["finally"](function () {
+        results.removeAttribute('data-loading');
+      });
+    } else {
+      this.submit();
     }
   });
 });

@@ -1,5 +1,9 @@
-@extends('errors::minimal')
+@extends('layouts.app')
 
-@section('title', __('Server Error'))
-@section('code', '500')
-@section('message', __('Server Error'))
+@section('meta.title', 'Ой-ой-ой')
+
+@section('content')
+<div class="content">
+    <p class="alert small red">Произошла ошибка на стороне сервера. Попробуйте снова через пару минут</p>
+</div>
+@endsection

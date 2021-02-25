@@ -13,6 +13,7 @@ class File extends Model
         'type',
         'description',
         'path',
+        'extension',
         'version',
         'donation_url',
         'keywords',

@@ -32,7 +32,7 @@
                         <h2 class="section__title">Версия</h2>
                     </div>
                     <div class="section__content">
-                        <input type="text" name="version" placeholder="{{ $file->version ?? '2.0.0' }}" value="{{ $file->version }}" maxlength="10" autocapitalize="none" autocorrect="off" autocomplete="off">
+                        <input type="text" name="version" placeholder="{{ $file->version ?? '2.0.0' }}" value="{{ $file->version }}" class="input" maxlength="10" autocapitalize="none" autocorrect="off" autocomplete="off">
                     </div>
                 </section>
                 <section class="section">
@@ -99,7 +99,7 @@
             @foreach ($errors->all() as $error)
             <p class="alert red small">{{ $error }}</p>
             @endforeach
-            <button data-action="form-submit" data-target="#file-update-submit-form" class="button primary">Опубликовать обновление</button>
+            <button class="button primary" data-submit="#file-update-submit-form">Опубликовать обновление</button>
         </section>
     </div>
 </aside>

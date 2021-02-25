@@ -32,25 +32,11 @@
 // require('./modules/select');
 // require('./rte');
 
-(function() {
-    require('./modules/select');
-})();
-// (function(window, document) {
-//     class mcm {
-//         constructor() {
-//             this.qsa = (selector) => document.querySelectorAll(selector);
-//             this.on = (event, callback) => document.addEventListener(event, callback);
-//         }
-
-//         qs(selector) {
-//             return document.querySelector(selector).bind(document);
-//         }
-//     }
-
-//     console.log(mcm.qs('.select'))
-
-//     require('./modules/select').default(mcm)
-// })(window, document);
+import './modules/smartAttributes';
+import './modules/rte';
+import './modules/files';
+import './modules/select';
+import './modules/hide';
 
 // var messages = {
 //     requestError: 'Произошла ошибка при обработке запроса. Попробуйте позже.'
@@ -270,94 +256,3 @@
 // })
 
 // // TABS END
-
-// // DRAG AND DROP
-
-// $(document).on('dragenter focus click', '.file > .file__original', function() {
-//     $(this).parent().addClass('is-dragenter');
-// });
-
-// $(document).on('dragleave blur drop', '.file > .file__original', function(e) {
-//     $(this).parent().removeClass('is-dragenter');
-
-//     if ($(this).hasClass('is-uploading')) {
-//         e.preventDefault();
-//         e.stopImmediatePropagation();
-//     }
-// });
-
-// $(document).on('change', '.file > .file__original', function(e) {
-//     var $input = $(this);
-//     var $container = $(this).parent('.file');
-//     var $label = $(this).next('.file__label');
-
-//     if (!$label.data('original-label')) {
-//         $label.data('original-label', $label.text().trim());
-//     }
-
-//     var files = $input.prop('files');
-
-//     if (files.length < 1) {
-//         return;
-//     }
-
-//     if ($(this).attr('multiple') && files.length > 0) {
-//         $label.text('Выбрано ' + files.length + ' файл(-а, -ов)');
-//     } else if (files.length > 0) {
-//         $label.text(files[0].name);
-//     } else {
-//         $label.text($label.data('original-label'));
-//     }
-
-//     if ($input.data('auto-upload')) {
-//         e.preventDefault();
-
-//         var data = new FormData();
-
-//         for (file of files) {
-//             data.append($input.attr('name'), file);
-//         }
-
-//         $container.addClass('is-uploading');
-        
-//         axios.post($input.data('auto-upload'), data).then(function(response) {
-//             if (response.data.success) {
-//                 if (response.data.preview.length) {
-//                     $preview = $container.prev('.media');
-
-//                     if ($preview.length) {
-//                         $preview.replaceWith(response.data.preview);
-//                     } else {
-//                         $container.before(response.data.preview);
-//                     }
-//                 }
-//             } else {
-//                 alert(response.data.message || messages.requestError);
-//             }
-//         }).catch(function(error) {
-//             console.log(error)
-//         }).finally(function() {
-//             $container.removeClass('is-uploading');
-//             $input.val('');
-//             $label.text($label.data('original-label'));
-//         });
-//     }
-// });
-
-// // DRAG AND DROP END
-
-// // HIDDEN CONTENT
-
-// $(document).on('click', 'input[type="radio"]', function() {
-//     var $radio = $(this);
-
-//     $('[data-show-if="radio-checked"][data-target-name="' + $radio.attr('name') + '"]').each(function() {
-//         if ($(this).data('target-value').trim() != $radio.val().trim()) {
-//             $(this).removeClass('hidden--visible');
-//         } else {
-//             $(this).addClass('hidden--visible');
-//         }
-//     });
-// });
-
-// // HIDDEN CONTENT END

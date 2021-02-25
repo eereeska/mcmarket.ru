@@ -1,5 +1,9 @@
-@extends('errors::minimal')
+@extends('layouts.app')
 
-@section('title', __('Unauthorized'))
-@section('code', '401')
-@section('message', __('Unauthorized'))
+@section('meta.title', ':(')
+
+@section('content')
+<div class="content">
+    <p class="alert small red">Извините, у Вас нет доступа к указанному адресу</p>
+</div>
+@endsection

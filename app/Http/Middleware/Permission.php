@@ -10,13 +10,13 @@ class Permission
 {
     public function handle(Request $request, Closure $next, ...$permissions)
     {
-        if (!Auth::user() or !Auth::user()->role or !Auth::user()->role->permissions) {
+        if (!Auth::user() or !Auth::user()->role) {
             abort(404);
         }
 
         foreach($permissions as $permission){
-            if (!Auth::user()->role->permissions->$permission){
-                abort(403, 'p');
+            if (!Auth::user()->role->$permission){
+                abort(403);
             }
         }
 

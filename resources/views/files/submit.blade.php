@@ -14,7 +14,7 @@
             <div class="section__content">
                 @foreach ($categories as $category)
                 <label class="radio">
-                    @if (request()->category == $category->name)
+                    @if (old('category') == $category->name)
                     <input type="radio" name="category" value="{{ $category->name }}" class="radio__original" checked>
                     @else
                     <input type="radio" name="category" value="{{ $category->name }}" class="radio__original">
@@ -30,7 +30,7 @@
                 <h2 class="section__title section__title--required">Заголовок</h2>
             </div>
             <div class="section__content">
-                <input type="text" name="title" placeholder="Отображается в заголовке страницы и при выдаче в поиске" value="{{ old('title') }}" maxlength="60" autocapitalize="none" autocorrect="off" autocomplete="off" required>
+                <input type="text" name="title" placeholder="Отображается в поиске Google, Яндекс и т.д." value="{{ old('title') }}" maxlength="60" autocapitalize="none" autocorrect="off" autocomplete="off" required class="input">
             </div>
         </section>
         <section class="section">
@@ -38,29 +38,9 @@
                 <h2 class="section__title section__title--required">Название</h2>
             </div>
             <div class="section__content">
-                <input type="text" name="name" placeholder="Отображается на главной странице и в названии файла" value="{{ old('name') }}" maxlength="20" autocapitalize="none" autocorrect="off" autocomplete="off" required>
+                <input type="text" name="name" placeholder="Отображается на главной странице и в названии файла" value="{{ old('name') }}" maxlength="20" autocapitalize="none" autocorrect="off" autocomplete="off" required class="input">
             </div>
         </section>
-        {{-- <section class="section">
-            <h2 class="section__title section__title--required">Описание</h2>
-            <div class="editor">
-                <div class="editor__toolbar" data-sticky>
-                    <button data-command="bold"></button>
-                    <button data-command="italic"></button>
-                    <button data-command="strikethrough"></button>
-                    <button data-command="underline"></button>
-                    <button data-command="removeFormat"></button>
-                    <button data-command="insertOrderedList"></button>
-                    <button data-command="insertUnorderedList"></button>
-                    <button data-command="justifyLeft"></button>
-                    <button data-command="justifyCenter"></button>
-                    <button data-command="justifyRight"></button>
-                    <button data-command="superscript"></button>
-                    <button data-command="subscript"></button>
-                </div>
-                <div class="editor__content" name="body" placeholder="Содержание" dir="auto" contenteditable="true" spellcheck="true" required></div>
-            </div>
-        </section> --}}
         <section class="section">
             <div class="section__header">
                 <div class="section__header-left">
@@ -80,12 +60,12 @@
                     <span class="radio__label">Nulled</span>
                 </label>
                 <label class="radio">
-                    <input type="radio" name="type" value="paid" class="radio__original">
+                    <input type="radio" name="type" value="paid" class="radio__original" data-show-if-checked="price">
                     <span class="radio__mark"></span>
                     <span class="radio__label">Платный</span>
                 </label>
-                <div class="hidden" data-show-if="radio-checked" data-target-name="type" data-target-value="paid">
-                    <input type="number" name="price" placeholder="Введите стоимость в рублях..." value="{{ old('price') }}" min="1" autocorrect="off" autocomplete="off">
+                <div class="hidden" data-hidden-id="price">
+                    <input type="number" name="price" placeholder="Введите стоимость в рублях..." value="{{ old('price') }}" class="input" min="1" autocorrect="off" autocomplete="off">
                     <p>Обратите внимание, что комиссия сервиса составляет <span>{{ config('mcm.fee') }}%</span></p>
                 </div>
             </div>
@@ -145,18 +125,17 @@
     <section class="section section--sticky">
         <section class="section">
             <div class="section__header">
-                <h2 class="section__title">Полезная информация</h2>
+                <h2 class="section__title">Шаг 1/2</h2>
             </div>
             <div class="section__content">
-                <p>После внесения необходимой информации, файл и сама информация будет проверена администрацией на соответствие <a href="{{ route('terms') }}" class="dashed" target="_blank">правилам сообщества</a></p>
-                <p>При одобрении заявки, вы получите соответствующее уведомление, а файл моментально появится в общем списке файлов на сайте</p>
+                <p>После внесения всей необходимой информации, администрация вручную проверит сам файл и его описание на соответствие с <a href="{{ route('terms') }}" class="dashed" target="_blank">правилам сообщества</a></p>
             </div>
         </section>
         <section class="section">
             @foreach ($errors->all() as $error)
             <p class="alert red small">{{ $error }}</p>
             @endforeach
-            <button data-action="form-submit" data-target="#file-submit-form" class="button primary">Отправить на проверку</button>
+            <button class="button primary" data-submit="#file-submit-form">Отправить на проверку</button>
         </section>
     </section>
 </aside>

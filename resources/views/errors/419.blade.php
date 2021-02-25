@@ -1,5 +1,9 @@
-@extends('errors::minimal')
+@extends('layouts.app')
 
-@section('title', __('Page Expired'))
-@section('code', '419')
-@section('message', __('Page Expired'))
+@section('meta.title', 'Ммм')
+
+@section('content')
+<div class="content">
+    <p class="alert small red">Ваш CSRF токен недействителен. Обновите странцу и попробуйте снова</p>
+</div>
+@endsection

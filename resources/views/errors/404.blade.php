@@ -1,5 +1,9 @@
-@extends('errors::minimal')
+@extends('layouts.app')
 
-@section('title', __('Not Found'))
-@section('code', '404')
-@section('message', __('Not Found'))
+@section('meta.title', 'Упс')
+
+@section('content')
+<div class="content">
+    <p class="alert small empty">Мхм, здесь ничего нет...</p>
+</div>
+@endsection

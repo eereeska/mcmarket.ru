@@ -1,5 +1,9 @@
-@extends('errors::minimal')
+@extends('layouts.app')
 
-@section('title', __('Too Many Requests'))
-@section('code', '429')
-@section('message', __('Too Many Requests'))
+@section('meta.title', 'А-я-я-й')
+
+@section('content')
+<div class="content">
+    <p class="alert small red">Вы отправляете слишком много запросов. Отдохните немного</p>
+</div>
+@endsection

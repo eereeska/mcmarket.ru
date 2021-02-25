@@ -18,7 +18,8 @@ class FileSubmitRequest extends FormRequest
             'title' => ['required', 'min:3', 'max:60'],
             'name' => ['required', 'min:3', 'max:20'],
             'type' => ['required', 'in:free,paid,nulled'],
-            'file' => ['required', 'file', 'max:102400']
+            'file' => ['required', 'file', 'max:102400'],
+            'price' => ['nullable', 'numeric', 'min:1']
         ];
     }
 
@@ -37,7 +38,9 @@ class FileSubmitRequest extends FormRequest
             'type.in' => 'Тип файла имеет неверное значение',
             'file.required' => 'Укажите файл',
             'file.file' => 'Файл имеет неверный формат',
-            'file.max' => 'Максимальный размер файла: 100 МБ'
+            'file.max' => 'Максимальный размер файла: 100 МБ',
+            'price.numeric' => 'Цена указана в неверном формате',
+            'price.min' => 'Стоимость не может быть ниже 1 рубля'
         ];
     }
 }

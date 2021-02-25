@@ -53,7 +53,7 @@
         }
 
         &:hover &__mark {
-            background-color: var(--border);
+            background-color: var(--secondary-foreground);
         }
 
         input:checked ~ &__mark {

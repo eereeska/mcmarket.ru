@@ -762,7 +762,7 @@ p:last-child {
   transition: opacity 0.05s ease-in-out, transform 0.1s ease-in-out;
 }
 .checkbox.classic:hover .checkbox__mark {
-  background-color: var(--border);
+  background-color: var(--secondary-foreground);
 }
 .checkbox.classic input:checked ~ .checkbox__mark:after {
   opacity: 1;
@@ -856,7 +856,7 @@ p:last-child {
   transition: opacity 0.05s ease-in-out, transform 0.1s ease-in-out;
 }
 .radio:hover .radio__mark {
-  background-color: var(--border);
+  background-color: var(--secondary-foreground);
 }
 input:checked ~ .radio__mark {
   border-color: var(--primary);
@@ -1407,7 +1407,7 @@ p.alert.empty:before {
 .list_table > * {
   flex-grow: 1;
 }
-.list.loading {
+.list[data-loading] {
   opacity: 0.4;
   pointer-events: none;
   cursor: default;
@@ -1744,7 +1744,7 @@ p.alert.empty:before {
   display: none;
   margin: var(--margin-5) 0;
 }
-.hidden--visible {
+.hidden_visible {
   display: block;
 }
 
@@ -1763,7 +1763,10 @@ p.alert.empty:before {
 
 .label {
   display: block;
-  margin-bottom: var(--margin-3);
+  margin: var(--margin-3) 0;
+}
+.label:first-child {
+  margin-top: 0;
 }
 .label:last-child {
   margin-bottom: 0;
