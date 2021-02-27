@@ -41,7 +41,7 @@
 <div class="data data_compact">
     <div class="data__icon icon icon--clock"></div>
     <div class="data__info">
-        <h3 class="data__value" {{ $file->version_updated_at->format('d.m.Y h:i:s') }}>{{ $file->created_at->ago() }}</h3>
+        <h3 class="data__value"><time datetime="{{ $file->created_at->toAtomString() }}" title="{{ $file->created_at->format('d.m.Y h:i:s') }}">{{ $file->created_at->ago() }}</time></h3>
         <div class="data__desc">Загружен</div>
     </div>
 </div>

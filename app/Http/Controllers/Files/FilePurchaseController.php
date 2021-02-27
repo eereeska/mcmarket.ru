@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Files;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\FilePurchaseRequest;
 use App\Models\File;
 use App\Models\FilePurchase;
 use Illuminate\Http\Request;
@@ -12,8 +11,10 @@ use Illuminate\Support\Facades\DB;
 
 class FilePurchaseController extends Controller
 {
-    public function create(Request $request, File $file)
+    public function create(Request $request, $id)
     {
+        $file = File::where('id', $id)->first();
+        
         $user = $request->user();
 
         if (FilePurchase::where([

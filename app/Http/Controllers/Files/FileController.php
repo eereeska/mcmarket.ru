@@ -17,11 +17,9 @@ class FileController extends Controller
 {
     public function index(Request $request)
     {
-        $categories = $this->getCategories();
+        $categories = FileCategoryController::getCategories();
 
-        $files = $this->getFilteredFiles($request, $categories);
-
-        // TODO: cache files
+        $files = FileFilterController::filter($request, $categories);
 
         if ($request->ajax()) {
             return response()->json(view('components.files._files', [
@@ -38,7 +36,7 @@ class FileController extends Controller
     public function submit()
     {
         return view('files.submit', [
-            'categories' => $this->getCategories()
+            'categories' => FileCategoryController::getCategories()
         ]);
     }
 
@@ -152,9 +150,13 @@ class FileController extends Controller
             return back();
         }
 
+        if (auth()->user()->role->can_approve_files) {
+            return redirect()->route('admin.file.edit', ['id' => $file->id]);
+        }
+
         return view('files.edit', [
             'file' => $file,
-            'categories' => $this->getCategories()
+            'categories' => FileCategoryController::getCategories()
         ]);
     }
 
@@ -223,7 +225,7 @@ class FileController extends Controller
             ]);
         }
 
-        Storage::delete('app/files/' . $file->path . '.' . $file->extension);
+        Storage::delete('app/' . $file->path . '.' . $file->extension);
 
         $file->delete();
 
@@ -242,67 +244,6 @@ class FileController extends Controller
         }
 
         return round($bytes, 2) . ' ' . $units[$i];
-    }
-
-    private function getFilteredFiles(Request $request, $categories = null) {
-        if (is_null($categories)) {
-            $categories = $this->getCategories();
-        }
-
-        // TODO: cache
-
-        $files = File::query();
-
-        $files = $files->where([
-            'is_visible' => true,
-            'is_approved' => true
-        ]);
-
-        $files = $files->when($request->get('from'), function($query) use ($request) {
-            return $query->where('user_id', $request->from);
-        });
-
-        $files = $files->when(in_array($request->get('category'), $categories->pluck('name')->toArray()), function($query) use ($request, $categories) {
-            return $query->where('category_id', $categories->where('name', $request->category)->pluck('id'));
-        });
-
-        $files = $files->when(in_array($request->get('type'), ['free', 'paid', 'nulled']), function ($query) use ($request) {
-            return $query->where('type', $request->type);
-        });
-
-        $sort = [
-            'update_up' => 'version_updated_at',
-            'update_down' => 'version_updated_at',
-            'new_up' => 'created_at',
-            'new_down' => 'created_at',
-            'downloads_up' => 'downloads_count',
-            'downloads_down' => 'downloads_count',
-            'views_up' => 'views_count',
-            'views_down' => 'views_count'
-        ];
-
-        $files = $files->when(array_key_exists($request->get('sort'), $sort), function ($query) use ($request, $sort) {
-            return $query->orderBy($sort[$request->sort], substr($request->sort, -strlen($request->sort)) === 'up' ? 'asc' : 'desc');
-        }, function($query) {
-            return $query->orderBy('version_updated_at', 'desc');
-        });
-
-        return $files->with(['category', 'user' => function($query) {
-            return $query->select(['id', 'name', 'avatar']);
-        }])->paginate(2)->appends($request->only(['category', 'type', 'sort']));
-    }
-
-    private function getCategories($fresh = false)
-    {
-        $cache_key = 'file.categories';
-
-        if ($fresh) {
-            Cache::forget($cache_key);
-        }
-
-        return Cache::rememberForever($cache_key, function() {
-            return FileCategory::orderBy('title')->get();
-        });
     }
 
     public static function normalizeDescription($description)

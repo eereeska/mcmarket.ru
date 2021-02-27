@@ -17,7 +17,21 @@
             </ul>
         </h3>
         <div class="data__desc">
-            @include('components.files._meta')
+            <div class="data__hidden" data-on-hover="show">
+                <label class="checkbox classic">
+                    <input type="checkbox" name="is_visible" value="1" {{ $file->is_visible ? 'checked' : '' }} data-on-change="request" data-method="post" data-url="{{ route('admin.file.approve', ['id' => $file->id]) }}">
+                    <span class="checkbox__mark"></span>
+                    <span class="checkbox__label">Видимый</span>
+                </label>
+                <label class="checkbox classic">
+                    <input type="checkbox" name="is_approved" value="1" {{ $file->is_approved ? 'checked' : '' }} data-on-change="request" data-method="post" data-url="{{ route('admin.file.approve', ['id' => $file->id]) }}">
+                    <span class="checkbox__mark"></span>
+                    <span class="checkbox__label">Одобрен</span>
+                </label>
+            </div>
+            <div class="data__hidden" data-on-hover="hide">
+                @include('components.files._meta')
+            </div>
         </div>
     </div>
 </div>

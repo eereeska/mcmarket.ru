@@ -7,8 +7,13 @@ use Illuminate\Http\Request;
 
 class UserFileController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        return view()
+        $categories = FileCategoryController::getCategories();
+
+        return view('files.user.index', [
+            'categories' => $categories,
+            'files' => FileFilterController::filter($request, $categories, auth()->user(), false)
+        ]);
     }
 }

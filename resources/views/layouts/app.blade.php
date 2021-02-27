@@ -53,8 +53,6 @@
     {{-- @include('misc.metrics') --}}
 
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-
-    @yield('header_scripts')
 </head>
 <body>
     <header class="header">
@@ -64,13 +62,13 @@
                 <nav class="header__nav">
                     <a href="#" @if (request()->is('u*')) class="active" @endif>Пользователи</a>
                     <a href="{{ route('groups-index') }}" @if (request()->is('group*')) class="active" @endif>Сообщества</a>
-                    @if (Auth::guest())
+                    @guest
                     <a href="{{ route('login') }}" @if (request()->is('login')) class="active" @endif>Вход</a>
                     <a href="{{ route('register') }}" @if (request()->is('register')) class="active" @endif>Регистрация</a>
-                    @endif
+                    @endguest
                 </nav>
             </div>
-            @if (Auth::check())
+            @auth
             <div class="header__right">
                 {{-- <a href="{{ route('conversations.index') }}" class="header__conversations icon icon--comments"></a> --}}
                 <a href="{{ route('user.show', ['user' => auth()->user() ]) }}" class="header__profile">
@@ -78,25 +76,13 @@
                     <span>{{ auth()->user()->name }}</span>
                 </a>
             </div>
-            @endif
+            @endauth
         </div>
     </header>
     <main class="page">
         @yield('content')
     </main>
-    <footer class="footer">
-        <div class="footer__inner">
-            <div class="footer__left">
-                <a href="{{ route('home') }}" class="footer__link">Minecraft Маркет &copy {{ now()->format('Y') }} MCMarket.ru</a>
-            </div>
-            <div class="footer__right">
-                <a href="{{ route('contact') }}" class="footer__link">Контакты</a>
-                <a href="{{ route('terms') }}" class="footer__link">Условия и правила</a>
-                <a href="{{ route('privacy') }}" class="footer__link">Политика конфиденциальности</a>
-            </div>
-        </div>
-    </footer>
+    @include('components._footer')
     <script src="{{ asset('js/app.js') }}"></script>
-    @yield('footer_scripts')
 </body>
 </html>

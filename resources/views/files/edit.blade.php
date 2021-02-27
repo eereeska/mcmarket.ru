@@ -1,7 +1,6 @@
-@extends('layouts.app', [
-    'page_classes' => 'file',
-    'title' => 'Редактирование файла ' . $file->name
-])
+@extends('layouts.app')
+
+@section('meta.title', 'Редактирование файла ' . $file->name)
 
 @section('content')
 <div class="content">
@@ -201,7 +200,7 @@
                 <h2 class="section__title">Опасная зона</h2>
             </div>
             <div class="section__content">
-                <a href="{{ route('file.delete', ['id' => $file->id]) }}" data-action="request" data-method="post" data-confirm="Вы уверены, что хотите удалить «{{ $file->name }}»" class="data data_compact">
+                <a href="{{ route('file.delete', ['id' => $file->id]) }}" data-request="delete" data-confirm="Вы уверены, что хотите удалить «{{ $file->name }}»" class="data data_compact">
                     <div class="data__icon icon icon--trash-alt"></div>
                     <div class="data__info">
                         <h3 class="data__value">Удалить файл</h3>

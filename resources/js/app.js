@@ -1,52 +1,9 @@
-// const { default: axios } = require('axios');
-
-// window.$ = window.jQuery = require('jquery/dist/jquery.slim');
-// window.axios = require('axios');
-// window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
-
-// $.fn.insertAtCaret = function (text) {
-//     return this.each(function () {
-//         if (document.selection && this.tagName == 'TEXTAREA') {
-//             this.focus();
-//             sel = document.selection.createRange();
-//             sel.text = text;
-//             this.focus();
-//         } else if (this.selectionStart || this.selectionStart == '0') {
-//             startPos = this.selectionStart;
-//             endPos = this.selectionEnd;
-//             scrollTop = this.scrollTop;
-//             this.value = this.value.substring(0, startPos) + text + this.value.substring(endPos, this.value.length);
-//             this.focus();
-//             this.selectionStart = startPos + text.length;
-//             this.selectionEnd = startPos + text.length;
-//             this.scrollTop = scrollTop;
-//         } else {
-//             this.value += text;
-//             this.focus();
-//             this.value = this.value;
-//         }
-//     });
-// };
-
-// require('./modules/ajaxSearch');
-// require('./modules/select');
-// require('./rte');
-
 import './modules/smartAttributes';
 import './modules/rte';
 import './modules/files';
 import './modules/select';
 import './modules/hide';
-
-// var messages = {
-//     requestError: 'Произошла ошибка при обработке запроса. Попробуйте позже.'
-// }
-
-// require('./modules/loadMore');
-
-// $(document).on('input', 'textarea.auto-resize', function() {
-//     $(this).css('height', $(this).[0].scrollHeight + 10);
-// });
+import './modules/toggle';
 
 // $(document).on('change', 'form[data-action="search"] input, form[data-action="search"] select', function(e) {
 //     var $form = $(this).closest('form[data-action="search"]');

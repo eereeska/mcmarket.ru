@@ -4,48 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ACP</title>
-
     <meta name="robots" content="noindex">
-
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-
-    @yield('header_scripts')
 </head>
 <body>
     <header class="header">
         <div class="header__inner">
             <div class="header__left">
-                <a href="{{ route('home') }}" class="header__logo">MCMarket</a>
+                <a href="{{ route('admin.index') }}" class="header__logo">ACP</a>
                 <nav class="header__nav">
                     <a href="#" @if (request()->is('u*')) class="active" @endif>Пользователи</a>
                     <a href="{{ route('groups-index') }}" @if (request()->is('group*')) class="active" @endif>Сообщества</a>
                 </nav>
             </div>
             <div class="header__right">
-                <a href="#" class="header__notifications icon icon--bell"></a>
-                <a href="{{ route('user-show', ['name' => Auth::user()->name ]) }}" class="header__profile">
-                    @include('components._avatar', ['user' => Auth::user()])
-                    <span>{{ Auth::user()->name }}</span>
+                <a href="{{ route('user.show', ['user' => auth()->user() ]) }}" class="header__profile">
+                    @include('components._avatar', ['user' => auth()->user()])
+                    <span>{{ auth()->user()->name }}</span>
                 </a>
             </div>
         </div>
     </header>
-    <main id="root" class="page {{ $page_classes ?? '' }}">
+    <main class="page">
         @yield('content')
     </main>
-    <footer class="footer">
-        <div class="footer__inner">
-            <div class="footer__left">
-                <a href="{{ route('home') }}" class="footer__link">Minecraft Маркет &copy {{ now()->format('Y') }} MCMarket.ru</a>
-            </div>
-            <div class="footer__right">
-                <a href="{{ route('contact') }}" class="footer__link">Контакты</a>
-                <a href="{{ route('terms') }}" class="footer__link">Условия и правила</a>
-                <a href="{{ route('privacy') }}" class="footer__link">Политика конфиденциальности</a>
-            </div>
-        </div>
-    </footer>
+    @include('components._footer')
     <script src="{{ asset('js/app.js') }}"></script>
-    @yield('footer_scripts')
 </body>
 </html>

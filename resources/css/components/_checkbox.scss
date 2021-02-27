@@ -21,11 +21,6 @@
         position: relative;
         display: block;
         padding-left: 25px;
-        margin-bottom: var(--margin-3);
-
-        &:last-child {
-            margin-bottom: 0;
-        }
 
         .checkbox__mark {
             position: absolute;

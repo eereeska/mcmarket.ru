@@ -140,7 +140,7 @@ span.green {
   font-weight: 300;
   font-display: block;
   src: url(/fonts/fa-light-300.eot?1bdff46d9f25dde635e0d69c3b83b4c2);
-  src: url(/fonts/fa-light-300.eot?1bdff46d9f25dde635e0d69c3b83b4c2?#iefix) format("embedded-opentype"), url(/fonts/fa-light-300.woff2?fc1caad4139f764993b367547a5fb464) format("woff2"), url(/fonts/fa-light-300.woff?5d111e0fbbaced46646e0122f415f528) format("woff"), url(/fonts/fa-light-300.ttf?8fe0bd1d3e62c597a0c46a61a89cbb87) format("truetype"), url(/fonts/fa-light-300.svg?9854c36138c2880f36f0e39fe608b174#fontawesome) format("svg");
+  src: url(/fonts/fa-light-300.eot?1bdff46d9f25dde635e0d69c3b83b4c2) format("embedded-opentype"), url(/fonts/fa-light-300.woff2?fc1caad4139f764993b367547a5fb464) format("woff2"), url(/fonts/fa-light-300.woff?5d111e0fbbaced46646e0122f415f528) format("woff"), url(/fonts/fa-light-300.ttf?8fe0bd1d3e62c597a0c46a61a89cbb87) format("truetype"), url(/fonts/fa-light-300.svg?9854c36138c2880f36f0e39fe608b174) format("svg");
 }
 @font-face {
   font-family: "Font Awesome 5 Pro";
@@ -148,7 +148,7 @@ span.green {
   font-weight: 400;
   font-display: block;
   src: url(/fonts/fa-regular-400.eot?46bbd47ac2b9b0cdfae2b5b9b57d9739);
-  src: url(/fonts/fa-regular-400.eot?46bbd47ac2b9b0cdfae2b5b9b57d9739?#iefix) format("embedded-opentype"), url(/fonts/fa-regular-400.woff2?ad461e5fa7137fee6f95bd0dbe8c1256) format("woff2"), url(/fonts/fa-regular-400.woff?5fd5b25f40f21aa40fd50ba05add5a03) format("woff"), url(/fonts/fa-regular-400.ttf?d02baad177fca99e27384335a509dbf3) format("truetype"), url(/fonts/fa-regular-400.svg?0918417c8847dc9296253ab60da9fe54#fontawesome) format("svg");
+  src: url(/fonts/fa-regular-400.eot?46bbd47ac2b9b0cdfae2b5b9b57d9739) format("embedded-opentype"), url(/fonts/fa-regular-400.woff2?ad461e5fa7137fee6f95bd0dbe8c1256) format("woff2"), url(/fonts/fa-regular-400.woff?5fd5b25f40f21aa40fd50ba05add5a03) format("woff"), url(/fonts/fa-regular-400.ttf?d02baad177fca99e27384335a509dbf3) format("truetype"), url(/fonts/fa-regular-400.svg?0918417c8847dc9296253ab60da9fe54) format("svg");
 }
 @font-face {
   font-family: "Font Awesome 5 Pro";
@@ -156,7 +156,7 @@ span.green {
   font-weight: 900;
   font-display: block;
   src: url(/fonts/fa-solid-900.eot?06fbe2ee912e35f2c53cab490ede1f25);
-  src: url(/fonts/fa-solid-900.eot?06fbe2ee912e35f2c53cab490ede1f25?#iefix) format("embedded-opentype"), url(/fonts/fa-solid-900.woff2?649614c34cb1aaa227bd7e72460c32fd) format("woff2"), url(/fonts/fa-solid-900.woff?57fd8d0e738650c8826619776f100051) format("woff"), url(/fonts/fa-solid-900.ttf?b645fda76c34402c35882904988eb160) format("truetype"), url(/fonts/fa-solid-900.svg?49819e9c7564110f4b04c9b0eb125b85#fontawesome) format("svg");
+  src: url(/fonts/fa-solid-900.eot?06fbe2ee912e35f2c53cab490ede1f25) format("embedded-opentype"), url(/fonts/fa-solid-900.woff2?649614c34cb1aaa227bd7e72460c32fd) format("woff2"), url(/fonts/fa-solid-900.woff?57fd8d0e738650c8826619776f100051) format("woff"), url(/fonts/fa-solid-900.ttf?b645fda76c34402c35882904988eb160) format("truetype"), url(/fonts/fa-solid-900.svg?49819e9c7564110f4b04c9b0eb125b85) format("svg");
 }
 @font-face {
   font-family: "Font Awesome 5 Brands";
@@ -164,12 +164,12 @@ span.green {
   font-weight: 400;
   font-display: block;
   src: url(/fonts/fa-brands-400.eot?05718c797d47f884efcbfafe44d2ca95);
-  src: url(/fonts/fa-brands-400.eot?05718c797d47f884efcbfafe44d2ca95?#iefix) format("embedded-opentype"), url(/fonts/fa-brands-400.woff2?29ff4724bd1b1e774a0195c2f9b1eaf2) format("woff2"), url(/fonts/fa-brands-400.woff?13a061ea7f526a9e20fd2a8e26d4223c) format("woff"), url(/fonts/fa-brands-400.ttf?3059d606e43fea58d959a586c2b09a47) format("truetype"), url(/fonts/fa-brands-400.svg?be027a977050ea00685a8fca398849dd#fontawesome) format("svg");
+  src: url(/fonts/fa-brands-400.eot?05718c797d47f884efcbfafe44d2ca95) format("embedded-opentype"), url(/fonts/fa-brands-400.woff2?29ff4724bd1b1e774a0195c2f9b1eaf2) format("woff2"), url(/fonts/fa-brands-400.woff?13a061ea7f526a9e20fd2a8e26d4223c) format("woff"), url(/fonts/fa-brands-400.ttf?3059d606e43fea58d959a586c2b09a47) format("truetype"), url(/fonts/fa-brands-400.svg?be027a977050ea00685a8fca398849dd) format("svg");
 }
 @font-face {
   font-family: "Nunito";
   src: url(/fonts/Nunito-Black.eot?0844941c19c9587d6a8ce1cdf0e0e693);
-  src: url(/fonts/Nunito-Black.eot?0844941c19c9587d6a8ce1cdf0e0e693?#iefix) format("embedded-opentype"), url(/fonts/Nunito-Black.woff2?cddf5d51af3a8b01fc0189adb54fd3d8) format("woff2"), url(/fonts/Nunito-Black.woff?5db49198f9e07c744f3a470a2cdc1f42) format("woff"), url(/fonts/Nunito-Black.ttf?430350a8e69f2dd2f1f96bddf6e08c7f) format("truetype"), url(/fonts/Nunito-Black.svg?e5b22a670b56702cd6173d86bccdc07f#Nunito-Black) format("svg");
+  src: url(/fonts/Nunito-Black.eot?0844941c19c9587d6a8ce1cdf0e0e693) format("embedded-opentype"), url(/fonts/Nunito-Black.woff2?cddf5d51af3a8b01fc0189adb54fd3d8) format("woff2"), url(/fonts/Nunito-Black.woff?5db49198f9e07c744f3a470a2cdc1f42) format("woff"), url(/fonts/Nunito-Black.ttf?430350a8e69f2dd2f1f96bddf6e08c7f) format("truetype"), url(/fonts/Nunito-Black.svg?e5b22a670b56702cd6173d86bccdc07f) format("svg");
   font-weight: 900;
   font-style: normal;
   font-display: swap;
@@ -177,7 +177,7 @@ span.green {
 @font-face {
   font-family: "Nunito";
   src: url(/fonts/Nunito-Bold.eot?81cc66858ad5c6bdda339383fb7f3eef);
-  src: url(/fonts/Nunito-Bold.eot?81cc66858ad5c6bdda339383fb7f3eef?#iefix) format("embedded-opentype"), url(/fonts/Nunito-Bold.woff2?e7c6d919a3967270fc2311f21f9abfd9) format("woff2"), url(/fonts/Nunito-Bold.woff?99eccd9b275c50e648b584ee34f9ebc1) format("woff"), url(/fonts/Nunito-Bold.ttf?977c6bbf70df1ffbef197b109fff1f32) format("truetype"), url(/fonts/Nunito-Bold.svg?e1011b3c8bbad8a2abc62ced2462f8a7#Nunito-Bold) format("svg");
+  src: url(/fonts/Nunito-Bold.eot?81cc66858ad5c6bdda339383fb7f3eef) format("embedded-opentype"), url(/fonts/Nunito-Bold.woff2?e7c6d919a3967270fc2311f21f9abfd9) format("woff2"), url(/fonts/Nunito-Bold.woff?99eccd9b275c50e648b584ee34f9ebc1) format("woff"), url(/fonts/Nunito-Bold.ttf?977c6bbf70df1ffbef197b109fff1f32) format("truetype"), url(/fonts/Nunito-Bold.svg?e1011b3c8bbad8a2abc62ced2462f8a7) format("svg");
   font-weight: bold;
   font-style: normal;
   font-display: swap;
@@ -185,7 +185,7 @@ span.green {
 @font-face {
   font-family: "Nunito";
   src: url(/fonts/Nunito-ExtraBold.eot?48dc8ac7f50ae1cea2551e91167c9e78);
-  src: url(/fonts/Nunito-ExtraBold.eot?48dc8ac7f50ae1cea2551e91167c9e78?#iefix) format("embedded-opentype"), url(/fonts/Nunito-ExtraBold.woff2?8e266502d01af09302f55e5f4ef6a08b) format("woff2"), url(/fonts/Nunito-ExtraBold.woff?8d28111b968bf30ee57102f546028ebb) format("woff"), url(/fonts/Nunito-ExtraBold.ttf?ba3f85a898cfdaf4bb7905ba323d1145) format("truetype"), url(/fonts/Nunito-ExtraBold.svg?eefacb3c07f6aa7408d53c1749aee214#Nunito-ExtraBold) format("svg");
+  src: url(/fonts/Nunito-ExtraBold.eot?48dc8ac7f50ae1cea2551e91167c9e78) format("embedded-opentype"), url(/fonts/Nunito-ExtraBold.woff2?8e266502d01af09302f55e5f4ef6a08b) format("woff2"), url(/fonts/Nunito-ExtraBold.woff?8d28111b968bf30ee57102f546028ebb) format("woff"), url(/fonts/Nunito-ExtraBold.ttf?ba3f85a898cfdaf4bb7905ba323d1145) format("truetype"), url(/fonts/Nunito-ExtraBold.svg?eefacb3c07f6aa7408d53c1749aee214) format("svg");
   font-weight: 800;
   font-style: normal;
   font-display: swap;
@@ -193,7 +193,7 @@ span.green {
 @font-face {
   font-family: "Nunito";
   src: url(/fonts/Nunito-ExtraLight.eot?1da971816565142c1a6ce81227fc082f);
-  src: url(/fonts/Nunito-ExtraLight.eot?1da971816565142c1a6ce81227fc082f?#iefix) format("embedded-opentype"), url(/fonts/Nunito-ExtraLight.woff2?1a0cd706bffc1122b20f092f7f18c06a) format("woff2"), url(/fonts/Nunito-ExtraLight.woff?8135a3b916a00374b6067d4feeaba773) format("woff"), url(/fonts/Nunito-ExtraLight.ttf?12f7bf5244646a2b4d127452f1213115) format("truetype"), url(/fonts/Nunito-ExtraLight.svg?5096073fa2b6643f3e315bf6d0ae6c2c#Nunito-ExtraLight) format("svg");
+  src: url(/fonts/Nunito-ExtraLight.eot?1da971816565142c1a6ce81227fc082f) format("embedded-opentype"), url(/fonts/Nunito-ExtraLight.woff2?1a0cd706bffc1122b20f092f7f18c06a) format("woff2"), url(/fonts/Nunito-ExtraLight.woff?8135a3b916a00374b6067d4feeaba773) format("woff"), url(/fonts/Nunito-ExtraLight.ttf?12f7bf5244646a2b4d127452f1213115) format("truetype"), url(/fonts/Nunito-ExtraLight.svg?5096073fa2b6643f3e315bf6d0ae6c2c) format("svg");
   font-weight: 200;
   font-style: normal;
   font-display: swap;
@@ -201,7 +201,7 @@ span.green {
 @font-face {
   font-family: "Nunito";
   src: url(/fonts/Nunito-Light.eot?e48dab2272ce8da464bf4e2a55d01c79);
-  src: url(/fonts/Nunito-Light.eot?e48dab2272ce8da464bf4e2a55d01c79?#iefix) format("embedded-opentype"), url(/fonts/Nunito-Light.woff2?68b15fd116fef463a9e1b882c5bbf023) format("woff2"), url(/fonts/Nunito-Light.woff?768d10645f5a17c35ecff2da224c76ff) format("woff"), url(/fonts/Nunito-Light.ttf?a664b86f94eba09ee4ccfff725459a11) format("truetype"), url(/fonts/Nunito-Light.svg?03e64a84593cc032516779d1604725d0#Nunito-Light) format("svg");
+  src: url(/fonts/Nunito-Light.eot?e48dab2272ce8da464bf4e2a55d01c79) format("embedded-opentype"), url(/fonts/Nunito-Light.woff2?68b15fd116fef463a9e1b882c5bbf023) format("woff2"), url(/fonts/Nunito-Light.woff?768d10645f5a17c35ecff2da224c76ff) format("woff"), url(/fonts/Nunito-Light.ttf?a664b86f94eba09ee4ccfff725459a11) format("truetype"), url(/fonts/Nunito-Light.svg?03e64a84593cc032516779d1604725d0) format("svg");
   font-weight: 300;
   font-style: normal;
   font-display: swap;
@@ -209,7 +209,7 @@ span.green {
 @font-face {
   font-family: "Nunito";
   src: url(/fonts/Nunito-Regular.eot?47b9edbb80b403aa391e594d8d5bd7d3);
-  src: url(/fonts/Nunito-Regular.eot?47b9edbb80b403aa391e594d8d5bd7d3?#iefix) format("embedded-opentype"), url(/fonts/Nunito-Regular.woff2?31a7171e0212ec4660335a92e85e0dd6) format("woff2"), url(/fonts/Nunito-Regular.woff?1d0a455cc4c6f6e4d5215bdf838e8dac) format("woff"), url(/fonts/Nunito-Regular.ttf?03b964590c2917848f80bc1db680b492) format("truetype"), url(/fonts/Nunito-Regular.svg?f86396c4468a37dddd73b88ba1f9a6b6#Nunito-Regular) format("svg");
+  src: url(/fonts/Nunito-Regular.eot?47b9edbb80b403aa391e594d8d5bd7d3) format("embedded-opentype"), url(/fonts/Nunito-Regular.woff2?31a7171e0212ec4660335a92e85e0dd6) format("woff2"), url(/fonts/Nunito-Regular.woff?1d0a455cc4c6f6e4d5215bdf838e8dac) format("woff"), url(/fonts/Nunito-Regular.ttf?03b964590c2917848f80bc1db680b492) format("truetype"), url(/fonts/Nunito-Regular.svg?f86396c4468a37dddd73b88ba1f9a6b6) format("svg");
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -217,7 +217,7 @@ span.green {
 @font-face {
   font-family: "Nunito";
   src: url(/fonts/Nunito-SemiBold.eot?3908ed76343bd7613fa34898f6f96a37);
-  src: url(/fonts/Nunito-SemiBold.eot?3908ed76343bd7613fa34898f6f96a37?#iefix) format("embedded-opentype"), url(/fonts/Nunito-SemiBold.woff2?c788dbb98f959e64a4273c82a5fffe41) format("woff2"), url(/fonts/Nunito-SemiBold.woff?dfe112bb72ecb2e4d568c0a4cd730ee4) format("woff"), url(/fonts/Nunito-SemiBold.ttf?5d42381a68a8330aef92b0dc6ce009f3) format("truetype"), url(/fonts/Nunito-SemiBold.svg?806f683fb1ca32cf39fdb58edc6f2e47#Nunito-SemiBold) format("svg");
+  src: url(/fonts/Nunito-SemiBold.eot?3908ed76343bd7613fa34898f6f96a37) format("embedded-opentype"), url(/fonts/Nunito-SemiBold.woff2?c788dbb98f959e64a4273c82a5fffe41) format("woff2"), url(/fonts/Nunito-SemiBold.woff?dfe112bb72ecb2e4d568c0a4cd730ee4) format("woff"), url(/fonts/Nunito-SemiBold.ttf?5d42381a68a8330aef92b0dc6ce009f3) format("truetype"), url(/fonts/Nunito-SemiBold.svg?806f683fb1ca32cf39fdb58edc6f2e47) format("svg");
   font-weight: 600;
   font-style: normal;
   font-display: swap;
@@ -709,6 +709,9 @@ p:last-child {
 .select__option:hover {
   background-color: var(--secondary-foreground);
 }
+.select__option_reset {
+  color: var(--red);
+}
 .select__option_selected {
   display: none;
 }
@@ -731,10 +734,6 @@ p:last-child {
   position: relative;
   display: block;
   padding-left: 25px;
-  margin-bottom: var(--margin-3);
-}
-.checkbox.classic:last-child {
-  margin-bottom: 0;
 }
 .checkbox.classic .checkbox__mark {
   position: absolute;
@@ -1030,7 +1029,7 @@ button {
 .section_compact {
   margin-bottom: var(--margin-5);
 }
-.section.small {
+.section_small {
   margin-bottom: var(--margin-3);
 }
 .section--sticky {
@@ -1425,15 +1424,15 @@ p.alert.empty:before {
 .data_compact {
   margin-bottom: var(--margin-4);
 }
-.data.is-loading {
+.data[data-loading] {
   pointer-events: none;
   opacity: 0.7;
 }
-.data.is-loading .data__icon {
+.data[data-loading] .data__icon {
   position: relative;
   background-image: unset;
 }
-.data.is-loading .data__icon::before {
+.data[data-loading] .data__icon::before {
   content: "";
   display: inline-block;
   -webkit-animation: spin 2s linear infinite;
@@ -1479,15 +1478,28 @@ p.alert.empty:before {
   gap: var(--gap-1);
 }
 .data__hidden {
-  opacity: 0;
-  transform: translateX(-5px);
-  transition: opacity 0.1s ease-in-out, transform 0.1s ease-in-out;
-  pointer-events: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gap-2);
+  transition: opacity 0.1s ease, transform 0.2s ease;
 }
-.data:hover .data__hidden.data__hidden--hover {
+.data__hidden[data-on-hover=show] {
+  position: absolute;
+  opacity: 0;
+  transform: translateY(-5px);
+  visibility: hidden;
+}
+.data:hover .data__hidden[data-on-hover=show] {
+  position: unset;
   opacity: 1;
-  transform: translateX(0);
-  pointer-events: unset;
+  transform: translateY(0);
+  visibility: visible;
+}
+.data:hover .data__hidden[data-on-hover=hide] {
+  position: absolute;
+  opacity: 0;
+  transform: translateY(-5px);
+  visibility: hidden;
 }
 
 .tabs {
@@ -1770,6 +1782,42 @@ p.alert.empty:before {
 }
 .label:last-child {
   margin-bottom: 0;
+}
+
+.toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--gap-2);
+  cursor: pointer;
+}
+.toggle__checkbox {
+  position: absolute;
+  display: none;
+}
+.toggle__slider {
+  position: relative;
+  background-color: var(--red);
+  padding: var(--margin-3) var(--margin-5);
+  border-radius: 100px;
+  transition: all 0.1s ease;
+}
+.toggle__slider::before {
+  content: "";
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  background-color: var(--background);
+  padding: var(--margin-2);
+  border-radius: 100px;
+  transition: all 0.1s ease;
+}
+.toggle_active .toggle__slider {
+  background-color: var(--green);
+}
+.toggle_active .toggle__slider::before {
+  left: calc(var(--margin-5) + 5px);
 }
 
 .forum__threads .forum__thread {

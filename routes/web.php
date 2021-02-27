@@ -92,7 +92,7 @@ Route::group(['prefix' => 'file'], function() {
             Route::post('/purchase', [FilePurchaseController::class, 'store']);
             Route::get('/edit', [FileController::class, 'edit'])->name('file.edit');
             Route::post('/edit', [FileController::class, 'update']);
-            Route::post('/delete', [FileController::class, 'destroy'])->middleware('ajax')->name('file.delete');
+            Route::delete('/delete', [FileController::class, 'destroy'])->middleware('ajax')->name('file.delete');
             Route::post('/media', [FileMediaController::class, 'store'])->middleware('ajax')->name('file.media');
             Route::post('/media/{media}/delete', [FileMediaController::class, 'destroy'])->middleware('ajax')->name('file.media.delete');
 

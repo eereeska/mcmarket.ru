@@ -1,5 +1,38 @@
 import mcm from "../mcm";
 
+mcm.qsa('[data-request]').forEach(function(item) {
+    mcm.on('click', item, function(e) {
+        e.preventDefault();
+
+        var $clicked = this;
+
+        $clicked.setAttribute('data-loading', true);
+
+        if (item.hasAttribute('data-confirm') && !confirm(item.getAttribute('data-confirm'))) {
+            return;
+        }
+
+        mcm.request(item.getAttribute('data-request') || 'post', item.getAttribute('href') || item.getAttribute('data-url')).then(function(response) {
+            if (response.data.success) {
+                if (response.data.hasOwnProperty('redirect')) {
+                    window.location.href = response.data.redirect;
+                } else {
+                    setTimeout(function() {
+                        $clicked.removeClass('success');
+                        $clicked.text($clicked.text());
+                    }, 2000);
+        
+                    $clicked.addClass('success');
+                }
+            } else {
+                alert(response.data.message);
+            }
+        }).finally(function() {
+            $clicked.removeAttribute('data-loading');
+        });
+    });
+});
+
 mcm.qsa('[data-submit]').forEach(function(item) {
     mcm.on('click', item, function(e) {
         e.preventDefault();
@@ -12,7 +45,7 @@ mcm.qsa('[data-submit]').forEach(function(item) {
 
         $target.dispatchEvent(new Event('submit'));
     });
-})
+});
 
 mcm.qsa('[data-on-change]').forEach(function(item) {
     var action = item.getAttribute('data-on-change');
@@ -28,6 +61,15 @@ mcm.qsa('[data-on-change]').forEach(function(item) {
             }
 
             form.dispatchEvent(new Event('submit'));
+        } else if (action == 'request') {
+            mcm.request(item.getAttribute('data-method') || 'post', item.getAttribute('data-url'), {
+                checked: item.checked
+            }).then(function(response) {
+                console.log(response)
+                if (response.data.success) {
+
+                }
+            });
         }
     });
 });

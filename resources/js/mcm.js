@@ -21,9 +21,9 @@ mcm.prototype.on = function(event, target, callback) {
 
 mcm.prototype.request = function(method, url, data) {
     var a = axios({
-        method,
-        url,
-        data,
+        method: method,
+        url: url,
+        data: data,
         headers: {
             'X-Requested-With': 'XMLHttpRequest',
             'X-CSRF-TOKEN': document.documentElement.dataset.csrf
@@ -31,10 +31,12 @@ mcm.prototype.request = function(method, url, data) {
     });
 
     a.catch(function(error) {
-        if (error.response?.status == 419) {
-            alert('Срок действия CSRF токена истёк Пожалуйста, обновите страницу и попробуйте снова');
+        if (error.response) {
+            if (error.response.status == 419) {
+                alert('Срок действия CSRF токена истёк Пожалуйста, обновите страницу и попробуйте снова');
+            }
         } else {
-            alert(error.response?.data.message || 'Произошла ошибка во время обработки запроса. Пожалуйста, попробуйте позже');
+            alert('Произошла ошибка во время обработки запроса. Пожалуйста, попробуйте позже');
         }
     });
 
@@ -42,9 +44,11 @@ mcm.prototype.request = function(method, url, data) {
 }
 
 mcm.prototype.parseHTML = function(string) {
-    var t = document.createElement('template');
-    t.innerHTML = string;
-    return t.content.cloneNode(true);
+    return new DOMParser().parseFromString(string, 'text/html');
+}
+
+mcm.prototype.notification = function(message) {
+    return new Notification(message);
 }
 
 export default new mcm();

@@ -9,7 +9,7 @@ class AjaxOnly
 {
     public function handle(Request $request, Closure $next)
     {
-        if (!$request->ajax()) {
+        if ($request->method != 'delete' && !$request->expectsJson()) {
             return back();
         }
         

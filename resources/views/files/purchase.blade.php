@@ -1,32 +1,30 @@
 @extends('layouts.app')
 
-@section('meta.title', 'Покупка ' . $file->short_title)
+@section('meta.title', 'Покупка ' . $file->name)
 @section('meta.description', 'Покупка «' . $file->title . '»')
 
 @if ($file->keywords)
-@section('meta.keywords', '{{ $file->keywords }}')
+@section('meta.keywords', $file->keywords)
 @endif
 
 @if ($file->cover_path)
-@section('meta.og:image')
-<meta property="og:image" content="{{ asset('covers/' . $file->cover_path) }}">
-@endsection
+@section('meta.og:image', asset('covers/' . $file->cover_path))
 @endif
 
 @section('content')
 <div class="content">
     <section class="section">
         <div class="section__header">
-            <h1 class="section__title">Приобритение «{{ $file->short_title }}»</h1>
+            <h1 class="section__title">Приобритение «{{ $file->name }}»</h1>
             @if ($file->version)
             <span class="muted">{{ $file->version }}</span>
             @endif
         </div>
         <div class="section__content">
-            <p>Обратите внимание, что администрация сайта не несёт ответственность за файлы, размещённые участниками сообщества, но вы можете разместить новый запрос в арбитраж, если приобретённый файл не будет соответствует описанию</p>
+            <p>Обратите внимание, что администрация сайта не несёт ответственность за файлы, размещённые участниками сообщества, но вы можете разместить новый запрос в арбитраж, если приобретённый файл не будет соответствует описанию.</p>
         </div>
     </section>
-    <section class="section">
+    {{-- <section class="section">
         <div class="section__header">
             <h2 class="section__title">Комментарий продавца</h2>
         </div>
@@ -37,7 +35,7 @@
                 <li>Запрещено размещать где угодно</li>
             </ul>
         </div>
-    </section>
+    </section> --}}
 </div>
 <aside class="sidebar">
     <section class="section">
@@ -51,7 +49,7 @@
                 <h2 class="section__title">Действия</h2>
             </div>
             <div class="section__content">
-                <a href="{{ route('file-purchase', ['file' => $file]) }}" data-action="request" data-method="post" class="data data_compact">
+                <a href="{{ route('file.purchase', ['id' => $file->id]) }}" data-request="post" class="data data_compact">
                     <div class="data__icon icon icon--cart"></div>
                     <div class="data__info">
                         <h3 class="data__value">Купить</h3>
@@ -70,8 +68,8 @@
                 @endif
             </div>
             <div class="section__content">
-                <a href="{{ route('user-show', ['user' => $file->user]) }}" class="data">
-                    @include('components._avatar', ['user' => $file->user])
+                <a href="{{ route('user.show', ['user' => $file->user]) }}" class="data">
+                    <div class="data__icon avatar" style="background-image: url({{ $file->user->getAvatar() }});"></div>
                     <div class="data__info">
                         <h3 class="data__value">{{ $file->user->name }}</h3>
                     </div>
