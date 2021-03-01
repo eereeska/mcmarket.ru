@@ -12,7 +12,7 @@
         font-weight: 600;
         margin-right: auto;
 
-        &--required::after {
+        &_required::after {
             content: '*';
             color: var(--red);
             margin-left: var(--margin-1);

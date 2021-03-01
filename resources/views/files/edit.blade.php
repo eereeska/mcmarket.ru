@@ -16,7 +16,7 @@
                 @csrf
                 <section class="section">
                     <div class="section__header">
-                        <h2 class="section__title section__title--required">Категория</h2>
+                        <h2 class="section__title section__title_required">Категория</h2>
                     </div>
                     <div class="section__content">
                         @foreach ($categories as $category)
@@ -30,7 +30,7 @@
                 </section>
                 <section class="section">
                     <div class="section__header">
-                        <h2 class="section__title section__title--required">Заголовок</h2>
+                        <h2 class="section__title section__title_required">Заголовок</h2>
                     </div>
                     <div class="section__content">
                         <input type="text" name="title" placeholder="Отображается в заголовке страницы и при выдаче в поиске" value="{{ $file->title }}" class="input" maxlength="60" autocapitalize="none" autocorrect="off" autocomplete="off" required>
@@ -40,7 +40,7 @@
                 </section>
                 <section class="section">
                     <div class="section__header">
-                        <h2 class="section__title section__title--required">Название</h2>
+                        <h2 class="section__title section__title_required">Название</h2>
                     </div>
                     <div class="section__content">
                         <input type="text" name="name" placeholder="Отображается на главной странице и в названии файла" value="{{ $file->name }}" class="input" maxlength="20" autocapitalize="none" autocorrect="off" autocomplete="off" required>
@@ -49,7 +49,7 @@
                 <section class="section">
                     <div class="section__header">
                         <div class="section__header-left">
-                            <h2 class="section__title section__title--required">Тип</h2>
+                            <h2 class="section__title section__title_required">Тип</h2>
                         </div>
                     </div>
                     <div class="section__content">
@@ -76,7 +76,7 @@
                 </section>
                 <section class="section">
                     <div class="section__header">
-                        <h2 class="section__title section__title--required">Обложка</h2>
+                        <h2 class="section__title section__title_required">Обложка</h2>
                         <span class="muted">Рекомендуемый размер изображения: 300x300 пикселей</span>
                     </div>
                     <div class="section__content">
@@ -88,7 +88,7 @@
                 </section>
                 <section class="section">
                     <div class="section__header">
-                        <h2 class="section__title section__title--required">Описание</h2>
+                        <h2 class="section__title section__title_required">Описание</h2>
                     </div>
                     <div class="section__content">
                         <div class="editor">

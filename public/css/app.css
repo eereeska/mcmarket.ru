@@ -1007,7 +1007,7 @@ button {
   font-weight: 600;
   margin-right: auto;
 }
-.section__title--required::after {
+.section__title_required::after {
   content: "*";
   color: var(--red);
   margin-left: var(--margin-1);

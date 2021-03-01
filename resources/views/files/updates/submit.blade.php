@@ -18,7 +18,7 @@
                 @csrf
                 <section class="section">
                     <div class="section__header">
-                        <h2 class="section__title section__title--required">Новый файл</h2>
+                        <h2 class="section__title section__title_required">Новый файл</h2>
                     </div>
                     <div class="section__content">
                         <label class="file">

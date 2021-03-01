@@ -9,7 +9,7 @@
         @csrf
         <section class="section">
             <div class="section__header">
-                <h2 class="section__title section__title--required">Категория</h2>
+                <h2 class="section__title section__title_required">Категория</h2>
             </div>
             <div class="section__content">
                 @foreach ($categories as $category)
@@ -27,7 +27,7 @@
         </section>
         <section class="section">
             <div class="section__header">
-                <h2 class="section__title section__title--required">Заголовок</h2>
+                <h2 class="section__title section__title_required">Заголовок</h2>
             </div>
             <div class="section__content">
                 <input type="text" name="title" placeholder="Отображается в поиске Google, Яндекс и т.д." value="{{ old('title') }}" maxlength="60" autocapitalize="none" autocorrect="off" autocomplete="off" required class="input">
@@ -35,7 +35,7 @@
         </section>
         <section class="section">
             <div class="section__header">
-                <h2 class="section__title section__title--required">Название</h2>
+                <h2 class="section__title section__title_required">Название</h2>
             </div>
             <div class="section__content">
                 <input type="text" name="name" placeholder="Отображается на главной странице и в названии файла" value="{{ old('name') }}" maxlength="20" autocapitalize="none" autocorrect="off" autocomplete="off" required class="input">
@@ -44,7 +44,7 @@
         <section class="section">
             <div class="section__header">
                 <div class="section__header-left">
-                    <h2 class="section__title section__title--required">Тип</h2>
+                    <h2 class="section__title section__title_required">Тип</h2>
                     {{-- <p class="section__description">Бесплатные и Nulled файлы автоматически отправляются на проверку в <a href="https://www.virustotal.com" rel="nofollow" target="_blank" class="dashed">VirusTotal</a></p> --}}
                 </div>
             </div>
@@ -72,7 +72,7 @@
         </section>
         <section class="section">
             <div class="section__header">
-                <h2 class="section__title section__title--required">Файл</h2>
+                <h2 class="section__title section__title_required">Файл</h2>
             </div>
             <div class="section__content">
                 <label class="file">
@@ -90,7 +90,7 @@
             </div>
         </section> --}}
         {{-- <section class="section">
-            <h2 class="section__title section__title--required">Обложка</h2>
+            <h2 class="section__title section__title_required">Обложка</h2>
             <label class="file">
                 <input type="file" name="cover" accept="image/*" class="file__original">
                 <span class="file__label">Нажмите здесь или перетащите изображение</span>
