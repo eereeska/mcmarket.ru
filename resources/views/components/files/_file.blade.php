@@ -10,7 +10,7 @@
                 @if (request()->category != $file->category->name)
                 <li class="breadcrumb__item"><a href="{{ route('home', ['category' => $file->category->name]) }}">{{ $file->category->title }}</a></li>
                 @endif
-                <li class="breadcrumb__item breadcrumb__item--active"><a href="{{ route('file.show', ['id' => $file->id]) }}">{{ $file->name }}</a></li>
+                <li class="breadcrumb__item breadcrumb__item_active"><a href="{{ route('file.show', ['id' => $file->id]) }}">{{ $file->name }}</a></li>
                 @if ($file->type == 'paid' and $file->price)
                 <li class="breadcrumb__item breadcrumb__item_price">{{ $file->price }} @choice('рубль|рубля|рублей', $file->price)</li>
                 @endif

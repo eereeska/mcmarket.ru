@@ -1736,7 +1736,7 @@ p.alert.empty:before {
 .breadcrumb__item + .breadcrumb__item_price::before {
   content: "";
 }
-.breadcrumb__item--active {
+.breadcrumb__item_active {
   color: var(--black);
   font-weight: bold;
 }

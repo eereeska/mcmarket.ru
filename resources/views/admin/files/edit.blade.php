@@ -8,7 +8,7 @@
         <div class="section__header">
             <ul class="breadcrumb">
                 <li class="breadcrumb__item"><a href="{{ route('file.show', ['id' => $file->id]) }}">{{ $file->name }}</a></li>
-                <li class="breadcrumb__item breadcrumb__item--active">Редактирование</li>
+                <li class="breadcrumb__item breadcrumb__item_active">Редактирование</li>
             </ul>
         </div>
         <div class="section__content">

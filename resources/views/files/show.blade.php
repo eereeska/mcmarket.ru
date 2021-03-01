@@ -21,9 +21,9 @@
             <ul class="breadcrumb">
                 <li class="breadcrumb__item"><a href="{{ route('home', ['category' => $file->category->name]) }}">{{ $file->category->title }}</a></li>
                 @if ($file->is_visible)
-                <li class="breadcrumb__item breadcrumb__item--active"><h1>{{ $file->name }}</h1></li>
+                <li class="breadcrumb__item breadcrumb__item_active"><h1>{{ $file->name }}</h1></li>
                 @else
-                <li class="breadcrumb__item breadcrumb__item--active"><h1>{{ $file->name }} <span class="muted">(скрыт)</span></h1></li>
+                <li class="breadcrumb__item breadcrumb__item_active"><h1>{{ $file->name }} <span class="muted">(скрыт)</span></h1></li>
                 @endif
             </ul>
             @if ($file->version)

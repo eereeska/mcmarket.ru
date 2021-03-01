@@ -10,7 +10,7 @@
             <ul class="breadcrumb">
                 <li class="breadcrumb__item"><a href="{{ route('file.show', ['id' => $file->id]) }}">{{ $file->name }}</a></li>
                 <li class="breadcrumb__item"><a href="{{ route('file.edit', ['id' => $file->id]) }}">Редактирование</a></li>
-                <li class="breadcrumb__item breadcrumb__item--active">Обновление</li>
+                <li class="breadcrumb__item breadcrumb__item_active">Обновление</li>
             </ul>
         </div>
         <div class="section__content">
