@@ -44,7 +44,7 @@
     </section>
 </div>
 <aside class="sidebar">
-    <div class="sidebar__inner sidebar__inner--sticky">
+    <section class="section section_sticky">
         @auth
         <section class="section">
             <a href="{{ route('forum-thread-create') }}" class="button primary" data-ajax>Создать тему</a>

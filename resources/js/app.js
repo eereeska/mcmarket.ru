@@ -3,7 +3,7 @@ import './modules/rte';
 import './modules/files';
 import './modules/select';
 import './modules/hide';
-import './modules/toggle';
+import './modules/tabs';
 
 // $(document).on('change', 'form[data-action="search"] input, form[data-action="search"] select', function(e) {
 //     var $form = $(this).closest('form[data-action="search"]');
@@ -183,33 +183,3 @@ import './modules/toggle';
 // });
 
 // // DROPDOWN END
-
-// // TABS
-
-// $('.tabs > .tabs__tab').each(function() {
-//     if ($(this).hasClass('active')) {
-//         $($(this).attr('href')).addClass('active-tab');
-//     }
-// });
-
-// $(document).on('click', '.tabs > .tabs__tab', function(e) {
-//     e.preventDefault();
-
-//     $(this).siblings('.active').each(function() {
-//         $(this).removeClass('active');
-//     });
-
-//     if ($(this).hasClass('active')) {
-//         return;
-//     }
-
-//     $(this).addClass('active');
-
-//     $(this).parent().next('.tabs__content').find('> *').each(function() {
-//         $(this).removeClass('active-tab');
-//     });
-
-//     $($(this).attr('href')).addClass('active-tab');
-// })
-
-// // TABS END

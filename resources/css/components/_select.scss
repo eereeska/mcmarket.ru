@@ -1,10 +1,5 @@
 .select {
     position: relative;
-    margin-bottom: var(--margin-5);
-
-    &:last-of-type {
-        margin-bottom: 0;
-    }
 
     &_active {
         z-index: 10;
@@ -50,10 +45,6 @@
             color: var(--primary);
         }
     }
-
-    // &__search + &__selected  {
-    //     cursor: text;
-    // }
 
     &__search:focus + &__selected {
         opacity: 0;

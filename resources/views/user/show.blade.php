@@ -1,17 +1,14 @@
-@extends('layouts.app', [
-    'title' => $user->name,
-    'page_classes' => 'profile'
-])
+@extends('layouts.app')
+
+@section('meta.title', $user->name)
 
 @if (!$user->settings->is_search_engine_visible)
-@section('meta.robots')
-<meta name="robots" content="noindex" />
-@endsection
+@section('meta.robots', 'noindex')
 @endif
 
 @section('content')
 <aside class="sidebar">
-    <div class="sidebar__inner sidebar__inner--sticky">
+    <section class="section section_sticky">
         <section class="section">
             <div class="section__header">
                 @include('components._avatar', ['user' => $user, 'large' => true])
@@ -100,12 +97,12 @@
                 </div>
             </div>
         </section>
-    </div>
+    </section>
 </aside>
 <div class="content">
     <section class="section compact">
         @include('user._name', ['user' => $user])
-        <p>{{ $user->role_id == 1 ? 'Администратор' : 'Участник' }}{{ $user->settings->is_online_status_visible ?  $user->isOnline() ? ', сейчас онлайн' : ', оффлайн' : '' }}</p>
+        <p>{{ $user->role->title }}{{ $user->settings->is_online_status_visible ?  $user->isOnline() ? ', сейчас онлайн' : ', оффлайн' : '' }}</p>
     </section>
     {{-- <section class="section">
         <div class="data data_compact">
@@ -124,7 +121,8 @@
     @endif
     <section class="section">
         <div class="tabs">
-            <a href="#files" class="tabs__tab active">Файлы</a>
+            <a href="#files" class="tabs__tab tabs__tab_active">Файлы</a>
+            <a href="#goods" class="tabs__tab">Товары</a>
         </div>
         <div class="tabs__content">
             <div id="files" class="list active-tab">

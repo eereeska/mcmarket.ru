@@ -11,10 +11,6 @@
         display: none;
     }
 
-    &__description {
-
-    }
-
     &__slider {
         position: relative;
         background-color: var(--red);
@@ -34,11 +30,17 @@
         }
     }
 
-    &_active &__slider {
+    &__checkbox:checked + &__slider {
         background-color: var(--green);
     }
 
-    &_active &__slider::before {
+    &__checkbox:checked + &__slider::before {
         left: calc(var(--margin-5) + 5px);
+    }
+
+    & + & {
+        border-top: 1px solid var(--border);
+        padding-top: var(--margin-3);
+        margin-top: var(--margin-3);
     }
 }

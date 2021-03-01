@@ -22,11 +22,11 @@ class CreateUserTables extends Migration
             $table->id();
             $table->string('name')->unique();
             $table->foreignId('role_id')->nullable()->default(1)->constrained('roles')->nullOnDelete();
-            $table->boolean('verified')->default(false);
             $table->float('balance', 8, 2, true)->default(0);
             $table->string('ip');
             $table->string('avatar')->nullable();
             $table->string('password')->nullable();
+            $table->boolean('is_verified')->default(false);
             $table->rememberToken();
             $table->timestamp('last_seen_at')->nullable();
             $table->timestamps();

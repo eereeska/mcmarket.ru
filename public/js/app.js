@@ -1847,7 +1847,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_files__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/files */ "./resources/js/modules/files.js");
 /* harmony import */ var _modules_select__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/select */ "./resources/js/modules/select.js");
 /* harmony import */ var _modules_hide__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./modules/hide */ "./resources/js/modules/hide.js");
-/* harmony import */ var _modules_toggle__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./modules/toggle */ "./resources/js/modules/toggle.js");
+/* harmony import */ var _modules_tabs__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./modules/tabs */ "./resources/js/modules/tabs.js");
 
 
 
@@ -1991,27 +1991,6 @@ __webpack_require__.r(__webpack_exports__);
 //     }
 // });
 // // DROPDOWN END
-// // TABS
-// $('.tabs > .tabs__tab').each(function() {
-//     if ($(this).hasClass('active')) {
-//         $($(this).attr('href')).addClass('active-tab');
-//     }
-// });
-// $(document).on('click', '.tabs > .tabs__tab', function(e) {
-//     e.preventDefault();
-//     $(this).siblings('.active').each(function() {
-//         $(this).removeClass('active');
-//     });
-//     if ($(this).hasClass('active')) {
-//         return;
-//     }
-//     $(this).addClass('active');
-//     $(this).parent().next('.tabs__content').find('> *').each(function() {
-//         $(this).removeClass('active-tab');
-//     });
-//     $($(this).attr('href')).addClass('active-tab');
-// })
-// // TABS END
 
 /***/ }),
 
@@ -2031,13 +2010,21 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var mcm = function mcm() {
-  this.hi = 'Что ты тут забыл? :/';
+  this.wtf = 'Что ты тут забыл? :/';
 };
 
 mcm.prototype.qs = document.querySelector.bind(document);
 mcm.prototype.qsa = document.querySelectorAll.bind(document);
+mcm.prototype.cs = document.getElementsByClassName.bind(document);
+mcm.prototype.ts = document.getElementsByTagName.bind(document);
+
+mcm.prototype.each = function (selector, callback) {
+  return this.qsa(selector).forEach(callback);
+};
 
 mcm.prototype.on = function (event, target, callback) {
+  var timeout = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 0;
+
   if (typeof target == 'string' || target instanceof String) {
     document.addEventListener(event, function (e) {
       if (e.target.matches(target)) {
@@ -2045,7 +2032,15 @@ mcm.prototype.on = function (event, target, callback) {
       }
     });
   } else {
-    target.addEventListener(event, callback);
+    if (timeout <= 0 && target.hasAttribute instanceof Function && target.hasAttribute('data-timeout')) {
+      timeout = parseInt(target.getAttribute('data-timeout'));
+    }
+
+    if (timeout > 0) {
+      target.addEventListener(event, this.debounce(callback, timeout));
+    } else {
+      target.addEventListener(event, callback);
+    }
   }
 };
 
@@ -2075,8 +2070,25 @@ mcm.prototype.parseHTML = function (string) {
   return new DOMParser().parseFromString(string, 'text/html');
 };
 
-mcm.prototype.notification = function (message) {
-  return new Notification(message);
+mcm.prototype.ie = function (el, callback) {
+  if (el) {
+    callback.bind(el)();
+  }
+};
+
+mcm.prototype.debounce = function (callback) {
+  var timeout = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 300;
+  var timer;
+  return function () {
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    clearTimeout(timer);
+    timer = setTimeout(function () {
+      callback.apply(this, args);
+    }, timeout);
+  };
 };
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (new mcm());
@@ -2465,9 +2477,11 @@ _mcm__WEBPACK_IMPORTED_MODULE_0__.default.qsa('[data-submit]').forEach(function 
     $target.dispatchEvent(new Event('submit'));
   });
 });
-_mcm__WEBPACK_IMPORTED_MODULE_0__.default.qsa('[data-on-change]').forEach(function (item) {
+_mcm__WEBPACK_IMPORTED_MODULE_0__.default.qsa('input[data-on-change]').forEach(function (item) {
   var action = item.getAttribute('data-on-change');
-  _mcm__WEBPACK_IMPORTED_MODULE_0__.default.on('change', item, function (e) {
+  var type = item.getAttribute('type').toLowerCase();
+  var event = type === 'text' || type === 'hidden' || type === 'number' ? 'keyup' : 'change';
+  _mcm__WEBPACK_IMPORTED_MODULE_0__.default.on(event, item, function (e) {
     e.preventDefault();
 
     if (action == 'submit') {
@@ -2481,10 +2495,6 @@ _mcm__WEBPACK_IMPORTED_MODULE_0__.default.qsa('[data-on-change]').forEach(functi
     } else if (action == 'request') {
       _mcm__WEBPACK_IMPORTED_MODULE_0__.default.request(item.getAttribute('data-method') || 'post', item.getAttribute('data-url'), {
         checked: item.checked
-      }).then(function (response) {
-        console.log(response);
-
-        if (response.data.success) {}
       });
     }
   });
@@ -2516,25 +2526,40 @@ _mcm__WEBPACK_IMPORTED_MODULE_0__.default.qsa('form').forEach(function (item) {
 
 /***/ }),
 
-/***/ "./resources/js/modules/toggle.js":
-/*!****************************************!*\
-  !*** ./resources/js/modules/toggle.js ***!
-  \****************************************/
+/***/ "./resources/js/modules/tabs.js":
+/*!**************************************!*\
+  !*** ./resources/js/modules/tabs.js ***!
+  \**************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _mcm__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../mcm */ "./resources/js/mcm.js");
 
-_mcm__WEBPACK_IMPORTED_MODULE_0__.default.qsa('label.toggle').forEach(function (toggle) {
-  _mcm__WEBPACK_IMPORTED_MODULE_0__.default.on('click', toggle, function (e) {
+_mcm__WEBPACK_IMPORTED_MODULE_0__.default.each('.tabs > .tabs__tab', function (tab) {
+  // if (tab.classList.contains('tabs__tab_active')) {
+  //     mcm.ie(tab.getAttribute('href'), function() {
+  //         this.classList.add('tabs__tab_active');
+  //     });
+  // }
+  _mcm__WEBPACK_IMPORTED_MODULE_0__.default.on('click', tab, function (e) {
     e.preventDefault();
-    this.classList.toggle('toggle_active');
-    var $checkbox = this.querySelector('input.toggle__checkbox');
 
-    if ($checkbox) {
-      $checkbox.checked = this.classList.contains('toggle_active');
+    if (this.classList.contains('tabs__tab_active')) {
+      return;
     }
+
+    tab.parentNode.querySelectorAll('.tabs__tab_active').forEach(function (activeTab) {
+      activeTab.classList.remove('tabs__tab_active');
+    });
+    this.classList.add('tabs__tab_active');
+    Array.from(tab.parentNode.parentNode.querySelector('div.tabs__content').children).forEach(function (item) {
+      if (item.getAttribute('id') == tab.getAttribute('href').replace('#', '')) {
+        item.classList.add('active-tab');
+      } else {
+        item.classList.remove('active-tab');
+      }
+    });
   });
 });
 

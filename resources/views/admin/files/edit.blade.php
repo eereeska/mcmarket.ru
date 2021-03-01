@@ -19,24 +19,20 @@
                         <h2 class="section__title">Модерирование</h2>
                     </div>
                     <div class="section__content">
-                        <section class="section section_small">
-                            <label for="is_visible" class="toggle">
-                                <input type="checkbox" name="is_visible" value="{{ $file->is_visible }}" class="toggle__checkbox">
-                                <div class="toggle__description">
-                                    <p>Видимый</p>
-                                </div>
-                                <div class="toggle__slider"></div>
-                            </label>
-                        </section>
-                        <section class="section section_small">
-                            <label for="is_approved" class="toggle">
-                                <input type="checkbox" name="is_approved" value="{{ $file->is_approved }}" class="toggle__checkbox">
-                                <div class="toggle__description">
-                                    <p>Одобрен</p>
-                                </div>
-                                <div class="toggle__slider"></div>
-                            </label>
-                        </section>
+                        <label class="toggle">
+                            <div class="toggle__description">
+                                <p>Видимый</p>
+                            </div>
+                            <input type="checkbox" name="is_visible" value="1" @if ($file->is_visible) checked @endif class="toggle__checkbox">
+                            <span class="toggle__slider"></span>
+                        </label>
+                        <label class="toggle">
+                            <div class="toggle__description">
+                                <p>Одобрен</p>
+                            </div>
+                            <input type="checkbox" name="is_approved" value="1" @if ($file->is_approved) checked @endif class="toggle__checkbox">
+                            <span class="toggle__slider"></span>
+                        </label>
                     </div>
                 </section>
                 <section class="section">
@@ -192,13 +188,13 @@
     </section>
 </div>
 <aside class="sidebar">
-    <section class="section section--sticky">
+    <section class="section section_sticky">
         <section class="section">
             <div class="section__header">
                 <h2 class="section__title">Действия</h2>
             </div>
             <div class="section__content">
-                <a href="{{ route('file.edit', ['id' => $file->id]) }}" class="data data_compact" data-submit="#file-edit-form">
+                <a href="{{ url()->current() }}" class="data data_compact" data-submit="#file-edit-form">
                     <div class="data__icon icon icon--save"></div>
                     <div class="data__info">
                         <h3 class="data__value">Сохранить</h3>

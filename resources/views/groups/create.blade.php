@@ -46,7 +46,7 @@
     </form>
 </div>
 <aside class="sidebar">
-    <div class="sidebar__inner sidebar__inner--sticky">
+    <section class="section section_sticky">
         {{-- @include('components._avatar', ['user' => null, 'id' => 'cover-preview', 'large' => true]) --}}
         @foreach ($errors->all() as $error)
         <p class="alert red small">{{ $error }}</p>

@@ -13,7 +13,7 @@
             <div class="header__left">
                 <a href="{{ route('admin.index') }}" class="header__logo">ACP</a>
                 <nav class="header__nav">
-                    <a href="#" @if (request()->is('u*')) class="active" @endif>Пользователи</a>
+                    <a href="{{ route('admin.users.index') }}" @if (request()->is('admin/users*')) class="active" @endif>Пользователи</a>
                     <a href="{{ route('groups-index') }}" @if (request()->is('group*')) class="active" @endif>Сообщества</a>
                 </nav>
             </div>

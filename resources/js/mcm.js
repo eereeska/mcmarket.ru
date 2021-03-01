@@ -1,13 +1,19 @@
 import axios from "axios";
 
 var mcm = function() {
-    this.hi = 'Что ты тут забыл? :/';
+    this.wtf = 'Что ты тут забыл? :/';
 }
 
 mcm.prototype.qs = document.querySelector.bind(document);
 mcm.prototype.qsa = document.querySelectorAll.bind(document);
+mcm.prototype.cs = document.getElementsByClassName.bind(document);
+mcm.prototype.ts = document.getElementsByTagName.bind(document);
 
-mcm.prototype.on = function(event, target, callback) {
+mcm.prototype.each = function(selector, callback) {
+    return this.qsa(selector).forEach(callback);
+}
+
+mcm.prototype.on = function(event, target, callback, timeout = 0) {
     if (typeof target == 'string' || target instanceof String) {
         document.addEventListener(event, function(e) {
             if (e.target.matches(target)) {
@@ -15,7 +21,15 @@ mcm.prototype.on = function(event, target, callback) {
             }
         });
     } else {
-        target.addEventListener(event, callback);
+        if (timeout <= 0 && target.hasAttribute instanceof Function && target.hasAttribute('data-timeout')) {
+            timeout = parseInt(target.getAttribute('data-timeout'));
+        }
+
+        if (timeout > 0) {
+            target.addEventListener(event, this.debounce(callback, timeout));
+        } else {
+            target.addEventListener(event, callback);
+        }
     }
 }
 
@@ -47,8 +61,22 @@ mcm.prototype.parseHTML = function(string) {
     return new DOMParser().parseFromString(string, 'text/html');
 }
 
-mcm.prototype.notification = function(message) {
-    return new Notification(message);
+mcm.prototype.ie = function(el, callback) {
+    if (el) {
+        callback.bind(el)();
+    }
+}
+
+mcm.prototype.debounce = function(callback, timeout = 300) {
+    var timer;
+
+    return function(...args) {
+        clearTimeout(timer);
+
+        timer = setTimeout(function() {
+            callback.apply(this, args);
+        }, timeout);
+    }
 }
 
 export default new mcm();

@@ -1,6 +1,6 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 
-@section('meta.title', 'Настройки')
+@section('meta.title', $user->name)
 
 @section('content')
 <aside class="sidebar">
@@ -33,10 +33,37 @@
             </section>
             <section class="section">
                 <div class="section__header">
+                    <h2 class="section__title">Никнейм</h2>
+                </div>
+                <div class="section__content">
+                    <input type="text" name="name" value="{{ $user->name }}" class="input"></input>
+                </div>
+            </section>
+            <section class="section">
+                <div class="section__header">
+                    <h2 class="section__title">Баланс</h2>
+                </div>
+                <div class="section__content">
+                    <input type="number" name="balance" value="{{ $user->balance }}" class="input"></input>
+                </div>
+            </section>
+            <section class="section">
+                <div class="section__content">
+                    <label class="toggle">
+                        <div class="toggle__description">
+                            <p>Подтверждён</p>
+                        </div>
+                        <input type="checkbox" value="1" class="toggle__checkbox" @if ($user->is_verified) checked @endif>
+                        <span class="toggle__slider"></span>
+                    </label>
+                </div>
+            </section>
+            <section class="section">
+                <div class="section__header">
                     <h2 class="section__title">Обо мне</h2>
                 </div>
                 <div class="section__content">
-                    <textarea name="about" placeholder="{{ is_null($user->settings->about) ? 'Вы ещё ничего не рассказали о себе' : strip_tags($user->settings->about) }}" class="textarea">{{ strip_tags($user->settings->about) }}</textarea>
+                    <textarea name="about" placeholder="{{ is_null($user->settings->about) ? 'Вы ещё ничего не рассказали о себе' : strip_tags($user->settings->about) }}" class="textarea textarea_small">{{ strip_tags($user->settings->about) }}</textarea>
                 </div>
             </section>
             <section class="section">

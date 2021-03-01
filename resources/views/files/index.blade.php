@@ -12,7 +12,7 @@
     </section>
 </div>
 <div class="sidebar">
-    <section class="section section--sticky">
+    <section class="section section_sticky">
         <section class="section">
             <div class="section__header">
                 <h2 class="section__title">Фильтры</h2>

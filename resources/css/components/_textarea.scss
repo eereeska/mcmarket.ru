@@ -24,24 +24,16 @@
         display: none;
     }
 
-    &--small {
+    &_small {
         min-height: 150px;
     }
 
-    &--medium {
+    &_medium {
         min-height: 200px;
     }
 
-    &--large {
+    &_large {
         min-height: 350px;
-    }
-
-    & + input {
-        margin-top: 20px;
-    }
-
-    & + button {
-        margin-top: 30px;
     }
 
     & + p.alert {

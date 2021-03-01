@@ -9,12 +9,12 @@
             <h2 class="section__title">Файлы</h2>
         </div>
         <div id="files" class="section__content list">
-            @include('components.files._files', ['files' => $files])
+            @include('components.admin.files._files', ['files' => $files])
         </div>
     </section>
 </div>
 <div class="sidebar">
-    <section class="section section--sticky">
+    <section class="section section_sticky">
         <section class="section">
             <div class="section__header">
                 <h2 class="section__title">Фильтры</h2>
@@ -29,7 +29,6 @@
                 </form>
             </div>
         </section>
-        @auth
         <section class="section">
             <div class="section__header">
                 <h2 class="section__title">Меню</h2>
@@ -43,7 +42,6 @@
                 </a>
             </div>
         </section>
-        @endauth
     </section>
 </div>
 @endsection

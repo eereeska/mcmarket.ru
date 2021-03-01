@@ -64,7 +64,7 @@
     </section>
 </div>
 <aside class="sidebar">
-    <div class="sidebar__inner sidebar__inner--sticky">
+    <section class="section section_sticky">
         {{-- @if ($file->cover_path)
         <section class="section">
             <a href="{{ route('file.show', ['id' => $file->id]) }}"><img class="cover" src="{{ asset('covers/' . $file->cover_path) }}"></img></a>

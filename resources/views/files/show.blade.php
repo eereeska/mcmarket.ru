@@ -49,7 +49,7 @@
         <p class="alert red">Добавьте обложку</p>
         @endif
     </section>
-    <section class="section section--sticky">
+    <section class="section section_sticky">
         @if (auth()->check())
         <section class="section">
             <div class="section__header">

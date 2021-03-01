@@ -36,7 +36,7 @@ class FileUpdateController extends Controller
         }
 
         $file->update([
-            'description' => FileController::normalizeDescription($request->get('description')),
+            'description' => FileDescriptionController::normalize($request->get('description')),
             'version' => $request->get('version'),
             'extension' => $request_file_extension,
             'path' => $path,

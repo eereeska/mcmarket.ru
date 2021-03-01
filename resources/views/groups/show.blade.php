@@ -22,7 +22,7 @@
     </section>
 </div>
 <aside class="sidebar">
-    <div class="sidebar__inner sidebar__inner--sticky">
+    <section class="section section_sticky">
         <section class="section">
             <div class="avatar large" style="background-image: url({{ asset('covers/' . $group->cover) }})"></div>
         </section>

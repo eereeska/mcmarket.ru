@@ -43,7 +43,7 @@
         <img class="cover" src="{{ asset('covers/' . $file->cover_path) }}" alt="{{ $file->title }}"></img>
         @endif
     </section>
-    <section class="section section--sticky">
+    <section class="section section_sticky">
         <section class="section">
             <div class="section__header">
                 <h2 class="section__title">Действия</h2>

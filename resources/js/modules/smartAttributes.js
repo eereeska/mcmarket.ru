@@ -47,10 +47,12 @@ mcm.qsa('[data-submit]').forEach(function(item) {
     });
 });
 
-mcm.qsa('[data-on-change]').forEach(function(item) {
+mcm.qsa('input[data-on-change]').forEach(function(item) {
     var action = item.getAttribute('data-on-change');
+    var type = item.getAttribute('type').toLowerCase();
+    var event = (type === 'text' || type === 'hidden' || type === 'number') ? 'keyup' : 'change';
 
-    mcm.on('change', item, function(e) {
+    mcm.on(event, item, function(e) {
         e.preventDefault();
 
         if (action == 'submit') {
@@ -64,11 +66,6 @@ mcm.qsa('[data-on-change]').forEach(function(item) {
         } else if (action == 'request') {
             mcm.request(item.getAttribute('data-method') || 'post', item.getAttribute('data-url'), {
                 checked: item.checked
-            }).then(function(response) {
-                console.log(response)
-                if (response.data.success) {
-
-                }
             });
         }
     });
@@ -77,6 +74,7 @@ mcm.qsa('[data-on-change]').forEach(function(item) {
 mcm.qsa('form').forEach(function(item) {
     var action = item.getAttribute('data-on-submit') || null;
 
+    
     mcm.on('submit', item, function(e) {
         if (action == 'request') {
             e.preventDefault();

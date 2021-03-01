@@ -11,7 +11,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use Intervention\Image\Facades\Image;
 
 class FileController extends Controller
 {
@@ -79,6 +78,10 @@ class FileController extends Controller
             $file->price = $request->price;
         }
 
+        if ($user->role->can_approve_files) {
+            $file->is_approved = true;
+        }
+
         $file->save();
 
         return redirect()->route('file.show', ['id' => $file->id]);
@@ -87,7 +90,7 @@ class FileController extends Controller
     public function show(Request $request, $id)
     {
         $file = Cache::remember('file.' . $id, now()->addHour(), function() use ($id) {
-            return File::where('id', $id)->with(['category', 'media', 'user'])->withCount(['media', 'purchases'])->first();
+            return File::where('id', $id)->with(['category', 'user'])->withCount(['purchases'])->first();
         });
 
         if (!$file) {
@@ -116,18 +119,17 @@ class FileController extends Controller
 
     public function download(Request $request, $id)
     {
-        $user = $request->user();
         $file = File::where('id', $id)->first();
 
         if (!$file) {
             return redirect()->route('home')->withErrors(['file_not_found' => 'Запрашиваемый файл не найден']);
         }
 
-        if ($user->id != $file->user_id and (!$file->is_visible or !$file->is_approved)) {
+        if (auth()->user()->id != $file->user_id and (!$file->is_visible or !$file->is_approved)) {
             return redirect()->route('file.show', ['id' => $file->id])->withErrors(['cant_download' => 'Запрашиваемый файл ещё не был одобрен администрацией']);
         }
         
-        if ($user->id != $file->user_id and $file->type == 'paid' and !$request->user()->hasPurchasedFile($file)) {
+        if (auth()->user()->id != $file->user_id and $file->type == 'paid' and !$request->user()->hasPurchasedFile($file)) {
             return back()->withErrors(['purchase_required' => 'Вы должны сначала приобрести указанный файл']);
         }
 
@@ -150,10 +152,6 @@ class FileController extends Controller
             return back();
         }
 
-        if (auth()->user()->role->can_approve_files) {
-            return redirect()->route('admin.file.edit', ['id' => $file->id]);
-        }
-
         return view('files.edit', [
             'file' => $file,
             'categories' => FileCategoryController::getCategories()
@@ -170,7 +168,7 @@ class FileController extends Controller
 
         $file->title = trim($request->title);
         $file->name = trim($request->name);
-        $file->description = $this->normalizeDescription($request->description);
+        $file->description = FileDescriptionController::normalize($request->description);
         $file->type = trim($request->type);
         
         if ($file->type == 'paid') {
@@ -190,19 +188,7 @@ class FileController extends Controller
         }
 
         if ($request->has('cover')) {
-            $cover = $request->file('cover');
-
-            if (!is_null($file->cover_path)) {
-                Storage::delete($file->cover_path);
-            }
-
-            // TODO: переделать сохранение обложки
-
-            $path = Str::random(40) . '.' . $cover->getClientOriginalExtension();
-
-            Image::make($cover)->fit(300, 300)->save(storage_path('app/public/covers/' . $path));
-
-            $file->cover_path = $path;
+            $file->cover_path = FileCoverController::store($file, $request->file('cover'));
         }
 
         $file->is_visible = (!is_null($file->description) and !empty(strip_tags($file->description)));
@@ -225,7 +211,7 @@ class FileController extends Controller
             ]);
         }
 
-        Storage::delete('app/' . $file->path . '.' . $file->extension);
+        Storage::delete($file->path);
 
         $file->delete();
 
@@ -237,40 +223,13 @@ class FileController extends Controller
 
     public static function bytesToHuman($bytes)
     {
-        $units = ['B', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB'];
+        $units = ['Б', 'КБ', 'МБ', 'ГБ', 'ТБ', 'ПБ'];
 
         for ($i = 0; $bytes > 1024; $i++) {
             $bytes /= 1024;
         }
 
         return round($bytes, 2) . ' ' . $units[$i];
-    }
-
-    public static function normalizeDescription($description)
-    {
-        $description = trim($description);
-
-        $allowed_tags = [
-            'p', 'b', 'u', 's', 'ul', 'li', 'ol', 'br'
-        ];
-
-        $description = strip_tags($description, $allowed_tags);
-
-        $description = preg_replace('/<([a-z][a-z0-9]*)[^>]*?(\/?)>/i', '<$1$2>', $description);
-        $description = preg_replace('/\<p\>\<\/p\>/i', '', $description);
-        $description = preg_replace('/\<p\>\<br\>\<\/p\>/i', '', $description);
-        $description = preg_replace('/\<p\>\<br \/\>\<\/p\>/i', '', $description);
-
-        if (empty($description)) {
-            return null;
-        }
-
-        // $description = preg_replace('/\<(.*?)\>\s\<\/(.*?)\>/mi', '', $description);
-        // $description = preg_replace('/\*\*(.*?)\*\*/mi', '<b>${1}</b>', $description);
-        // $description = preg_replace('~\[media=(.*?)\]~s', '<img src="${1}" alt="' . $file->name . '" />', $description);
-        // $description = trim('<p>' . preg_replace(["/([\n]{2,})/i", "/([\r\n]{3,})/i", "/([^>])\n([^<])/i"], ["</p>\n<p>", "</p>\n<p>", '${1}<br />${2}'], trim($description)) . '</p>');
-
-        return trim($description);
     }
 
     public static function save($file, $old = null)

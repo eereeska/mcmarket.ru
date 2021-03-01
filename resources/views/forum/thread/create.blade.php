@@ -49,7 +49,7 @@
     </form>
 </div>
 <aside class="sidebar">
-    <div class="sidebar__inner sidebar__inner--sticky">
+    <section class="section section_sticky">
         <button data-action="form-submit" data-target="#forum-create-thread-form" class="button primary">Создать</button>
     </div>
 </aside>

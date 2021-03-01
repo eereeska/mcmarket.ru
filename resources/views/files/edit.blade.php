@@ -167,7 +167,7 @@
     </section>
 </div>
 <aside class="sidebar">
-    <section class="section section--sticky">
+    <section class="section section_sticky">
         {{-- @if ($file->cover_path)
         <section class="section">
             <a href="{{ route('file.show', ['id' => $file->id]) }}"><img class="cover" src="{{ asset('covers/' . $file->cover_path) }}"></img></a>

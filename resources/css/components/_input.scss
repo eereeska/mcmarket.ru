@@ -5,9 +5,9 @@
     background-color: var(--foreground);
     border: 1px solid var(--border);
     border-radius: var(--radius-2);
-    padding: 24px;
+    padding: var(--margin-3);
     outline: none;
-    transition: border 0.1s ease-in-out, background-color 0.1s ease-in-out;
+    transition: all 0.1s ease;
 
     &[type=number]::-webkit-inner-spin-button,
     &[type=number]::-webkit-outer-spin-button {
@@ -15,9 +15,9 @@
         margin: 0;
     }
 
-    // &:focus {
-    //     background-color: transparent;
-    // }
+    &:focus {
+        background-color: transparent;
+    }
 
     &::placeholder {
         font: inherit;
