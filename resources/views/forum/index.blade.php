@@ -53,14 +53,14 @@
         <section class="section">
             <h2 class="section__title">Статистика</h2>
             <div class="data data_compact">
-                <div class="data__icon icon icon--comment"></div>
+                <div class="data__icon icon icon_comment"></div>
                 <div class="data__info">
                     <span class="data__value">{{ $threads->count() }}</span>
                     <span class="data__desc">Всего тем</span>
                 </div>
             </div>
             <div class="data data_compact">
-                <div class="data__icon icon icon--comments"></div>
+                <div class="data__icon icon icon_comments"></div>
                 <div class="data__info">
                     <span class="data__value">{{ $threads->replies_count ?? '0' }}</span>
                     <span class="data__desc">Сообщений</span>

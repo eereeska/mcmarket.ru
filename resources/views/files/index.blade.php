@@ -33,7 +33,7 @@
             </div>
             <div class="section__content">
                 <a href="{{ route('files.my') }}" class="data data_compact">
-                    <div class="data__icon icon icon--file"></div>
+                    <div class="data__icon icon icon_file"></div>
                     <div class="data__info">
                         <h3 class="data__value">Мои файлы</h3>
                     </div>

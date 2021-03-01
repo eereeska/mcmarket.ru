@@ -35,7 +35,7 @@
             </div>
             <div class="section__content">
                 <a href="{{ route('file.submit', ['category' => request()->category ?? null]) }}" class="data data_compact">
-                    <div class="data__icon icon icon--file-plus"></div>
+                    <div class="data__icon icon icon_file-plus"></div>
                     <div class="data__info">
                         <h3 class="data__value">Добавить файл</h3>
                     </div>

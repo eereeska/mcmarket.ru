@@ -50,7 +50,7 @@
             </div>
             <div class="section__content">
                 <a href="{{ route('file.purchase', ['id' => $file->id]) }}" data-request="post" class="data data_compact">
-                    <div class="data__icon icon icon--cart"></div>
+                    <div class="data__icon icon icon_cart"></div>
                     <div class="data__info">
                         <h3 class="data__value">Купить</h3>
                     </div>

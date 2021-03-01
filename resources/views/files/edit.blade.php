@@ -179,13 +179,13 @@
             </div>
             <div class="section__content">
                 <a href="{{ route('file.edit', ['id' => $file->id]) }}" class="data data_compact" data-submit="#file-edit-form">
-                    <div class="data__icon icon icon--save"></div>
+                    <div class="data__icon icon icon_save"></div>
                     <div class="data__info">
                         <h3 class="data__value">Сохранить</h3>
                     </div>
                 </a>
                 <a href="{{ route('file.update.submit', ['id' => $file->id]) }}" class="data data_compact">
-                    <div class="data__icon icon icon--upload"></div>
+                    <div class="data__icon icon icon_upload"></div>
                     <div class="data__info">
                         <h3 class="data__value">Добавить обновление</h3>
                     </div>
@@ -201,7 +201,7 @@
             </div>
             <div class="section__content">
                 <a href="{{ route('file.delete', ['id' => $file->id]) }}" data-request="delete" data-confirm="Вы уверены, что хотите удалить «{{ $file->name }}»" class="data data_compact">
-                    <div class="data__icon icon icon--trash-alt"></div>
+                    <div class="data__icon icon icon_trash-alt"></div>
                     <div class="data__info">
                         <h3 class="data__value">Удалить файл</h3>
                     </div>

@@ -19,187 +19,187 @@
         font-weight: 900;
     }
 
-    &--bell::before {
+    &_bell::before {
         content: '\f0f3';
     }
     
-    &--search::before {
+    &_search::before {
         content: '\f002';
     }
     
-    &--login::before {
+    &_login::before {
         content: '\f090';
     }
     
-    &--register::before {
+    &_register::before {
         content: '\f234';
     }
 
-    &--comment::before {
+    &_comment::before {
         content: '\f075';
     }
 
-    &--comments::before {
+    &_comments::before {
         content: '\f086';
     }
 
-    &--idea::before {
+    &_idea::before {
         content: '\f672';
     }
 
-    &--plugin::before {
+    &_plugin::before {
         content: '\f12e';
     }
 
-    &--graphic::before {
+    &_graphic::before {
         content: '\f53f';
     }
 
-    &--building::before {
+    &_building::before {
         content: '\f66f';
     }
 
-    &--users::before {
+    &_users::before {
         content: '\f0c0';
     }
 
-    &--news::before {
+    &_news::before {
         content: '\f1ea';
     }
 
-    &--gift::before {
+    &_gift::before {
         content: '\f06b';
     }
 
-    &--arrow-up::before {
+    &_arrow-up::before {
         content: '\f062';
     }
 
-    &--arrow-down::before {
+    &_arrow-down::before {
         content: '\f063';
     }
 
-    &--angle-up::before {
+    &_angle-up::before {
         content: '\f106';
     }
 
-    &--angle-down::before {
+    &_angle-down::before {
         content: '\f107';
     }
 
-    &--clock::before {
+    &_clock::before {
         content: '\f017';
     }
 
-    &--download::before {
+    &_download::before {
         content: '\f019';
     }
 
-    &--upload::before {
+    &_upload::before {
         content: '\f093';
     }
 
-    &--heart::before {
+    &_heart::before {
         content: '\f004';
     }
 
-    &--coin::before {
+    &_coin::before {
         content: '\f85c';
     }
 
-    &--coins::before {
+    &_coins::before {
         content: '\f51e';
     }
 
-    &--server::before {
+    &_server::before {
         content: '\f233';
     }
 
-    &--eye::before {
+    &_eye::before {
         content: '\f06e';
     }
 
-    &--eye-slash::before {
+    &_eye-slash::before {
         content: '\f07e';
     }
 
-    &--sliders-h::before {
+    &_sliders-h::before {
         content: '\f1de';
     }
 
-    &--skull::before {
+    &_skull::before {
         content: '\f54c';
     }
 
-    &--map::before {
+    &_map::before {
         content: '\f279';
     }
 
-    &--web::before {
+    &_web::before {
         content: '\f121';
     }
 
-    &--desktop::before {
+    &_desktop::before {
         content: '\f390';
     }
 
-    &--layers::before {
+    &_layers::before {
         content: '\f5fd';
     }
 
-    &--info::before {
+    &_info::before {
         content: '\f129';
     }
 
-    &--file::before {
+    &_file::before {
         content: '\f15b';
     }
 
-    &--file-plus::before {
+    &_file-plus::before {
         content: '\f319';
     }
 
-    &--weight-hanging::before {
+    &_weight-hanging::before {
         content: '\f5cd';
     }
 
-    &--virus::before {
+    &_virus::before {
         content: '\e074';
     }
 
-    &--virus-slash::before {
+    &_virus-slash::before {
         content: '\e075';
     }
 
-    &--shield-virus::before {
+    &_shield-virus::before {
         content: '\e06c';
     }
 
-    &--sync-alt::before {
+    &_sync-alt::before {
         content: '\f2f1';
     }
 
-    &--edit::before {
+    &_edit::before {
         content: '\f044';
     }
 
-    &--trash-alt::before {
+    &_trash-alt::before {
         content: '\f2ed';
     }
 
-    &--report::before {
+    &_report::before {
         content: '\f024';
     }
 
-    &--save::before {
+    &_save::before {
         content: '\f0c7';
     }
 
-    &--bars::before {
+    &_bars::before {
         content: '\f0c9';
     }
 
-    &--cart::before {
+    &_cart::before {
         content: '\f07a';
     }
 }

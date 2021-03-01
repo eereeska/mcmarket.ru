@@ -29,7 +29,7 @@
         <section class="section">
             <h2 class="section__title">Информация</h2>
             <div class="data data_compact">
-                <div class="data__icon icon icon--clock"></div>
+                <div class="data__icon icon icon_clock"></div>
                 <div class="data__info">
                     <span class="data__value" title="{{ $group->created_at->format('h:i:s') }}">{{ $group->created_at->format('d.m.Y') }}</span>
                     <span class="data__desc">Дата создания</span>

@@ -7,7 +7,7 @@
     <div class="section__content">
         @forelse ($notifications as $notification)
         <div class="data">
-            <div class="data__icon icon icon--{{ $notification->data['icon'] ?? 'info' }}"></div>
+            <div class="data__icon icon icon_{{ $notification->data['icon'] ?? 'info' }}"></div>
             <div class="data__info">
                 @if ($notification->type == 'admin-file-submit-request')
                 <h3 class="data__value">Новая заявка на добавление <a href="{{ route('file-show', ['id' => $notification->data['file_id']]) }}" class="dashed">файла</a></h3>

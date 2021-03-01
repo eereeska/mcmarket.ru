@@ -1057,142 +1057,142 @@ button {
 .icon_solid {
   font-weight: 900;
 }
-.icon--bell::before {
+.icon_bell::before {
   content: "";
 }
-.icon--search::before {
+.icon_search::before {
   content: "";
 }
-.icon--login::before {
+.icon_login::before {
   content: "";
 }
-.icon--register::before {
+.icon_register::before {
   content: "";
 }
-.icon--comment::before {
+.icon_comment::before {
   content: "";
 }
-.icon--comments::before {
+.icon_comments::before {
   content: "";
 }
-.icon--idea::before {
+.icon_idea::before {
   content: "";
 }
-.icon--plugin::before {
+.icon_plugin::before {
   content: "";
 }
-.icon--graphic::before {
+.icon_graphic::before {
   content: "";
 }
-.icon--building::before {
+.icon_building::before {
   content: "";
 }
-.icon--users::before {
+.icon_users::before {
   content: "";
 }
-.icon--news::before {
+.icon_news::before {
   content: "";
 }
-.icon--gift::before {
+.icon_gift::before {
   content: "";
 }
-.icon--arrow-up::before {
+.icon_arrow-up::before {
   content: "";
 }
-.icon--arrow-down::before {
+.icon_arrow-down::before {
   content: "";
 }
-.icon--angle-up::before {
+.icon_angle-up::before {
   content: "";
 }
-.icon--angle-down::before {
+.icon_angle-down::before {
   content: "";
 }
-.icon--clock::before {
+.icon_clock::before {
   content: "";
 }
-.icon--download::before {
+.icon_download::before {
   content: "";
 }
-.icon--upload::before {
+.icon_upload::before {
   content: "";
 }
-.icon--heart::before {
+.icon_heart::before {
   content: "";
 }
-.icon--coin::before {
+.icon_coin::before {
   content: "";
 }
-.icon--coins::before {
+.icon_coins::before {
   content: "";
 }
-.icon--server::before {
+.icon_server::before {
   content: "";
 }
-.icon--eye::before {
+.icon_eye::before {
   content: "";
 }
-.icon--eye-slash::before {
+.icon_eye-slash::before {
   content: "";
 }
-.icon--sliders-h::before {
+.icon_sliders-h::before {
   content: "";
 }
-.icon--skull::before {
+.icon_skull::before {
   content: "";
 }
-.icon--map::before {
+.icon_map::before {
   content: "";
 }
-.icon--web::before {
+.icon_web::before {
   content: "";
 }
-.icon--desktop::before {
+.icon_desktop::before {
   content: "";
 }
-.icon--layers::before {
+.icon_layers::before {
   content: "";
 }
-.icon--info::before {
+.icon_info::before {
   content: "";
 }
-.icon--file::before {
+.icon_file::before {
   content: "";
 }
-.icon--file-plus::before {
+.icon_file-plus::before {
   content: "";
 }
-.icon--weight-hanging::before {
+.icon_weight-hanging::before {
   content: "";
 }
-.icon--virus::before {
+.icon_virus::before {
   content: "";
 }
-.icon--virus-slash::before {
+.icon_virus-slash::before {
   content: "";
 }
-.icon--shield-virus::before {
+.icon_shield-virus::before {
   content: "";
 }
-.icon--sync-alt::before {
+.icon_sync-alt::before {
   content: "";
 }
-.icon--edit::before {
+.icon_edit::before {
   content: "";
 }
-.icon--trash-alt::before {
+.icon_trash-alt::before {
   content: "";
 }
-.icon--report::before {
+.icon_report::before {
   content: "";
 }
-.icon--save::before {
+.icon_save::before {
   content: "";
 }
-.icon--bars::before {
+.icon_bars::before {
   content: "";
 }
-.icon--cart::before {
+.icon_cart::before {
   content: "";
 }
 

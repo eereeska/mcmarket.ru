@@ -33,9 +33,9 @@
             <div class="section__content">
                 <div class="data data_compact">
                     @if ($user->balance > 1000)
-                    <div class="data__icon icon icon--coins"></div>
+                    <div class="data__icon icon icon_coins"></div>
                     @else
-                    <div class="data__icon icon icon--coin"></div>
+                    <div class="data__icon icon icon_coin"></div>
                     @endif
                     <div class="data__info">
                         <span class="data__value">{{ $user->balance }} @choice('рубль|рубля|рублей', $user->balance)</span>
@@ -43,7 +43,7 @@
                     </div>
                 </div>
                 <div class="data data_compact">
-                    <div class="data__icon icon icon--clock"></div>
+                    <div class="data__icon icon icon_clock"></div>
                     <div class="data__info">
                         <span class="data__value" title="{{ $user->created_at->format('d.m.Y h:i:s') }}">{{ $user->created_at->ago() }}</span>
                         <span class="data__desc">Регистрация</span>
@@ -75,21 +75,21 @@
             </div>
             <div class="section__content">
                 <div class="data data_compact">
-                    <div class="data__icon icon icon--comments"></div>
+                    <div class="data__icon icon icon_comments"></div>
                     <div class="data__info">
                         <span class="data__value">15</span>
                         <span class="data__desc">Сообщений</span>
                     </div>
                 </div>
                 <div class="data data_compact">
-                    <div class="data__icon icon icon--download"></div>
+                    <div class="data__icon icon icon_download"></div>
                     <div class="data__info">
                         <span class="data__value">15</span>
                         <span class="data__desc">Скачиваний</span>
                     </div>
                 </div>
                 <div class="data data_compact">
-                    <div class="data__icon icon icon--heart"></div>
+                    <div class="data__icon icon icon_heart"></div>
                     <div class="data__info">
                         <span class="data__value">15</span>
                         <span class="data__desc">Реакций оставлено</span>
@@ -106,7 +106,7 @@
     </section>
     {{-- <section class="section">
         <div class="data data_compact">
-            <div class="data__icon icon icon--heart"></div>
+            <div class="data__icon icon icon_heart"></div>
             <div class="data__info">
                 <h3 class="data__value"><a href="#">My Club</a></h3>
                 <span class="data__desc">Владелец сообщества</span>
