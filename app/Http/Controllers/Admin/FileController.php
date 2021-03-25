@@ -2,16 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\File;
-use Illuminate\Support\Str;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Intervention\Image\Facades\Image;
-use Illuminate\Support\Facades\Storage;
-use App\Http\Controllers\Files\FileFilterController;
 use App\Http\Controllers\Files\FileCategoryController;
 use App\Http\Controllers\Files\FileCoverController;
 use App\Http\Controllers\Files\FileDescriptionController;
+use App\Http\Controllers\Files\FileFilterController;
+use App\Models\File;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 
 class FileController extends Controller

@@ -18,7 +18,7 @@
   --color-secondary: rgb(102, 102, 115);
   --color-red: #FB7676;
   --background: #F5F6FA;
-  --foreground: #F1F2F9;
+  --foreground: #f2f3f9;
   --secondary-foreground: #EBEEF9;
   --placeholder: #8D8F97;
   --border: #DDE1F7;
@@ -75,12 +75,12 @@ body {
 }
 
 a {
-  color: var(--black);
+  color: var(--primary);
   text-decoration: none;
-  transition: color 0.1s ease-in-out;
+  transition: color 0.1s ease;
 }
 a:hover {
-  color: var(--primary);
+  color: var(--primary-light);
 }
 a.dashed {
   border-bottom: 1px dashed;
@@ -364,6 +364,7 @@ p:last-child {
   justify-content: flex-end;
 }
 .header__logo {
+  color: var(--black);
   font-size: 24px;
   font-weight: bold;
 }
@@ -389,6 +390,7 @@ p:last-child {
   overflow: hidden;
 }
 .header__profile {
+  color: var(--black);
   display: flex;
   align-items: center;
   gap: 10px;
@@ -477,6 +479,7 @@ p:last-child {
   gap: var(--gap-3);
 }
 .footer__link {
+  color: var(--black);
   font-weight: 600;
 }
 
@@ -1015,11 +1018,14 @@ button {
 .section__header + .section__content {
   margin-top: var(--margin-5);
 }
-.section_compact {
-  margin-bottom: var(--margin-5);
+.section_tiny {
+  margin-bottom: var(--margin-3);
 }
 .section_small {
-  margin-bottom: var(--margin-3);
+  margin-bottom: var(--margin-4);
+}
+.section_compact {
+  margin-bottom: var(--margin-5);
 }
 .section_sticky {
   position: -webkit-sticky;
@@ -1224,13 +1230,13 @@ p.alert + input {
   margin-top: 20px;
 }
 p.alert.red {
-  border: 1px solid var(--color-red);
+  border: 1px solid var(--red);
 }
 p.alert.red:before {
-  color: var(--color-red);
+  color: var(--red);
 }
 p.alert.empty {
-  border: 1px solid var(--foreground);
+  border: 1px solid var(--border);
 }
 p.alert.empty:before {
   content: "";
@@ -1402,6 +1408,7 @@ p.alert.empty:before {
 }
 
 .data {
+  color: var(--black);
   display: flex;
   align-items: center;
   flex-wrap: wrap;
@@ -1564,7 +1571,6 @@ p.alert.empty:before {
   }
 }
 .editor {
-  width: 100%;
   background-color: var(--foreground);
 }
 .editor [placeholder]:empty::before {
@@ -1681,7 +1687,7 @@ p.alert.empty:before {
   border-top-right-radius: var(--radius-2);
   border-bottom-left-radius: var(--radius-2);
   border-bottom-right-radius: var(--radius-2);
-  padding: 24px;
+  padding: var(--margin-3);
   resize: none;
   outline: none;
   overflow: auto;
@@ -1701,15 +1707,6 @@ p.alert.empty:before {
 }
 .editor__content::placeholder {
   font: inherit;
-}
-.editor + input {
-  margin-top: 20px;
-}
-.editor + button {
-  margin-top: 30px;
-}
-.editor + p.alert {
-  margin-top: 20px;
 }
 
 .breadcrumb {

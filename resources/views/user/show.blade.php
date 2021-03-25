@@ -102,7 +102,7 @@
 <div class="content">
     <section class="section compact">
         @include('user._name', ['user' => $user])
-        <p>{{ $user->role->title }}{{ $user->settings->is_online_status_visible ?  $user->isOnline() ? ', сейчас онлайн' : ', оффлайн' : '' }}</p>
+        <p>{{ $user->role->title }}, {{ $user->settings->is_online_status_visible ?  $user->getOnlineStatus() : 'Оффлайн' }}</p>
     </section>
     {{-- <section class="section">
         <div class="data data_compact">

@@ -79,6 +79,11 @@
             @endauth
         </div>
     </header>
+    @if ($errors->any())
+    @foreach ($errors as $error)
+    <p class="alert red">{{ $error->message }}</p>
+    @endforeach
+    @endif
     <main class="page">
         @yield('content')
     </main>

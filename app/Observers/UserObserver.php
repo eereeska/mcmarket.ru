@@ -2,6 +2,7 @@
 
 namespace App\Observers;
 
+use App\Http\Controllers\Users\UserEmailVerificationController;
 use App\Models\User;
 use App\Models\UserSettings;
 
@@ -12,6 +13,8 @@ class UserObserver
         $settings = new UserSettings();
         $settings->user_id = $user->id;
         $settings->save();
+        
+        UserEmailVerificationController::sendEmail($user);
     }
 
     public function updated(User $user)

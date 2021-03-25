@@ -18,7 +18,7 @@
     --color-red: #FB7676;
 
     --background: #F5F6FA; // F2F4FA
-    --foreground: #F1F2F9; // EDEFF9, E9ECF9
+    --foreground: #f2f3f9; // EDEFF9, E9ECF9, F1F2F9
     --secondary-foreground: #EBEEF9;
     --placeholder: #8D8F97;
     --border: #DDE1F7;
@@ -77,12 +77,12 @@ body {
 }
 
 a {
-    color: var(--black);
+    color: var(--primary);
     text-decoration: none;
-    transition: color 0.1s ease-in-out;
+    transition: color 0.1s ease;
 
     &:hover {
-        color: var(--primary);
+        color: var(--primary-light);
     }
 
     &.dashed {

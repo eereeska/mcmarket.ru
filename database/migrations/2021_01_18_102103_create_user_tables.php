@@ -21,13 +21,15 @@ class CreateUserTables extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique();
-            $table->foreignId('role_id')->nullable()->default(1)->constrained('roles')->nullOnDelete();
+            $table->string('email')->unique();
+            $table->foreignId('role_id')->default(1)->constrained('roles');
             $table->float('balance', 8, 2, true)->default(0);
             $table->string('ip');
             $table->string('avatar')->nullable();
             $table->string('password')->nullable();
-            $table->boolean('is_verified')->default(false);
+            $table->boolean('verified')->default(false);
             $table->rememberToken();
+            $table->timestamp('email_verified_at')->nullable();
             $table->timestamp('last_seen_at')->nullable();
             $table->timestamps();
         });
@@ -51,9 +53,9 @@ class CreateUserTables extends Migration
 
     public function down()
     {
+        Schema::dropIfExists('roles');
         Schema::dropIfExists('users');
         Schema::dropIfExists('user_settings');
-        Schema::dropIfExists('roles');
         Schema::dropIfExists('user_followers');
     }
 }

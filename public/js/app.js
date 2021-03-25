@@ -2480,8 +2480,18 @@ _mcm__WEBPACK_IMPORTED_MODULE_0__.default.qsa('[data-submit]').forEach(function 
 _mcm__WEBPACK_IMPORTED_MODULE_0__.default.qsa('input[data-on-change]').forEach(function (item) {
   var action = item.getAttribute('data-on-change');
   var type = item.getAttribute('type').toLowerCase();
-  var event = type === 'text' || type === 'hidden' || type === 'number' ? 'keyup' : 'change';
-  _mcm__WEBPACK_IMPORTED_MODULE_0__.default.on(event, item, function (e) {
+
+  if (!['checkbox', 'hidden'].includes(type)) {
+    _mcm__WEBPACK_IMPORTED_MODULE_0__.default.on('keydown', item, function (e) {
+      if (e.altKey || e.ctrlKey) {
+        return;
+      }
+
+      this.dispatchEvent(new Event('change'));
+    });
+  }
+
+  _mcm__WEBPACK_IMPORTED_MODULE_0__.default.on('change', item, function (e) {
     e.preventDefault();
 
     if (action == 'submit') {

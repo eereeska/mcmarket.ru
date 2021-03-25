@@ -12,6 +12,8 @@ use App\Http\Controllers\GroupController;
 use App\Http\Controllers\Search\UserSearchController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\Users\UserEmailVerificationController;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Support\Facades\Route;
 
 Route::match(['get', 'post'], '/', [FileController::class, 'index'])->name('home');
@@ -48,6 +50,11 @@ Route::post('/register', [RegisterController::class, 'register'])->middleware('g
 Route::get('/logout', [LoginController::class, 'logout'])->middleware('auth')->name('logout');
 
 Route::group(['middleware' => 'auth'], function() {
+    Route::group(['prefix' => 'email'], function() {
+        Route::post('/verify', [UserEmailVerificationController::class, 'sendEmail'])->middleware('ajax')->name('user.email.verification.send');
+        Route::get('/verify/{token}', [UserEmailVerificationController::class, 'verify'])->name('user.email.verification.verify');
+    });
+
     Route::get('/settings', [UserController::class, 'settings'])->name('settings');
     Route::post('/settings', [UserController::class, 'updateSettings']);
 });
@@ -84,7 +91,7 @@ Route::group(['prefix' => 'files'], function() {
 Route::group(['prefix' => 'file'], function() {
     Route::group(['middleware' => 'auth'], function() {
         Route::get('/submit', [FileController::class, 'submit'])->middleware('permission:can_submit_new_files')->name('file.submit');
-        Route::post('/submit', [FileController::class, 'store'])->name('file.store');
+        Route::post('/submit', [FileController::class, 'store'])->middleware('permission:can_submit_new_files')->name('file.store');
 
         Route::group(['prefix' => '/{id}'], function() {
             Route::get('/download', [FileController::class, 'download'])->name('file.download');

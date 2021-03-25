@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class LoginController extends Controller
 {
@@ -16,7 +17,7 @@ class LoginController extends Controller
     public function login(Request $request)
     {
         if (Auth::attempt([
-            'name' => $request->name,
+            'email' => $request->email,
             'password' => $request->password
         ], true)) {
             $request->session()->regenerate();
@@ -30,6 +31,8 @@ class LoginController extends Controller
     public function logout()
     {
         Auth::logout();
-        return back();
+        Session::flush();
+
+        return redirect()->route('home');
     }
 }

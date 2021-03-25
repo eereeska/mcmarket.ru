@@ -50,9 +50,18 @@ mcm.qsa('[data-submit]').forEach(function(item) {
 mcm.qsa('input[data-on-change]').forEach(function(item) {
     var action = item.getAttribute('data-on-change');
     var type = item.getAttribute('type').toLowerCase();
-    var event = (type === 'text' || type === 'hidden' || type === 'number') ? 'keyup' : 'change';
 
-    mcm.on(event, item, function(e) {
+    if (!['checkbox', 'hidden'].includes(type)) {
+        mcm.on('keydown', item, function(e) {
+            if (e.altKey || e.ctrlKey) {
+                return;
+            }
+
+            this.dispatchEvent(new Event('change'));
+        });
+    }
+
+    mcm.on('change', item, function(e) {
         e.preventDefault();
 
         if (action == 'submit') {

@@ -10,20 +10,31 @@
     </div>
     <form method="post" action="{{ route('register') }}">
         {{ csrf_field() }}
-        <input type="text" name="name" placeholder="Никнейм" value="{{ old('name') }}" minlength="3" maxlength="24" autocapitalize="none" autocorrect="off" autocomplete="username" required>
-        @if ($errors->has('name'))
-            <p class="alert red small">{{ $errors->first('name') }}</p>
-        @endif
-        <input type="password" name="password" placeholder="Пароль" autocomplete="password" required>
-        @if ($errors->has('password'))
-            <p class="alert red small">{{ $errors->first('password') }}</p>
-        @endif
-        @if ($errors->has('create_error'))
-            <p class="alert red small">{{ $errors->first('create_error') }}</p>
-        @endif
-        <input type="password" name="password_confirmation" placeholder="Подтверждение пароля" autocomplete="password" required>
-        <p class="center mt-30 mb-30">Создавая аккаунт, я соглашаюсь с <a href="{{ route('terms') }}" target="_blank">правилами MCMarket</a> и даю согласие на <a href="#" target="_blank">обработку персональных данных</a>.</p>
-        <button type="submit" class="button primary">Создать аккаунт</button>
+        <section class="section section_small">
+            <input type="email" name="email" placeholder="Почта" value="{{ old('email') }}" minlength="3" maxlength="20" autocapitalize="none" autocorrect="off" autocomplete="on" required class="input">
+            @if ($errors->has('email'))
+                <p class="alert red small">{{ $errors->first('email') }}</p>
+            @endif
+        </section>
+        <section class="section section_small">
+            <input type="text" name="username" placeholder="Никнейм" value="{{ old('username') }}" minlength="3" maxlength="20" autocapitalize="none" autocorrect="off" autocomplete="on" required class="input">
+            @if ($errors->has('name'))
+                <p class="alert red small">{{ $errors->first('username') }}</p>
+            @endif
+        </section>
+        <section class="section section_small">
+            <input type="password" name="password" placeholder="Пароль" autocomplete="new-password" required class="input">
+            @if ($errors->has('password'))
+                <p class="alert red small">{{ $errors->first('password') }}</p>
+            @endif
+        </section>
+        <section class="section section_small">
+            <p class="center mt-30 mb-30">Создавая аккаунт, Вы соглашаетесь с <a href="{{ route('terms') }}" target="_blank">правилами MCMarket</a> и выражаете согласие на <a href="#" target="_blank">обработку персональных данных</a>.</p>
+            @if ($errors->has('create_error'))
+                <p class="alert red small">{{ $errors->first('create_error') }}</p>
+            @endif
+            <button type="submit" class="button primary">Создать аккаунт</button>
+        </section>
     </form>
     <p class="center mt-60 mb-30">Через соц. сети</p>
     <div class="social_links grid">

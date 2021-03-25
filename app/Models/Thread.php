@@ -5,6 +5,20 @@ namespace App\Models;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * App\Models\Thread
+ *
+ * @property-read User $author
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\ThreadReply[] $replies
+ * @property-read int|null $replies_count
+ * @property-read Model|\Eloquent $taggabble
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Tag[] $tags
+ * @property-read int|null $tags_count
+ * @method static \Illuminate\Database\Eloquent\Builder|Thread newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Thread newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Thread query()
+ * @mixin \Eloquent
+ */
 class Thread extends Model
 {
     public function taggabble()
