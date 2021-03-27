@@ -10,8 +10,12 @@
     </div>
     <form method="post" action="{{ route('login') }}">
         {{ csrf_field() }}
-        <input type="text" name="name" placeholder="Никнейм" value="{{ old('name') }}" minlength="3" maxlength="24" autocapitalize="none" autocorrect="off" autocomplete="username" required>
-        <input type="password" name="password" placeholder="Пароль" autocomplete="password" required>
+        <section class="section section_small">
+            <input class="input" type="text" name="name" placeholder="Никнейм" value="{{ old('name') }}" minlength="3" maxlength="24" autocapitalize="none" autocorrect="off" autocomplete="username" required>
+        </section>
+        <section class="section section_small">
+            <input class="input" type="password" name="password" placeholder="Пароль" autocomplete="password" required>
+        </section>
         @if ($errors->any())
             <p class="alert red small">{{ $errors->first() }}</p>
         @endif
