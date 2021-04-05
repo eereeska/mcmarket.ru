@@ -1,7 +1,9 @@
 .page {
     display: flex;
+    justify-content: center;
     gap: var(--margin-6);
     max-width: var(--content-max-width);
+    width: 100%;
     margin: var(--margin-6) auto;
 
     @media (max-width: 1220px) {
@@ -12,9 +14,8 @@
     .content {
         width: 100%;
 
-        &_auth-form {
+        &_auth {
             max-width: 400px;
-            margin: 0 auto;
         }
     }
 }

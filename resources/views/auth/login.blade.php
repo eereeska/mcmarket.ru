@@ -3,7 +3,16 @@
 @section('meta.title', 'Авторизация')
 
 @section('content')
-<div class="content content_auth-form">
+@if ($errors->any())
+    <aside class="sidebar">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </aside>
+@endif
+<div class="content content_auth">
     <div class="section_title">
         <h4>Авторизация</h4>
         <a href="{{ route('register') }}">Регистрация</a>
@@ -16,9 +25,6 @@
         <section class="section section_small">
             <input class="input" type="password" name="password" placeholder="Пароль" autocomplete="password" required>
         </section>
-        @if ($errors->any())
-            <p class="alert red small">{{ $errors->first() }}</p>
-        @endif
         <button type="submit" class="button primary">Войти</button>
     </form>
     <p class="center mt-60 mb-30">Через соц. сети</p>

@@ -21,15 +21,13 @@ class CreateUserTables extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique();
-            $table->string('email')->unique();
             $table->foreignId('role_id')->default(1)->constrained('roles');
             $table->float('balance', 8, 2, true)->default(0);
-            $table->string('ip');
+            $table->string('ip')->nullable();
             $table->string('avatar')->nullable();
             $table->string('password')->nullable();
             $table->boolean('verified')->default(false);
             $table->rememberToken();
-            $table->timestamp('email_verified_at')->nullable();
             $table->timestamp('last_seen_at')->nullable();
             $table->timestamps();
         });

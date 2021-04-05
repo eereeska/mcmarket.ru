@@ -170,14 +170,8 @@ class FileController extends Controller
         $file->name = trim($request->name);
         $file->description = FileDescriptionController::normalize($request->description);
         $file->type = trim($request->type);
-        
-        if ($file->type == 'paid') {
-            $file->price = $request->price ?? null;
-        }
-
-        if ($request->has('version')) {
-            $file->version = trim($request->version);
-        }
+        $file->price = $file->type == 'paid' ? $request->price ?? null : null;
+        $file->version = trim($request->version) ?? null;
 
         if ($request->has('donation_url')) {
             $file->donation_url = trim($request->donation_url);
@@ -187,7 +181,7 @@ class FileController extends Controller
             $file->keywords = trim($request->keywords);
         }
 
-        if ($request->has('cover')) {
+        if ($request->hasFile('cover')) {
             $file->cover_path = FileCoverController::store($file, $request->file('cover'));
         }
 

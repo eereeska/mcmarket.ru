@@ -130,5 +130,9 @@
         &_selected {
             display: none;
         }
+
+        &.icon::before {
+            margin-right: var(--margin-3);
+        }
     }
 }

@@ -6,5 +6,13 @@
     &_inline {
         flex-direction: row;
         flex-wrap: wrap;
+
+        .button {
+            width: unset;
+        }
+
+        &_fluid .button {
+            flex-grow: 1;
+        }
     }
 }

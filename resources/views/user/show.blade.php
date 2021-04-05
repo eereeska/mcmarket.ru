@@ -10,22 +10,9 @@
 <aside class="sidebar">
     <section class="section section_sticky">
         <section class="section">
-            <div class="section__header">
-                @include('components._avatar', ['user' => $user, 'large' => true])
-            </div>
-            <div class="section__content buttons">
-                @if (Auth::check() and Auth::user()->id == $user->id)
-                @if (!Auth::user()->verified)
-                <button class="button primary">Пройти идентификацию</button>
-                @endif
-                <a href="{{ route('settings') }}" class="button">Настройки</a>
-                @elseif (Auth::check())
-                {{-- <a href="{{ route('chat', ['chat' => $chat]) }}" class="button primary">Написать</a> --}}
-                <button class="button primary" data-action="request" data-url="{{ route('user.follow', ['name' => $user->name]) }}">Подписаться</button>
-                @endif
-            </div>
+        @include('components._avatar', ['user' => $user, 'large' => true])
         </section>
-        @if (Auth::check() and Auth::user()->id == $user->id)
+        @if (auth()->id() == $user->id)
         <section class="section">
             <div class="section__header">
                 <h2 class="section__title">Информация</h2>
@@ -100,7 +87,7 @@
     </section>
 </aside>
 <div class="content">
-    <section class="section compact">
+    <section class="section section_compact">
         @include('user._name', ['user' => $user])
         <p>{{ $user->role->title }}, {{ $user->settings->is_online_status_visible ?  $user->getOnlineStatus() : 'Оффлайн' }}</p>
     </section>
@@ -120,6 +107,19 @@
     </section>
     @endif
     <section class="section">
+        <div class="section__content buttons buttons_inline buttons_inline_fluid">
+            @if (auth()->id() == $user->id)
+            @if (!Auth::user()->verified)
+            <button class="button primary">Пройти идентификацию</button>
+            @endif
+            <a href="{{ route('settings') }}" class="button">Настройки</a>
+            @elseif (Auth::check())
+            {{-- <a href="{{ route('chat', ['chat' => $chat]) }}" class="button primary">Написать</a> --}}
+            <button class="button primary" data-action="request" data-url="{{ route('user.follow', ['user' => $user]) }}">Подписаться</button>
+            @endif
+        </div>
+    </section>
+    {{-- <section class="section">
         <div class="tabs">
             <a href="#files" class="tabs__tab tabs__tab_active">Файлы</a>
             <a href="#goods" class="tabs__tab">Товары</a>
@@ -130,6 +130,6 @@
             </div>
             <div id="goods" class="list">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis, nam officia sapiente officiis tenetur quae numquam voluptatum suscipit vitae odit excepturi impedit reprehenderit cum totam at incidunt fuga doloremque illo rerum earum. Nobis pariatur repudiandae ipsum optio fuga sequi minus laborum atque aliquid ducimus facere neque soluta odit culpa molestiae harum ipsam eligendi veniam, dicta dolorum nostrum architecto? Officiis ducimus doloribus ea quis dolorum, nulla repellat libero animi doloremque voluptates ipsam dolorem, ex, iusto rerum accusantium? Ea ducimus minus ipsa numquam distinctio facilis commodi voluptate iure, corrupti laudantium dolores quis atque magni natus eius eum excepturi ipsam maiores consequatur perspiciatis!</div>
         </div>
-    </section>
+    </section> --}}
 </div>
 @endsection

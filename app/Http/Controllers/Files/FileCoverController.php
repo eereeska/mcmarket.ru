@@ -16,8 +16,10 @@ class FileCoverController extends Controller
 
         $path = hash_file($hash, $cover) . '.' . $cover->getClientOriginalExtension();
 
+        // TODO: Доработать пути, кеш и сделать сохранение нескольких версий, разных размеров
+
         try {
-            Image::make($cover)->fit($width, $height)->save(storage_path('app/public/covers/' . $path));
+            Image::make($cover)->fit($width, $height)->save(storage_path('app/public/covers/files/' . $path));
         } catch(\Exception $e) {
             return null;
         }

@@ -122,6 +122,11 @@ class File extends Model
         return round($this->size, 2) . ' ' . $units[$i];
     }
 
+    public function getCover()
+    {
+        return asset('covers/files/' . $this->cover_path);
+    }
+
     public function getTabTitle()
     {
         $types = [

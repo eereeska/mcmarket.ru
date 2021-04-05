@@ -1,22 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="content">
-    <section class="section">
-        <div class="section__header">
-            <h2 class="section__title">Файлы</h2>
-        </div>
-        <div id="files" class="section__content list">
-            @include('components.files._files', ['files' => $files])
-        </div>
-    </section>
-</div>
-<div class="sidebar">
+<aside class="sidebar">
     <section class="section section_sticky">
         <section class="section">
-            <div class="section__header">
-                <h2 class="section__title">Фильтры</h2>
-            </div>
             <div class="section__content">
                 <form action="{{ route('home') }}" data-on-submit="request" data-results="#files">
                     @include('components.files.filters._sort')
@@ -41,6 +28,16 @@
             </div>
         </section>
         @endauth
+    </section>
+</aside>
+<div class="content">
+    <section class="section">
+        <div class="section__header">
+            <h2 class="section__title">Файлы</h2>
+        </div>
+        <div id="files" class="section__content list">
+            @include('components.files._files', ['files' => $files])
+        </div>
     </section>
 </div>
 @endsection

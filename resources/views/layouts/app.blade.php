@@ -60,8 +60,8 @@
             <div class="header__left">
                 <a href="{{ route('home') }}" class="header__logo">MCMarket</a>
                 <nav class="header__nav">
-                    <a href="#" @if (request()->is('u*')) class="active" @endif>Пользователи</a>
-                    <a href="{{ route('groups-index') }}" @if (request()->is('group*')) class="active" @endif>Сообщества</a>
+                    {{-- <a href="#" @if (request()->is('u*')) class="active" @endif>Пользователи</a> --}}
+                    {{-- <a href="{{ route('groups-index') }}" @if (request()->is('group*')) class="active" @endif>Сообщества</a> --}}
                     @guest
                     <a href="{{ route('login') }}" @if (request()->is('login')) class="active" @endif>Вход</a>
                     <a href="{{ route('register') }}" @if (request()->is('register')) class="active" @endif>Регистрация</a>

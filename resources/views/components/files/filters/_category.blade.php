@@ -5,5 +5,6 @@
     'reset' => true,
     'default' => 'Не выбрана',
     'selected' => request()->get('category', 'none'),
-    'options' => $categories->pluck('title', 'name')->toArray()
+    'options' => $categories->pluck('title', 'name')->toArray(),
+    'icons' => $categories->pluck('icon', 'name')->toArray()
 ])

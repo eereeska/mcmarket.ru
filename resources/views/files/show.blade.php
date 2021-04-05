@@ -44,19 +44,19 @@
 <aside class="sidebar">
     <section class="section">
         @if ($file->cover_path)
-        <img class="cover" src="{{ asset('covers/' . $file->cover_path) }}" alt="{{ $file->title }}"></img>
+        <img class="cover" src="{{ $file->getCover() }}" alt="{{ $file->title }}" />
         @else
         <p class="alert red">Добавьте обложку</p>
         @endif
     </section>
     <section class="section section_sticky">
-        @if (auth()->check())
+        @auth
         <section class="section">
             <div class="section__header">
                 <h2 class="section__title">Действия</h2>
             </div>
             <div class="section__content">
-                @if (auth()->user()->id != $file->user_id and !auth()->user()->hasPurchasedFile($file))
+                @if ($file->type == 'paid' and auth()->user()->id != $file->user_id and !auth()->user()->hasPurchasedFile($file))
                 <a href="{{ route('file.purchase', ['id' => $file->id]) }}" class="data data_compact">
                     <div class="data__icon icon icon_cart"></div>
                     <div class="data__info">
@@ -78,17 +78,17 @@
                         <h3 class="data__value">Редактировать</h3>
                     </div>
                 </a>
-                @else
+                {{-- @else
                 <a href="#" class="data data_compact">
                     <div class="data__icon icon icon_report"></div>
                     <div class="data__info">
                         <h3 class="data__value">Пожаловаться</h3>
                     </div>
-                </a>
+                </a> --}}
                 @endif
             </div>
         </section>
-        @endif
+        @endauth
         <section class="section">
             <div class="section__header">
                 @if ($file->type === 'paid')
