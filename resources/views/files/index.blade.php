@@ -6,10 +6,45 @@
         <section class="section">
             <div class="section__content">
                 <form action="{{ route('home') }}" data-on-submit="request" data-results="#files">
-                    @include('components.files.filters._sort')
-                    @include('components.files.filters._category')
-                    @include('components.files.filters._type')
-                    @include('components.files.filters._from')
+                    @include('components._select', [
+                        'label' => 'Сортировка',
+                        'name' => 'sort',
+                        'submit' => true,
+                        'default' => 'update_down',
+                        'selected' => request()->get('sort', 'update_down'),
+                        'options' => [
+                            'update_down' => 'Последнее обновление',
+                            'new_down' => 'Новые',
+                            'downloads_down' => 'Больше всего скачиваний',
+                            'views_down' => 'Больше всего просмотров'
+                        ]
+                    ])
+                    @include('components._select', [
+                        'label' => 'Категория',
+                        'name' => 'category',
+                        'required' => false,
+                        'submit' => true,
+                        'reset' => true,
+                        'compact' => true,
+                        'default' => 'Не выбрана',
+                        'selected' => request()->get('category', 'none'),
+                        'options' => $categories->pluck('title', 'name')->toArray(),
+                        'icons' => $categories->pluck('icon', 'name')->toArray()
+                    ])
+                    @include('components._select', [
+                        'label' => 'Тип',
+                        'name' => 'type',
+                        'submit' => true,
+                        'reset' => true,
+                        'default' => 'Не выбран',
+                        'selected' => request()->get('type', 'none'),
+                        'options' => [
+                            'free' => 'Бесплатные',
+                            'paid' => 'Платные',
+                            'nulled' => 'Nulled'
+                        ]
+                    ])
+                    {{-- @include('components.files.filters._from') --}}
                 </form>
             </div>
         </section>

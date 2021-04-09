@@ -10,7 +10,7 @@
             <a href="{{ route('login') }}">Уже есть аккаунт?</a>
         </div>
         <div class="section__content">
-            <form id="register-form" method="post" action="{{ route('register') }}">
+            <form id="auth-form" method="post" action="{{ route('register') }}">
                 {{ csrf_field() }}
                 <section class="section section_small">
                     <input type="text" name="username" placeholder="Никнейм" value="{{ old('username') }}" minlength="3" maxlength="20" autocapitalize="none" autocorrect="off" autocomplete="on" required class="input">
@@ -34,7 +34,7 @@
                     @endif
                     <script>
                         function onSubmit() {
-                            document.getElementById('register-form').submit();
+                            document.getElementById('auth-form').submit();
                         }
                     </script>
                     <button type="submit" class="button primary h-captcha" data-sitekey="5c123643-0349-474e-a131-30368a03f91c" data-size="invisible" data-callback="onSubmit">Создать аккаунт</button>

@@ -76,5 +76,6 @@ class Kernel extends HttpKernel
         'ajax' => \App\Http\Middleware\AjaxOnly::class,
         'permission' => \App\Http\Middleware\Permission::class,
         'role' => \App\Http\Middleware\Role::class,
+        'captcha' => \App\Http\Middleware\HCaptcha::class,
     ];
 }

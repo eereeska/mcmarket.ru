@@ -1,16 +1,24 @@
+@if ($compact ?? true)
 <section class="section section_compact">
+@else
+<section class="section">
+@endif
     @isset($label)
     <div class="section__header">
+        @if ($required ?? false)
+        <label for="{{ $name }}" class="section__title section__title_required">{{ $label }}</label>
+        @else
         <label for="{{ $name }}" class="section__title">{{ $label }}</label>
+        @endif
     </div>
     @endisset
     <div class="section__content">
         <div class="select">
-            @isset($submit)
+            @if ($submit ?? false)
             <input type="hidden" name="{{ $name }}" class="select__data" data-on-change="submit">
             @else
             <input type="hidden" name="{{ $name }}" class="select__data">
-            @endisset
+            @endif
             @if (isset($search))
             <input type="text" placeholder="Поиск..." class="input select__search" autocomplete="off" tabindex="0" minlength="2" data-url="{{ $search['url'] }}">
             @endif
@@ -21,7 +29,7 @@
             @endif
             @isset($options)
             <div class="select__options">
-                @isset($reset)
+                @if ($reset ?? false)
                 @if (array_key_exists($selected, $options))
                 <div class="select__option select__option_reset" data-value="none">{{ $default }}</div>
                 @else

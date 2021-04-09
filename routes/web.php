@@ -12,8 +12,6 @@ use App\Http\Controllers\GroupController;
 use App\Http\Controllers\Search\UserSearchController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\Users\UserEmailVerificationController;
-use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Support\Facades\Route;
 
 Route::match(['get', 'post'], '/', [FileController::class, 'index'])->name('home');
@@ -42,19 +40,14 @@ Route::group(['prefix' => 'search', 'middleware' => 'auth'], function() {
 });
 
 Route::get('/login', [LoginController::class, 'index'])->middleware('guest')->name('login');
-Route::post('/login', [LoginController::class, 'login'])->middleware('guest');
+Route::post('/login', [LoginController::class, 'login'])->middleware(['guest', 'captcha']);
 
 Route::get('/register', [RegisterController::class, 'index'])->middleware('guest')->name('register');
-Route::post('/register', [RegisterController::class, 'register'])->middleware('guest');
+Route::post('/register', [RegisterController::class, 'register'])->middleware(['guest', 'captcha']);
 
 Route::get('/logout', [LoginController::class, 'logout'])->middleware('auth')->name('logout');
 
 Route::group(['middleware' => 'auth'], function() {
-    Route::group(['prefix' => 'email'], function() {
-        Route::post('/verify', [UserEmailVerificationController::class, 'sendEmail'])->middleware('ajax')->name('user.email.verification.send');
-        Route::get('/verify/{token}', [UserEmailVerificationController::class, 'verify'])->name('user.email.verification.verify');
-    });
-
     Route::get('/settings', [UserController::class, 'settings'])->name('settings');
     Route::post('/settings', [UserController::class, 'updateSettings']);
 });

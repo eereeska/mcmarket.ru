@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\HCaptchaController;
 use App\Models\User;
 use App\Models\UserSettings;
 use Illuminate\Http\Request;
@@ -22,8 +21,7 @@ class RegisterController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'username' => ['required', 'min:3', 'max:20', 'alpha_dash', 'unique:users,name'],
-            'password' => ['required', 'min:6'],
-            'h-captcha-response' => ['required']
+            'password' => ['required', 'min:6']
         ], [
             'username.required' => 'Обязательное поле',
             'username.min' => 'Никнейм не может быть короче трёх символов',
@@ -31,18 +29,11 @@ class RegisterController extends Controller
             'username.alpha_dash' => 'Никнейм может состоять лишь из букв, цифр, нижнего подчёркивания, тире и не должен содержать пробелов',
             'username.unique' => 'Указанный никнейм уже используется',
             'password.required' => 'Обязательное поле',
-            'password.min' => 'Минимальная длинна: 6 символов',
-            'h-captcha-response.required' => 'Вы что, робот?'
+            'password.min' => 'Минимальная длинна: 6 символов'
         ]);
 
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
-        }
-
-        if (!HCaptchaController::verify($request->get('h-captcha-response'))) {
-            return redirect()->back()->withErrors([
-                'h-captcha-response' => 'Вы что, робот?'
-            ])->withInput();
         }
 
         try {
@@ -60,7 +51,6 @@ class RegisterController extends Controller
 
             return redirect()->route('home');
         } catch (\Exception $e) {
-            dd($e);
             return back()->withErrors(['create_error' => 'Не удалось создать аккаунт'])->withInput();
         }
     }

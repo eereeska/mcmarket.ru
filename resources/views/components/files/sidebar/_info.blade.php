@@ -10,7 +10,7 @@
 <div class="data data_compact">
     <div class="data__icon icon icon_file"></div>
     <div class="data__info">
-        <h3 class="data__value">.{{ $file->extension }}</h3>
+        <h3 class="data__value">{{ $file->extension }}</h3>
         <div class="data__desc">Расширение</div>
     </div>
 </div>

@@ -5,26 +5,13 @@
 
 @section('content')
 <div class="content">
-    <form id="file-submit-form" method="post" action="{{ route('file.submit') }}" enctype="multipart/form-data">
+    <form id="file-submit-form" method="post" action="{{ route('file.submit') }}" enctype="multipart/form-data" autocomplete="off">
         @csrf
-        <section class="section">
-            <div class="section__header">
-                <h2 class="section__title section__title_required">Категория</h2>
-            </div>
-            <div class="section__content">
-                @foreach ($categories as $category)
-                <label class="radio">
-                    @if (old('category') == $category->name)
-                    <input type="radio" name="category" value="{{ $category->name }}" class="radio__original" checked>
-                    @else
-                    <input type="radio" name="category" value="{{ $category->name }}" class="radio__original">
-                    @endif
-                    <span class="radio__mark"></span>
-                    <span class="radio__label">{{ $category->title }}</span>
-                </label>
-                @endforeach
-            </div>
-        </section>
+        <select name="category" class="select">
+            @foreach ($categories as $category)
+            <option value="{{ $category->name }}">{{ $category->title }}</option>
+            @endforeach
+        </select>
         <section class="section">
             <div class="section__header">
                 <h2 class="section__title section__title_required">Заголовок</h2>
@@ -55,11 +42,6 @@
                     <span class="radio__label">Бесплатный</span>
                 </label>
                 <label class="radio">
-                    <input type="radio" name="type" value="nulled" class="radio__original">
-                    <span class="radio__mark"></span>
-                    <span class="radio__label">Nulled</span>
-                </label>
-                <label class="radio">
                     <input type="radio" name="type" value="paid" class="radio__original" data-show-if-checked="price">
                     <span class="radio__mark"></span>
                     <span class="radio__label">Платный</span>
@@ -76,8 +58,8 @@
             </div>
             <div class="section__content">
                 <label class="file">
-                    <input type="file" name="file" class="file__original">
-                    <span class="file__label">Нажмите здесь или перетащите файл</span>
+                    <input type="file" name="file" class="file__original" multiple>
+                    {{-- <span class="file__label">Нажмите здесь или перетащите файл</span> --}}
                 </label>
             </div>
         </section>

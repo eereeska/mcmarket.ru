@@ -3,29 +3,31 @@
 @section('meta.title', 'Авторизация')
 
 @section('content')
-@if ($errors->any())
-    <aside class="sidebar">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </aside>
-@endif
 <div class="content content_auth">
     <div class="section_title">
         <h4>Авторизация</h4>
         <a href="{{ route('register') }}">Регистрация</a>
     </div>
-    <form method="post" action="{{ route('login') }}">
+    <form id="auth-form" method="post" action="{{ route('login') }}">
         {{ csrf_field() }}
+        @if ($errors->any())
         <section class="section section_small">
-            <input class="input" type="text" name="name" placeholder="Никнейм" value="{{ old('name') }}" minlength="3" maxlength="24" autocapitalize="none" autocorrect="off" autocomplete="username" required>
+            <p class="alert red small">{{ $errors->first() }}</p>
+        </section>
+        @endif
+        <section class="section section_small">
+            <input class="input" type="text" name="username" placeholder="Никнейм" value="{{ old('username') }}" minlength="3" maxlength="24" autocapitalize="none" autocorrect="off" autocomplete="username" required>
         </section>
         <section class="section section_small">
             <input class="input" type="password" name="password" placeholder="Пароль" autocomplete="password" required>
         </section>
-        <button type="submit" class="button primary">Войти</button>
+        <script>
+            function onSubmit() {
+                document.getElementById('auth-form').submit();
+            }
+        </script>
+        <button type="submit" class="button primary h-captcha" data-sitekey="5c123643-0349-474e-a131-30368a03f91c" data-size="invisible" data-callback="onSubmit">Войти</button>
+        <script src="https://hcaptcha.com/1/api.js" async defer></script>
     </form>
     <p class="center mt-60 mb-30">Через соц. сети</p>
     <div class="social_links grid">

@@ -5,6 +5,120 @@
   box-sizing: border-box;
 }
 
+ul[class],
+ol[class] {
+  padding: 0;
+}
+
+body,
+h1,
+h2,
+h3,
+h4,
+p,
+ul[class],
+ol[class],
+li,
+figure,
+figcaption,
+blockquote,
+dl,
+dd {
+  margin: 0;
+}
+
+ul[class],
+ol[class] {
+  list-style: none;
+}
+
+a:not([class]) {
+  -webkit-text-decoration-skip: ink;
+          text-decoration-skip-ink: auto;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+article > * + * {
+  margin-top: 1em;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    -webkit-animation-duration: 0.01ms !important;
+            animation-duration: 0.01ms !important;
+    -webkit-animation-iteration-count: 1 !important;
+            animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+@font-face {
+  font-family: "Font Awesome 5 Pro";
+  font-style: normal;
+  font-weight: 300;
+  font-display: block;
+  src: url(/fonts/fa-light-300.eot?1bdff46d9f25dde635e0d69c3b83b4c2);
+  src: url(/fonts/fa-light-300.eot?1bdff46d9f25dde635e0d69c3b83b4c2) format("embedded-opentype"), url(/fonts/fa-light-300.woff2?fc1caad4139f764993b367547a5fb464) format("woff2"), url(/fonts/fa-light-300.woff?5d111e0fbbaced46646e0122f415f528) format("woff"), url(/fonts/fa-light-300.ttf?8fe0bd1d3e62c597a0c46a61a89cbb87) format("truetype"), url(/fonts/fa-light-300.svg?329ac15a79cc35c363f66f800af8cf1c) format("svg");
+}
+@font-face {
+  font-family: "Font Awesome 5 Pro";
+  font-style: normal;
+  font-weight: 400;
+  font-display: block;
+  src: url(/fonts/fa-regular-400.eot?46bbd47ac2b9b0cdfae2b5b9b57d9739);
+  src: url(/fonts/fa-regular-400.eot?46bbd47ac2b9b0cdfae2b5b9b57d9739) format("embedded-opentype"), url(/fonts/fa-regular-400.woff2?ad461e5fa7137fee6f95bd0dbe8c1256) format("woff2"), url(/fonts/fa-regular-400.woff?5fd5b25f40f21aa40fd50ba05add5a03) format("woff"), url(/fonts/fa-regular-400.ttf?d02baad177fca99e27384335a509dbf3) format("truetype"), url(/fonts/fa-regular-400.svg?18658d17d9e38ca06895c30ac33ee921) format("svg");
+}
+@font-face {
+  font-family: "Font Awesome 5 Pro";
+  font-style: normal;
+  font-weight: 900;
+  font-display: block;
+  src: url(/fonts/fa-solid-900.eot?06fbe2ee912e35f2c53cab490ede1f25);
+  src: url(/fonts/fa-solid-900.eot?06fbe2ee912e35f2c53cab490ede1f25) format("embedded-opentype"), url(/fonts/fa-solid-900.woff2?649614c34cb1aaa227bd7e72460c32fd) format("woff2"), url(/fonts/fa-solid-900.woff?57fd8d0e738650c8826619776f100051) format("woff"), url(/fonts/fa-solid-900.ttf?b645fda76c34402c35882904988eb160) format("truetype"), url(/fonts/fa-solid-900.svg?c1df6dae72efa4b135b75224233aac79) format("svg");
+}
+@font-face {
+  font-family: "Font Awesome 5 Brands";
+  font-style: normal;
+  font-weight: 400;
+  font-display: block;
+  src: url(/fonts/fa-brands-400.eot?05718c797d47f884efcbfafe44d2ca95);
+  src: url(/fonts/fa-brands-400.eot?05718c797d47f884efcbfafe44d2ca95) format("embedded-opentype"), url(/fonts/fa-brands-400.woff2?29ff4724bd1b1e774a0195c2f9b1eaf2) format("woff2"), url(/fonts/fa-brands-400.woff?13a061ea7f526a9e20fd2a8e26d4223c) format("woff"), url(/fonts/fa-brands-400.ttf?3059d606e43fea58d959a586c2b09a47) format("truetype"), url(/fonts/fa-brands-400.svg?9ed8ad4651c7586b577e25b4f43f8f99) format("svg");
+}
+@font-face {
+  font-family: "Nunito";
+  src: url(/fonts/Nunito-Bold.eot?81cc66858ad5c6bdda339383fb7f3eef);
+  src: url(/fonts/Nunito-Bold.eot?81cc66858ad5c6bdda339383fb7f3eef) format("embedded-opentype"), url(/fonts/Nunito-Bold.woff2?e7c6d919a3967270fc2311f21f9abfd9) format("woff2"), url(/fonts/Nunito-Bold.woff?99eccd9b275c50e648b584ee34f9ebc1) format("woff"), url(/fonts/Nunito-Bold.ttf?977c6bbf70df1ffbef197b109fff1f32) format("truetype"), url(/fonts/Nunito-Bold.svg?6f6195e30c1c75677dc440a02c758901) format("svg");
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Nunito";
+  src: url(/fonts/Nunito-Regular.eot?47b9edbb80b403aa391e594d8d5bd7d3);
+  src: url(/fonts/Nunito-Regular.eot?47b9edbb80b403aa391e594d8d5bd7d3) format("embedded-opentype"), url(/fonts/Nunito-Regular.woff2?31a7171e0212ec4660335a92e85e0dd6) format("woff2"), url(/fonts/Nunito-Regular.woff?1d0a455cc4c6f6e4d5215bdf838e8dac) format("woff"), url(/fonts/Nunito-Regular.ttf?03b964590c2917848f80bc1db680b492) format("truetype"), url(/fonts/Nunito-Regular.svg?008479c9cd194e4c6c2d90d7ec6dc01b) format("svg");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Nunito";
+  src: url(/fonts/Nunito-SemiBold.eot?3908ed76343bd7613fa34898f6f96a37);
+  src: url(/fonts/Nunito-SemiBold.eot?3908ed76343bd7613fa34898f6f96a37) format("embedded-opentype"), url(/fonts/Nunito-SemiBold.woff2?c788dbb98f959e64a4273c82a5fffe41) format("woff2"), url(/fonts/Nunito-SemiBold.woff?dfe112bb72ecb2e4d568c0a4cd730ee4) format("woff"), url(/fonts/Nunito-SemiBold.ttf?5d42381a68a8330aef92b0dc6ce009f3) format("truetype"), url(/fonts/Nunito-SemiBold.svg?bc259794ef85864e298af889cefac18e) format("svg");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
 :root {
   --html-bg-color: #F1F3FA;
   --content-max-width: 1100px;
@@ -67,8 +181,11 @@ body {
   font-family: "Nunito", Arial, Helvetica, sans-serif;
   font-weight: normal;
   font-size: 16px;
-  height: 100%;
+  min-height: 100vh;
+  scroll-behavior: smooth;
+  text-rendering: optimizeSpeed;
   color: var(--text-color-primary);
+  line-height: 26px;
   margin: 0;
   -webkit-user-select: none;
      -moz-user-select: none;
@@ -88,11 +205,6 @@ a.dashed {
   border-bottom: 1px dashed;
 }
 
-img {
-  display: block;
-  max-width: 100%;
-}
-
 span.muted {
   color: var(--gray);
 }
@@ -108,10 +220,6 @@ span.green {
 }
 .fluid--wrap {
   flex-wrap: wrap;
-}
-
-.gap-1 {
-  gap: var(--gap-1);
 }
 
 .truncate {
@@ -136,100 +244,6 @@ span.green {
   background-color: var(--primary);
 }
 
-@font-face {
-  font-family: "Font Awesome 5 Pro";
-  font-style: normal;
-  font-weight: 300;
-  font-display: block;
-  src: url(/fonts/fa-light-300.eot?1bdff46d9f25dde635e0d69c3b83b4c2);
-  src: url(/fonts/fa-light-300.eot?1bdff46d9f25dde635e0d69c3b83b4c2) format("embedded-opentype"), url(/fonts/fa-light-300.woff2?fc1caad4139f764993b367547a5fb464) format("woff2"), url(/fonts/fa-light-300.woff?5d111e0fbbaced46646e0122f415f528) format("woff"), url(/fonts/fa-light-300.ttf?8fe0bd1d3e62c597a0c46a61a89cbb87) format("truetype"), url(/fonts/fa-light-300.svg?329ac15a79cc35c363f66f800af8cf1c) format("svg");
-}
-@font-face {
-  font-family: "Font Awesome 5 Pro";
-  font-style: normal;
-  font-weight: 400;
-  font-display: block;
-  src: url(/fonts/fa-regular-400.eot?46bbd47ac2b9b0cdfae2b5b9b57d9739);
-  src: url(/fonts/fa-regular-400.eot?46bbd47ac2b9b0cdfae2b5b9b57d9739) format("embedded-opentype"), url(/fonts/fa-regular-400.woff2?ad461e5fa7137fee6f95bd0dbe8c1256) format("woff2"), url(/fonts/fa-regular-400.woff?5fd5b25f40f21aa40fd50ba05add5a03) format("woff"), url(/fonts/fa-regular-400.ttf?d02baad177fca99e27384335a509dbf3) format("truetype"), url(/fonts/fa-regular-400.svg?18658d17d9e38ca06895c30ac33ee921) format("svg");
-}
-@font-face {
-  font-family: "Font Awesome 5 Pro";
-  font-style: normal;
-  font-weight: 900;
-  font-display: block;
-  src: url(/fonts/fa-solid-900.eot?06fbe2ee912e35f2c53cab490ede1f25);
-  src: url(/fonts/fa-solid-900.eot?06fbe2ee912e35f2c53cab490ede1f25) format("embedded-opentype"), url(/fonts/fa-solid-900.woff2?649614c34cb1aaa227bd7e72460c32fd) format("woff2"), url(/fonts/fa-solid-900.woff?57fd8d0e738650c8826619776f100051) format("woff"), url(/fonts/fa-solid-900.ttf?b645fda76c34402c35882904988eb160) format("truetype"), url(/fonts/fa-solid-900.svg?c1df6dae72efa4b135b75224233aac79) format("svg");
-}
-@font-face {
-  font-family: "Font Awesome 5 Brands";
-  font-style: normal;
-  font-weight: 400;
-  font-display: block;
-  src: url(/fonts/fa-brands-400.eot?05718c797d47f884efcbfafe44d2ca95);
-  src: url(/fonts/fa-brands-400.eot?05718c797d47f884efcbfafe44d2ca95) format("embedded-opentype"), url(/fonts/fa-brands-400.woff2?29ff4724bd1b1e774a0195c2f9b1eaf2) format("woff2"), url(/fonts/fa-brands-400.woff?13a061ea7f526a9e20fd2a8e26d4223c) format("woff"), url(/fonts/fa-brands-400.ttf?3059d606e43fea58d959a586c2b09a47) format("truetype"), url(/fonts/fa-brands-400.svg?9ed8ad4651c7586b577e25b4f43f8f99) format("svg");
-}
-@font-face {
-  font-family: "Nunito";
-  src: url(/fonts/Nunito-Bold.eot?81cc66858ad5c6bdda339383fb7f3eef);
-  src: url(/fonts/Nunito-Bold.eot?81cc66858ad5c6bdda339383fb7f3eef) format("embedded-opentype"), url(/fonts/Nunito-Bold.woff2?e7c6d919a3967270fc2311f21f9abfd9) format("woff2"), url(/fonts/Nunito-Bold.woff?99eccd9b275c50e648b584ee34f9ebc1) format("woff"), url(/fonts/Nunito-Bold.ttf?977c6bbf70df1ffbef197b109fff1f32) format("truetype"), url(/fonts/Nunito-Bold.svg?6f6195e30c1c75677dc440a02c758901) format("svg");
-  font-weight: bold;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Nunito";
-  src: url(/fonts/Nunito-Regular.eot?47b9edbb80b403aa391e594d8d5bd7d3);
-  src: url(/fonts/Nunito-Regular.eot?47b9edbb80b403aa391e594d8d5bd7d3) format("embedded-opentype"), url(/fonts/Nunito-Regular.woff2?31a7171e0212ec4660335a92e85e0dd6) format("woff2"), url(/fonts/Nunito-Regular.woff?1d0a455cc4c6f6e4d5215bdf838e8dac) format("woff"), url(/fonts/Nunito-Regular.ttf?03b964590c2917848f80bc1db680b492) format("truetype"), url(/fonts/Nunito-Regular.svg?008479c9cd194e4c6c2d90d7ec6dc01b) format("svg");
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Nunito";
-  src: url(/fonts/Nunito-SemiBold.eot?3908ed76343bd7613fa34898f6f96a37);
-  src: url(/fonts/Nunito-SemiBold.eot?3908ed76343bd7613fa34898f6f96a37) format("embedded-opentype"), url(/fonts/Nunito-SemiBold.woff2?c788dbb98f959e64a4273c82a5fffe41) format("woff2"), url(/fonts/Nunito-SemiBold.woff?dfe112bb72ecb2e4d568c0a4cd730ee4) format("woff"), url(/fonts/Nunito-SemiBold.ttf?5d42381a68a8330aef92b0dc6ce009f3) format("truetype"), url(/fonts/Nunito-SemiBold.svg?bc259794ef85864e298af889cefac18e) format("svg");
-  font-weight: 600;
-  font-style: normal;
-  font-display: swap;
-}
-@-webkit-keyframes spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-@keyframes spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-@-webkit-keyframes loading {
-  0% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
-}
-@keyframes loading {
-  0% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
-}
 h1,
 h2,
 h3,
@@ -238,7 +252,6 @@ h5,
 h6,
 p {
   font-size: 16px;
-  line-height: 26px;
   margin: 0;
 }
 h1.center,
@@ -299,6 +312,45 @@ p:last-child {
   margin-bottom: 0;
 }
 
+@-webkit-keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+@-webkit-keyframes loading {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes loading {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
 .header {
   position: relative;
   background-color: var(--pure-white);
@@ -953,21 +1005,17 @@ button {
   transition: opacity 0.3s ease-in-out;
 }
 .file__original {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  opacity: 0;
+  outline: none;
   cursor: pointer;
 }
-.file__label {
-  width: 100%;
-  text-align: center;
-  padding: 24px var(--margin-6);
-  border: 2px dashed var(--border);
-  border-radius: var(--radius-2);
-  transition: border 0.1s ease-in-out;
+.file__original::-webkit-file-upload-button {
+  font: inherit;
+  background-color: var(--foreground);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-1);
+  padding: var(--margin-2) var(--margin-3);
+  margin-right: var(--margin-3);
+  outline: none;
   cursor: pointer;
 }
 .file.is-dragenter:not(.is-uploading) .file__label, .file:hover:not(.is-uploading) .file__label {
@@ -1009,7 +1057,6 @@ button {
   margin-bottom: var(--margin-5);
 }
 .section_sticky {
-  position: -webkit-sticky;
   position: sticky;
   top: var(--margin-5);
 }
@@ -1563,7 +1610,6 @@ p.alert.empty:before {
   content: "";
 }
 .editor__toolbar {
-  position: -webkit-sticky;
   position: sticky;
   top: 0;
   display: flex;

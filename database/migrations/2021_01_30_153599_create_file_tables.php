@@ -21,9 +21,8 @@ class CreateFileTables extends Migration
             $table->foreignId('category_id')->nullable()->constrained('file_categories')->nullOnDelete();
             $table->string('title');
             $table->string('name');
-            $table->enum('type', ['free', 'paid', 'nulled']);
             $table->string('path');
-            $table->unsignedInteger('size');
+            $table->unsignedBigInteger('size');
             $table->float('price', 8, 2, true)->nullable();
             $table->string('cover_path')->nullable();
             $table->mediumText('description')->nullable();
@@ -32,7 +31,7 @@ class CreateFileTables extends Migration
             $table->string('extension')->nullable();
             $table->string('donation_url')->nullable();
             $table->string('vt_id')->nullable();
-            $table->enum('vt_status', ['cmopleted', 'queued', 'in-progress'])->nullable();
+            $table->enum('vt_status', ['completed', 'queued', 'in-progress'])->nullable();
             $table->json('vt_stats')->nullable();
             $table->string('vt_hash')->nullable();
             $table->unsignedBigInteger('views_count')->default(0);
