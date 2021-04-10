@@ -73,7 +73,7 @@
                 {{-- <a href="{{ route('conversations.index') }}" class="header__conversations icon icon_comments"></a> --}}
                 <a href="{{ route('user.show', ['user' => auth()->user() ]) }}" class="header__profile">
                     @include('components._avatar', ['user' => auth()->user()])
-                    <span>{{ auth()->user()->balance }} руб</span>
+                    <span>{{ auth()->user()->name }}</span>
                 </a>
             </div>
             @endauth

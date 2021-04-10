@@ -3,29 +3,75 @@
 @section('meta.title', 'Файлы')
 
 @section('content')
-<div class="content">
-    <section class="section">
-        <div class="section__header">
-            <h2 class="section__title">Файлы</h2>
-        </div>
-        <div id="files" class="section__content list">
-            @include('components.admin.files._files', ['files' => $files])
-        </div>
-    </section>
-</div>
-<div class="sidebar">
+<aside class="sidebar">
     <section class="section section_sticky">
         <section class="section">
-            <div class="section__header">
+            {{-- <div class="section__header">
                 <h2 class="section__title">Фильтры</h2>
-            </div>
+            </div> --}}
             <div class="section__content">
                 <form action="{{ route('admin.files.index') }}" data-on-submit="request" data-results="#files">
-                    @include('components.files.filters._sort')
-                    @include('components.files.filters._status')
-                    @include('components.files.filters._category')
-                    @include('components.files.filters._type')
-                    @include('components.files.filters._from')
+                    @include('components._select', [
+                        'label' => 'Сортировка',
+                        'name' => 'sort',
+                        'submit' => true,
+                        'default' => 'update_down',
+                        'selected' => request()->get('sort', 'update_down'),
+                        'options' => [
+                            'update_down' => 'Последнее обновление',
+                            'new_down' => 'Новые',
+                            'downloads_down' => 'Больше всего скачиваний',
+                            'views_down' => 'Больше всего просмотров'
+                        ]
+                    ])
+                    @include('components._select', [
+                        'label' => 'Категория',
+                        'name' => 'category',
+                        'required' => false,
+                        'submit' => true,
+                        'reset' => true,
+                        'compact' => true,
+                        'default' => 'Не выбрана',
+                        'selected' => request()->get('category', 'none'),
+                        'options' => $categories->pluck('title', 'name')->toArray(),
+                        'icons' => $categories->pluck('icon', 'name')->toArray()
+                    ])
+                    @include('components._select', [
+                        'label' => 'Тип',
+                        'name' => 'type',
+                        'submit' => true,
+                        'reset' => true,
+                        'default' => 'Не выбран',
+                        'selected' => request()->get('type', 'none'),
+                        'options' => [
+                            'free' => 'Бесплатные',
+                            'paid' => 'Платные',
+                            'nulled' => 'Nulled'
+                        ]
+                    ])
+                    @include('components._select', [
+                        'label' => 'Статус',
+                        'name' => 'status',
+                        'submit' => true,
+                        'reset' => true,
+                        'default' => 'Не выбран',
+                        'selected' => request()->get('status'),
+                        'options' => [
+                            'hidden' => 'Скрыт',
+                            'pending' => 'На рассмотрении',
+                            'approved' => 'Одобрен'
+                        ]
+                    ])
+                    @include('components._select', [
+                        'label' => 'От пользователя',
+                        'name' => 'from',
+                        'submit' => true,
+                        'default' => 'Не указан',
+                        'selected' => 'none',
+                        'search' => [
+                            'url' => route('search.users')
+                        ]
+                    ])
                 </form>
             </div>
         </section>
@@ -42,6 +88,16 @@
                 </a>
             </div>
         </section>
+    </section>
+</aside>
+<div class="content">
+    <section class="section">
+        <div class="section__header">
+            <h2 class="section__title">Файлы</h2>
+        </div>
+        <div id="files" class="section__content list">
+            @include('components.admin.files._files', ['files' => $files])
+        </div>
     </section>
 </div>
 @endsection

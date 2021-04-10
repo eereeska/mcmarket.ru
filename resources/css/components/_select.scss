@@ -131,8 +131,18 @@
             display: none;
         }
 
-        &.icon::before {
-            margin-right: var(--margin-3);
+        &.icon {
+            display: flex;
+            flex-direction: row-reverse;
+            justify-content: space-between;
+
+            &::before {
+                opacity: 0.3;
+            }
+
+            &:hover::before {
+                opacity: 0.7;
+            }
         }
     }
 }

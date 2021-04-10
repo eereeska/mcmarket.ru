@@ -10,10 +10,10 @@ class CreatePaymentsTable extends Migration
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('paygate_id');
+            $table->text('unitpay_id');
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->float('sum', 8, 2, true);
-            $table->enum('status', ['waiting', 'error', 'success'])->default('waiting');
+            $table->timestamp('complete_at')->nullable();
             $table->timestamps();
         });
     }

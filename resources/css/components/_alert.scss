@@ -1,35 +1,32 @@
-p.alert {
-    position: relative;
-    padding: 15px 15px 15px 45px;
+.alert {
+    background-color: var(--foreground);
     border-radius: var(--radius-2);
+    display: flex;
 
-    &:before {
-        content: '\f06a';
-        position: absolute;
-        top: 15px;
-        left: 15px;
-        font-family: 'Font Awesome 5 Pro';
-        font-weight: 100;
+    &__content {
+        flex-grow: 1;
+        padding: var(--margin-3);
     }
 
-    & + input {
-        margin-top: 20px;
-    }
+    &__close {
+        align-items: center;
+        display: flex;
+        cursor: pointer;
+        justify-content: center;
+        padding: var(--margin-3);
 
-    &.red {
-        border: 1px solid var(--red);
-
-        &:before {
-            color: var(--red);
+        &::before {
+            content: "\f00d";
+            color: var(--gray);
+            font-family: "Font Awesome 5 Pro";
+            font-size: 18px;
+            font-weight: 100;
+            opacity: 0.5;
+            transition: opacity 0.1s ease;
         }
-    }
 
-    &.empty {
-        border: 1px solid var(--border);
-
-        &:before {
-            content: '\f8f6';
-            font-weight: normal;
+        &:hover::before {
+            opacity: 1;
         }
     }
 }

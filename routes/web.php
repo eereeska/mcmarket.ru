@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Balance\DepositController;
 use App\Http\Controllers\Conversations\ConversationController;
 use App\Http\Controllers\Files\FileController;
 use App\Http\Controllers\Files\FileMediaController;
@@ -50,6 +51,7 @@ Route::get('/logout', [LoginController::class, 'logout'])->middleware('auth')->n
 Route::group(['middleware' => 'auth'], function() {
     Route::get('/settings', [UserController::class, 'settings'])->name('settings');
     Route::post('/settings', [UserController::class, 'updateSettings']);
+    Route::get('/balance/deposit', [DepositController::class, 'deposit'])->name('deposit');
 });
 
 Route::group(['prefix' => 'upload', 'middleware' => 'auth'], function() {

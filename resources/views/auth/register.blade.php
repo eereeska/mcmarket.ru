@@ -14,30 +14,29 @@
                 {{ csrf_field() }}
                 <section class="section section_small">
                     <input type="text" name="username" placeholder="Никнейм" value="{{ old('username') }}" minlength="3" maxlength="20" autocapitalize="none" autocorrect="off" autocomplete="on" required class="input">
-                    @if ($errors->has('username'))
-                    <p class="alert red small">{{ $errors->first('username') }}</p>
-                    @endif
                 </section>
                 <section class="section section_small">
                     <input type="password" name="password" placeholder="Пароль" autocomplete="new-password" required class="input">
-                    @if ($errors->has('password'))
-                    <p class="alert red small">{{ $errors->first('password') }}</p>
-                    @endif
                 </section>
-                @if ($errors->has('h-captcha-response'))
-                <p class="alert red small">{{ $errors->first('h-captcha-response') }}</p>
+                @if ($errors->any())
+                    <section class="section section_compact">
+                        <div class="alert">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    </section>
                 @endif
                 <section class="section section_small">
-                    <p class="center mt-30 mb-30">Создавая аккаунт, Вы соглашаетесь с <a href="{{ route('terms') }}" target="_blank">правилами MCMarket</a> и выражаете согласие на <a href="#" target="_blank">обработку персональных данных</a>.</p>
-                    @if ($errors->has('create_error'))
-                        <p class="alert red small">{{ $errors->first('create_error') }}</p>
-                    @endif
+                    <p class="center mt-30 mb-30">Создавая аккаунт, Вы соглашаетесь с <a href="{{ route('terms') }}" target="_blank">правилами и условиями MCMarket</a></p>
                     <script>
                         function onSubmit() {
                             document.getElementById('auth-form').submit();
                         }
                     </script>
-                    <button type="submit" class="button primary h-captcha" data-sitekey="5c123643-0349-474e-a131-30368a03f91c" data-size="invisible" data-callback="onSubmit">Создать аккаунт</button>
+                    <button type="submit" class="button primary h-captcha" data-sitekey="{{ config('mcm.hcaptcha.public_key') }}" data-size="invisible" data-callback="onSubmit">Создать аккаунт</button>
                     <script src="https://hcaptcha.com/1/api.js" async defer></script>
                     {{-- @include('components._hcaptcha') --}}
                 </section>

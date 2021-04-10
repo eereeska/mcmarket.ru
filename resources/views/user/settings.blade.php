@@ -27,7 +27,6 @@
                 <div class="section__content">
                     <label class="file">
                         <input type="file" name="avatar" accept="image/*" class="file__original" value="{{ $user->avatar }}">
-                        <span class="file__label">Нажмите здесь или перетащите изображение для загрузки</span>
                     </label>
                 </div>
             </section>
@@ -44,16 +43,20 @@
                     <h2 class="section__title">Приватность</h2>
                 </div>
                 <div class="section__content">
-                    <label class="checkbox classic">
-                        <input type="checkbox" name="is_search_engine_visible" value="1" {{ $user->settings->is_search_engine_visible ? 'checked' : '' }}>
-                        <span class="checkbox__mark"></span>
-                        <span class="checkbox__label">Профиль можно найти в поиске Google, Яндекс и т.д.</span>
-                    </label>
-                    <label class="checkbox classic">
-                        <input type="checkbox" name="is_online_status_visible" value="1" {{ $user->settings->is_online_status_visible ? 'checked' : '' }}>
-                        <span class="checkbox__mark"></span>
-                        <span class="checkbox__label">Отображать Online статус</span>
-                    </label>
+                    <section class="section section_small">
+                        <label class="checkbox classic">
+                            <input type="checkbox" name="is_search_engine_visible" value="1" {{ $user->settings->is_search_engine_visible ? 'checked' : '' }}>
+                            <span class="checkbox__mark"></span>
+                            <span class="checkbox__label">Профиль можно найти в поиске Google, Яндекс и т.д.</span>
+                        </label>
+                    </section>
+                    <section class="section section_small">
+                        <label class="checkbox classic">
+                            <input type="checkbox" name="is_online_status_visible" value="1" {{ $user->settings->is_online_status_visible ? 'checked' : '' }}>
+                            <span class="checkbox__mark"></span>
+                            <span class="checkbox__label">Отображать Online статус</span>
+                        </label>
+                    </section>
                     {{-- <label class="checkbox classic">
                         <input type="checkbox" name="is_groups_visible" value="1" {{ $user->settings->is_groups_visible ? 'checked' : '' }}>
                         <span class="checkbox__mark"></span>

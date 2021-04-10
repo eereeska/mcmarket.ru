@@ -3,10 +3,9 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Http\Requests\Auth\LoginRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\Validator;
 
 class LoginController extends Controller
 {
@@ -15,20 +14,8 @@ class LoginController extends Controller
         return view('auth.login');
     }
 
-    public function login(Request $request)
+    public function login(LoginRequest $request)
     {
-        $validator = Validator::make($request->all(), [
-            'username' => ['required'],
-            'password' => ['required']
-        ], [
-            'username.required' => 'Обязательное поле',
-            'password.required' => 'Обязательное поле'
-        ]);
-
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput();
-        }
-        
         if (Auth::attempt([
             'name' => $request->username,
             'password' => $request->password
@@ -37,7 +24,7 @@ class LoginController extends Controller
 
             return redirect()->route('home');
         } else {
-            return back()->withErrors(['wrong_credentials' => 'Неверный логин или пароль'])->withInput();
+            return back()->withErrors(['wrong_credentials' => 'Неверный логин или пароль']);
         }
     }
 

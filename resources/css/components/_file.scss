@@ -12,8 +12,9 @@
         // opacity: 0;
         // cursor: pointer;
 
-        outline: none;
         cursor: pointer;
+        outline: none;
+        width: 100%;
 
         &::-webkit-file-upload-button {
             font: inherit;

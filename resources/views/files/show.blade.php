@@ -36,7 +36,9 @@
                 {!! $file->description !!}
             </article>
             @else
-            <p class="alert red">Заполните описание</p>
+            <div class="alert">
+                <div class="alert__content">Заполните описание</div>
+            </div>
             @endif
         </div>
     </section>
@@ -46,7 +48,9 @@
         @if ($file->cover_path)
         <img class="cover" src="{{ $file->getCover() }}" alt="{{ $file->title }}" />
         @else
-        <p class="alert red">Добавьте обложку</p>
+        <div class="alert">
+            <div class="alert__content">Добавьте обложку</div>
+        </div>
         @endif
     </section>
     <section class="section section_sticky">

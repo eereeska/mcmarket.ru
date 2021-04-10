@@ -1,6 +1,6 @@
 <div class="data data_compact">
     @if ($file->cover_path)
-    <a href="{{ route('admin.file.edit', ['id' => $file->id]) }}" class="data__icon cover" style="background-image: url({{ asset('covers/' . $file->cover_path) }})"></a>
+    <a href="{{ route('admin.file.edit', ['id' => $file->id]) }}" class="data__icon cover" style="background-image: url({{ $file->getCover() }})"></a>
     @else
     <a href="{{ route('admin.file.edit', ['id' => $file->id]) }}" class="data__icon icon"></a>
     @endif

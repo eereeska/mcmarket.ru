@@ -18,7 +18,7 @@
                 <h2 class="section__title">Информация</h2>
             </div>
             <div class="section__content">
-                <div class="data data_compact">
+                {{-- <div class="data data_compact">
                     @if ($user->balance > 1000)
                     <div class="data__icon icon icon_coins"></div>
                     @else
@@ -28,7 +28,7 @@
                         <span class="data__value">{{ $user->balance }} @choice('рубль|рубля|рублей', $user->balance)</span>
                         <span class="data__desc">Баланс</span>
                     </div>
-                </div>
+                </div> --}}
                 <div class="data data_compact">
                     <div class="data__icon icon icon_clock"></div>
                     <div class="data__info">
@@ -56,7 +56,7 @@
             </div>
         </section>
         @endif
-        <section class="section">
+        {{-- <section class="section">
             <div class="section__header">
                 <h2 class="section__title">Статистика</h2>
             </div>
@@ -83,7 +83,7 @@
                     </div>
                 </div>
             </div>
-        </section>
+        </section> --}}
     </section>
 </aside>
 <div class="content">
