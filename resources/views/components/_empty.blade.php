@@ -1,1 +1,4 @@
-<p class="alert empty small">Здесь пока ничего нет</p>
+<div class="alert">
+    <div class="alert__content">Здесь пока ничего нет</div>
+</div>
+{{-- #TODO: Empty class --}}

@@ -23,7 +23,6 @@
                     <div class="section__content">
                         <label class="file">
                             <input type="file" name="file" class="file__original" required>
-                            <span class="file__label">Нажмите здесь или перетащите файл</span>
                         </label>
                     </div>
                 </section>

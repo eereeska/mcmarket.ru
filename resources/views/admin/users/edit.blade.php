@@ -5,8 +5,10 @@
 @section('content')
 <aside class="sidebar">
     <section class="section section_sticky">
-        <div class="section__header">
-            @include('components._avatar', ['user' => $user, 'large' => true, 'id' => 'avatar-preview'])
+        <section class="section">
+            <div class="section__header">
+                @include('components._avatar', ['user' => $user, 'large' => true, 'id' => 'avatar-preview'])
+            </div>
         </div>
         <div class="section__content">
             @foreach ($errors->all() as $error)
@@ -14,6 +16,13 @@
             @endforeach
             <button class="button primary" data-action="form-submit" data-target="#settings-update-form">Сохранить</button>
         </div>
+        </section>
+        <section class="section">
+            <div class="section__header">Действия</div>
+            <div class="section__content">
+                <a class="button red" href="{{ route('admin.users.ban', ['id' => $user->id]) }}">Заблокировать</a>
+            </div>
+        </section>
     </section>
 </aside>
 <div class="content">
@@ -27,7 +36,6 @@
                 <div class="section__content">
                     <label class="file">
                         <input type="file" name="avatar" accept="image/*" class="file__original" value="{{ $user->avatar }}">
-                        <span class="file__label">Нажмите здесь или перетащите изображение для загрузки</span>
                     </label>
                 </div>
             </section>
@@ -36,7 +44,7 @@
                     <h2 class="section__title">Никнейм</h2>
                 </div>
                 <div class="section__content">
-                    <input type="text" name="name" value="{{ $user->name }}" class="input"></input>
+                    <input type="text" name="username" value="{{ $user->name }}" class="input" autocomplete="off">
                 </div>
             </section>
             <section class="section">
@@ -44,7 +52,7 @@
                     <h2 class="section__title">Баланс</h2>
                 </div>
                 <div class="section__content">
-                    <input type="number" name="balance" value="{{ $user->balance }}" class="input"></input>
+                    <input type="number" name="balance" value="{{ $user->balance }}" class="input" autocomplete="off">
                 </div>
             </section>
             <section class="section">

@@ -14,7 +14,7 @@ class Permission
         }
 
         foreach($permissions as $permission){
-            if (!auth()->user()->role->$permission){
+            if (!auth()->user()->role['p_' . $permission]){
                 abort(403);
             }
         }

@@ -59,11 +59,6 @@
                             <span class="radio__label">Бесплатный</span>
                         </label>
                         <label class="radio">
-                            <input type="radio" name="type" value="nulled" class="radio__original" {{ $file->type == 'nulled' ? 'checked="checked"' : '' }}>
-                            <span class="radio__mark"></span>
-                            <span class="radio__label">Nulled</span>
-                        </label>
-                        <label class="radio">
                             <input type="radio" name="type" value="paid" class="radio__original" {{ $file->type == 'paid' ? 'checked="checked"' : '' }} data-show-if-checked="price">
                             <span class="radio__mark"></span>
                             <span class="radio__label">Платный</span>
@@ -82,7 +77,6 @@
                     <div class="section__content">
                         <label class="file">
                             <input type="file" name="cover" accept="image/*" value="{{ $file->cover_path }}" class="file__original">
-                            <span class="file__label">Нажмите здесь или перетащите изображение</span>
                         </label>
                     </div>
                 </section>

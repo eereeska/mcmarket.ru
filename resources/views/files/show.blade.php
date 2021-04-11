@@ -3,7 +3,7 @@
 @section('meta.title', $file->getTabTitle())
 
 @if ($file->description)
-@section('meta.description', substr(strip_tags($file->description), 0, 150))
+@section('meta.description', $file->getHeadMetaDescription())
 @endif
 
 @if ($file->keywords)

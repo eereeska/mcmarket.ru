@@ -9,30 +9,6 @@ class DatabaseSeeder extends Seeder
 {
     public function run()
     {
-        DB::table('roles')->insert([
-            [
-                'name' => 'member',
-                'title' => 'Участник',
-                'can_access_acp' => false,
-                'can_submit_new_files' => false,
-                'can_approve_files' => false
-            ],
-            [
-                'name' => 'moderator',
-                'title' => 'Модератор',
-                'can_access_acp' => false,
-                'can_submit_new_files' => false,
-                'can_approve_files' => false
-            ],
-            [
-                'name' => 'admin',
-                'title' => 'Администратор',
-                'can_access_acp' => true,
-                'can_submit_new_files' => true,
-                'can_approve_files' => true
-            ]
-        ]);
-
         DB::table('file_categories')->insert([
             [
                 'name' => 'plugins',

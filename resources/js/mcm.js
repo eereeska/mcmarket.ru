@@ -62,7 +62,11 @@ mcm.prototype.parseHTML = function(string) {
 }
 
 mcm.prototype.ie = function(el, callback) {
-    if (el) {
+    if (el instanceof String) {
+        if (this.qs(el)) {
+            callback.bind(this.qs(el))();
+        }
+    } else if (el) {
         callback.bind(el)();
     }
 }

@@ -137,4 +137,9 @@ class File extends Model
 
         return $types[$this->type] . ' » ' . ($this->category ? $this->category->title . ' » ' : '') . $this->title . ($this->version ? ' ' . $this->version . ' ' : '');
     }
+
+    public function getHeadMetaDescription($length = 150)
+    {
+        return substr(preg_replace('/\r|\n/', '', strip_tags($this->description)), 0, $length);
+    }
 }
