@@ -9,7 +9,9 @@ class Role
 {
     public function handle(Request $request, Closure $next, $role)
     {
-        if (auth()->guest() or !auth()->user()->hasRole($role)) {
+        $check = 'is_' . $role;
+
+        if (auth()->guest() or !auth()->user()->$check) {
             abort(404);
         }
 

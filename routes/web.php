@@ -85,8 +85,8 @@ Route::group(['prefix' => 'files'], function() {
 
 Route::group(['prefix' => 'file'], function() {
     Route::group(['middleware' => 'auth'], function() {
-        Route::get('/submit', [FileController::class, 'submit'])->middleware('permission:can_submit_new_files')->name('file.submit');
-        Route::post('/submit', [FileController::class, 'store'])->middleware('permission:can_submit_new_files')->name('file.store');
+        Route::get('/submit', [FileController::class, 'submit'])->middleware('role:admin')->name('file.submit');
+        Route::post('/submit', [FileController::class, 'store'])->middleware('role:admin')->name('file.store');
 
         Route::group(['prefix' => '/{id}'], function() {
             Route::get('/download', [FileController::class, 'download'])->name('file.download');

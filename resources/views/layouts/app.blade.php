@@ -54,39 +54,33 @@
 
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 </head>
-<body>
-    <header class="header">
-        <div class="header__inner">
-            <div class="header__left">
-                <a href="{{ route('home') }}" class="header__logo">MCMarket</a>
-                <nav class="header__nav">
+<body class="flex flex-col h-screen bg-gray-100">
+    <header class="flex bg-white border-b-2 border-gray-200 px-4 lg:px-0">
+        <div class="flex justify-between w-full max-w-screen-lg mx-auto py-3">
+            <div class="flex flex-grow justify-between items-center space-x-4">
+                <a href="{{ route('home') }}" class="text-2xl font-bold">MCМаркет</a>
+                <nav class="flex items-center space-x-4">
                     {{-- <a href="#" @if (request()->is('u*')) class="active" @endif>Пользователи</a> --}}
                     {{-- <a href="{{ route('groups-index') }}" @if (request()->is('group*')) class="active" @endif>Сообщества</a> --}}
                     @guest
+                    
+                    @endguest
+                    @auth
+                    <a href="{{ route('user.show', ['user' => auth()->user() ]) }}" class="flex items-center space-x-2">
+                        <div class="w-8 h-8 rounded bg-cover bg-no-repeat bg-center" style="background-image: url({{ auth()->user()->getAvatar() }});"></div>
+                        <span>{{ auth()->user()->name }}</span>
+                    </a>
+                    {{-- <a href="{{ route('user.show', ['user' => auth()->user()]) }}">Профиль</a>
+                    <a href="{{ route('logout') }}">Выйти</a> --}}
+                    @else
                     <a href="{{ route('login') }}" @if (request()->is('login')) class="active" @endif>Вход</a>
                     <a href="{{ route('register') }}" @if (request()->is('register')) class="active" @endif>Регистрация</a>
-                    @endguest
+                    @endauth
                 </nav>
             </div>
-            @auth
-            <div class="header__right">
-                {{-- <a href="{{ route('conversations.index') }}" class="header__conversations icon icon_comments"></a> --}}
-                <a href="{{ route('user.show', ['user' => auth()->user() ]) }}" class="header__profile">
-                    @include('components._avatar', ['user' => auth()->user()])
-                    <span>{{ auth()->user()->name }}</span>
-                </a>
-            </div>
-            @endauth
         </div>
     </header>
-    @if ($errors->any())
-    @foreach ($errors as $error)
-    <p class="alert red">{{ $error->message }}</p>
-    @endforeach
-    @endif
-    <main class="page">
-        @yield('content')
-    </main>
+    @yield('content')
     @include('components._footer')
     <script src="{{ asset('js/app.js') }}"></script>
 </body>

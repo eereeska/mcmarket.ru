@@ -69,18 +69,10 @@ class FileController extends Controller
         $file->user_id = $user->id;
         $file->title = $request->title;
         $file->name = $request->name;
-        $file->type = $request->type;
         $file->size = $request_file->getSize();
         $file->path = $path;
         $file->extension = $request_file_extension;
-
-        if ($request->type == 'paid') {
-            $file->price = $request->price;
-        }
-
-        if ($user->role->can_approve_files) {
-            $file->is_approved = true;
-        }
+        $file->price = $request->price ?? null;
 
         $file->save();
 
@@ -90,7 +82,7 @@ class FileController extends Controller
     public function show(Request $request, $id)
     {
         $file = Cache::remember('file.' . $id, now()->addHour(), function() use ($id) {
-            return File::where('id', $id)->with(['category', 'user'])->withCount(['purchases'])->first();
+            return File::where('id', $id)->with(['category', 'user'])->first();
         });
 
         if (!$file) {
@@ -169,8 +161,7 @@ class FileController extends Controller
         $file->title = trim($request->title);
         $file->name = trim($request->name);
         $file->description = FileDescriptionController::normalize($request->description);
-        $file->type = trim($request->type);
-        $file->price = $file->type == 'paid' ? $request->price ?? null : null;
+        $file->price = $request->price ?? null;
         $file->version = trim($request->version) ?? null;
 
         if ($request->has('donation_url')) {

@@ -76,7 +76,6 @@ class File extends Model
         'category',
         'title',
         'name',
-        'type',
         'description',
         'path',
         'extension',
@@ -124,18 +123,7 @@ class File extends Model
 
     public function getCover()
     {
-        return asset('covers/files/' . $this->cover_path);
-    }
-
-    public function getTabTitle()
-    {
-        $types = [
-            'free' => 'Бесплатно',
-            'paid' => 'Платно',
-            'nulled' => 'Nulled'
-        ];
-
-        return $types[$this->type] . ' » ' . ($this->category ? $this->category->title . ' » ' : '') . $this->title . ($this->version ? ' ' . $this->version . ' ' : '');
+        return $this->cover_path ? asset('covers/files/' . $this->cover_path) : null;
     }
 
     public function getHeadMetaDescription($length = 150)

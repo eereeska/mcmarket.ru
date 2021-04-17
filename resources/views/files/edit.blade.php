@@ -3,83 +3,107 @@
 @section('meta.title', 'Редактирование файла ' . $file->name)
 
 @section('content')
-<div class="content">
-    <section class="section">
-        <div class="section__header">
-            <ul class="breadcrumb">
-                <li class="breadcrumb__item"><a href="{{ route('file.show', ['id' => $file->id]) }}">{{ $file->name }}</a></li>
-                <li class="breadcrumb__item breadcrumb__item_active">Редактирование</li>
-            </ul>
+<div class="flex flex-wrap gap-10 w-full max-w-screen-lg mx-auto px-4 my-12 lg:flex-nowrap lg:px-0">
+    <main class="w-full">
+        <ol class="inline-flex mb-6 font-semibold">
+            <li class="hover:text-blue-500">
+                <a href="{{ route('file.show', ['id' => $file->id]) }}">{{ $file->name }}</a>
+            </li>
+            <li class="mx-2">
+                <i class="far fa-angle-right"></i>
+            </li>
+            <li class="text-gray-500">Редактирование</li>
+        </ol>
+        <form action="{{ url()->current() }}" method="post" enctype="multipart/form-data" autocomplete="off">
+            @csrf
+            <div class="mb-6">
+                <label for="category" class="block mb-3 text-gray-500">Категория <span class="text-red-500">*</span></label>
+                <select name="category" class="w-full bg-white border border-gray-300 rounded-md px-3 py-2 text-left cursor-default focus:outline-none focus:ring-2 focus:ring-blue-300">
+                    <option disabled selected value>Не указана</option>
+                    @foreach ($categories as $category)
+                        <option value="{{ $category->name }}" @if ($category->name == $file->category->name) selected @endif>{{ $category->title }}</option>
+                    @endforeach
+                </select>
+                @if ($errors->has('category'))
+                    <p class="mt-2 text-red-600">{{ $errors->first('category') }}</p>
+                @endif
+            </div>
+            <div class="mb-6">
+                <label for="title" class="block mb-3 text-gray-500">Заголовок <span class="text-red-500">*</span></label>
+                <input type="text" name="title" placeholder="От 4 до 60 символов" value="{{ $file->title }}" required minlength="4" maxlength="60" class="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:border-blue-300">
+                @if ($errors->has('title'))
+                    <p class="mt-2 text-red-600">{{ $errors->first('title') }}</p>
+                @endif
+            </div>
+            <div class="mb-6">
+                <label for="name" class="block mb-3 text-gray-500">Название <span class="text-red-500">*</span></label>
+                <input type="text" name="name" placeholder="От 3 до 24 символов" value="{{ $file->name }}" required minlength="3" maxlength="24" class="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:border-blue-300">
+                @if ($errors->has('name'))
+                    <p class="mt-2 text-red-600">{{ $errors->first('name') }}</p>
+                @endif
+            </div>
+            <div id="cover" class="mb-6">
+                <label for="cover" class="block mb-3 text-gray-500">Обложка <span class="text-red-500">*</span></label>
+                <input type="file" name="cover" accept="image/*" value="{{ $file->cover_path }}" class="w-full focus:outline-none focus:ring-2 focus:ring-blue-500">
+                @if ($errors->has('cover'))
+                    <p class="mt-2 text-red-600">{{ $errors->first('cover') }}</p>
+                @endif
+            </div>
+            <div id="description" class="mb-6">
+                <label for="description" class="block mb-3 text-gray-500">Описание <span class="text-red-500">*</span></label>
+                <div contenteditable="true" spellcheck="true" data-name="description" class="bg-white border rounded-md px-3 py-2 space-y-3 focus:outline-none focus:ring-2 focus:border-blue-500">{!! $file->description ?? '<p>Самое скучное описание...</p>' !!}</div>
+                @if ($errors->has('description'))
+                    <p class="mt-2 text-red-600">{{ $errors->first('description') }}</p>
+                @endif
+            </div>
+            <div class="mb-6">
+                <label for="price" class="block mb-3 text-gray-500">Стоимость</label>
+                <input type="number" name="price" placeholder="От 1 до 100.000 рублей" value="{{ $file->price }}" min="1" max="100000" class="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:border-blue-300">
+                @if ($errors->has('price'))
+                    <p class="mt-2 text-red-600">{{ $errors->first('price') }}</p>
+                @endif
+            </div>
+            <div class="mb-6">
+                <label for="version" class="block mb-3 text-gray-500">Версия</label>
+                <input type="text" name="version" placeholder="От 1 до 6 символов" value="{{ $file->version }}" minlength="1" maxlength="6" class="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:border-blue-300">
+                @if ($errors->has('version'))
+                    <p class="mt-2 text-red-600">{{ $errors->first('version') }}</p>
+                @endif
+            </div>
+            <div class="mb-6">
+                <label for="keywords" class="block mb-3 text-gray-500">Ключевые слова</label>
+                <input type="text" name="keywords" placeholder="От 2 до 200 символов" value="{{ $file->keywords }}" minlength="2" maxlength="200" class="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:border-blue-300">
+                @if ($errors->has('keywords'))
+                    <p class="mt-2 text-red-600">{{ $errors->first('keywords') }}</p>
+                @endif
+            </div>
+        </form>
+    </main>
+    <aside class="w-full lg:w-1/3">
+        <div class="sticky top-6">
+            <div class="mb-6">
+                @include('files.components._cover')
+            </div>
+            <div class="mb-6">
+                <button type="submit" class="sticky bottom-3 w-full bg-blue-500 rounded-md px-6 py-4 text-white focus:outline-none focus:ring-2 focus:ring-blue-300">Сохранить</button>
+            </div>
+            <div class="rounded-md border-b-2 border-gray-200 mt-6 mb-6"></div>
+            <a href="{{ route('file.update.submit', ['id' => $file->id]) }}" class="flex flex-wrap items-center gap-x-3 gap-y-3 mb-4 font-semibold hover:text-blue-500">
+                <div class="w-12 h-12 flex items-center justify-center bg-gray-200 rounded-md">
+                    <i class="far fa-upload"></i>
+                </div>
+                <span>Добавить обновление</span>
+            </a>
+            <a href="{{ route('file.update.submit', ['id' => $file->id]) }}" class="flex flex-wrap items-center gap-x-3 gap-y-3 font-semibold hover:text-blue-500">
+                <div class="w-12 h-12 flex items-center justify-center bg-gray-200 rounded-md">
+                    <div class="far fa-trash"></div>
+                </div>
+                <span>Удалить файл</span>
+            </a>
         </div>
-        <div class="section__content">
-            <form id="file-edit-form" method="post" action="{{ url()->current() }}" enctype="multipart/form-data">
-                @csrf
-                <section class="section">
-                    <div class="section__header">
-                        <h2 class="section__title section__title_required">Категория</h2>
-                    </div>
-                    <div class="section__content">
-                        @foreach ($categories as $category)
-                        <label class="radio">
-                            <input type="radio" name="category" value="{{ $category->name }}" class="radio__original" {{ $file->category->name == $category->name ? 'checked="checked"' : '' }}>
-                            <span class="radio__mark"></span>
-                            <span class="radio__label">{{ $category->title }}</span>
-                        </label>
-                        @endforeach
-                    </div>
-                </section>
-                <section class="section">
-                    <div class="section__header">
-                        <h2 class="section__title section__title_required">Заголовок</h2>
-                    </div>
-                    <div class="section__content">
-                        <input type="text" name="title" placeholder="Отображается в заголовке страницы и при выдаче в поиске" value="{{ $file->title }}" class="input" maxlength="60" autocapitalize="none" autocorrect="off" autocomplete="off" required>
-                        <label for="title" class="label">Вы можете использовать «{v}» в качестве переменной, вместо которой будет подставлена актуальная версия файла, если она установлена. Например: {{ $file->title ?? 'Заголовок' }} {v} = {{ $file->title ?? 'Заголовок' }} {{ $file->version ?? '1.0.0' }}</label>
-                        <label for="title" class="label">Также, вам доступны следующие переменные: «{p}» — будет заменена на стоимость файла</label>
-                    </div>
-                </section>
-                <section class="section">
-                    <div class="section__header">
-                        <h2 class="section__title section__title_required">Название</h2>
-                    </div>
-                    <div class="section__content">
-                        <input type="text" name="name" placeholder="Отображается на главной странице и в названии файла" value="{{ $file->name }}" class="input" maxlength="20" autocapitalize="none" autocorrect="off" autocomplete="off" required>
-                    </div>
-                </section>
-                <section class="section">
-                    <div class="section__header">
-                        <div class="section__header-left">
-                            <h2 class="section__title section__title_required">Тип</h2>
-                        </div>
-                    </div>
-                    <div class="section__content">
-                        <label class="radio">
-                            <input type="radio" name="type" value="free" class="radio__original" {{ $file->type == 'free' ? 'checked="checked"' : '' }}>
-                            <span class="radio__mark"></span>
-                            <span class="radio__label">Бесплатный</span>
-                        </label>
-                        <label class="radio">
-                            <input type="radio" name="type" value="paid" class="radio__original" {{ $file->type == 'paid' ? 'checked="checked"' : '' }} data-show-if-checked="price">
-                            <span class="radio__mark"></span>
-                            <span class="radio__label">Платный</span>
-                        </label>
-                        <div class="hidden" data-hidden-id="price">
-                            <input type="number" name="price" placeholder="Введите стоимость в рублях..." value="{{ $file->price }}" class="input" min="1" autocorrect="off" autocomplete="off">
-                            <label for="price" class="label">Обратите внимание, что комиссия сервиса составляет <span>{{ config('mcm.fee') }}%</span></label>
-                        </div>
-                    </div>
-                </section>
-                <section class="section">
-                    <div class="section__header">
-                        <h2 class="section__title section__title_required">Обложка</h2>
-                        <span class="muted">Рекомендуемый размер изображения: 300x300 пикселей</span>
-                    </div>
-                    <div class="section__content">
-                        <label class="file">
-                            <input type="file" name="cover" accept="image/*" value="{{ $file->cover_path }}" class="file__original">
-                        </label>
-                    </div>
-                </section>
+    </aside>
+</div>
+{{-- <div class="content">
                 <section class="section">
                     <div class="section__header">
                         <h2 class="section__title section__title_required">Описание</h2>
@@ -102,52 +126,6 @@
                         </div>
                     </div>
                 </section>
-                {{-- <section class="section">
-                    <div class="section__header">
-                        <h2 class="section__title">Медиа</h2>
-                    </div>
-                    <div class="section__content">
-                        @if ($file->media_count > 0)
-                        @include('components.files._media', ['media' => $file->media])
-                        @endif
-                        <label class="file">
-                            <input type="file" name="media-images[]" multiple accept="image/*" class="file__original" data-auto-upload="{{ route('file.media', ['id' => $file->id]) }}">
-                            <span class="file__label">Нажмите здесь или перетащите изображения для загрузки</span>
-                        </label>
-                    </div>
-                </section> --}}
-                <section class="section">
-                    <div class="section__header">
-                        <h2 class="section__title">Версия</h2>
-                    </div>
-                    <div class="section__content">
-                        <input type="text" name="version" placeholder="1.0.0" value="{{ $file->version }}" class="input" autocorrect="off" autocomplete="off">
-                    </div>
-                </section>
-                {{-- <section class="section">
-                    <div class="section__header">
-                        <h2 class="section__title">Собственная ссылка</h2>
-                    </div>
-                    <div class="section__content">
-                        <input type="text" name="custom_url" value="{{ $file->slug }}" placeholder="my-custom-url" autocorrect="off" autocomplete="off">
-                    </div>
-                </section>
-                <section class="section">
-                    <div class="section__header">
-                        <h2 class="section__title">Ссылка для пожертвований</h2>
-                    </div>
-                    <div class="section__content">
-                        <input type="text" name="donation_url" value="{{ $file->donation_url }}" placeholder="paypal.me/mcmarket" autocorrect="off" autocomplete="off">
-                    </div> --}}
-                {{-- </section> --}}
-                {{-- <section class="section">
-                    <div class="section__header">
-                        <h2 class="section__title">Название скачиваемого файла</h2>
-                    </div>
-                    <div class="section__content">
-                        <input type="text" name="name" placeholder="{{ $file->version ? $file->name . ' ' . $file->version : $file->name }}" autocomplete="no">
-                    </div>
-                </section> --}}
                 <section class="section">
                     <div class="section__header">
                         <h2 class="section__title">Ключевые слова</h2>
@@ -162,11 +140,6 @@
 </div>
 <aside class="sidebar">
     <section class="section section_sticky">
-        {{-- @if ($file->cover_path)
-        <section class="section">
-            <a href="{{ route('file.show', ['id' => $file->id]) }}"><img class="cover" src="{{ asset('covers/' . $file->cover_path) }}"></img></a>
-        </section>
-        @endif --}}
         <section class="section">
             <div class="section__header">
                 <h2 class="section__title">Действия</h2>
@@ -203,5 +176,5 @@
             </div>
         </section>
     </div>
-</aside>
+</aside> --}}
 @endsection
