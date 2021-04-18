@@ -21,7 +21,7 @@ class FilePurchaseController extends Controller
             'file_id' => $file->id,
             'user_id' => $user->id
         ])->exists()) {
-            return back()->withErrors(['already_purchased' => 'Вы уже приобрели этот файл']);
+            return redirect()->route('file.show', ['id' => $file->id])->withErrors(['already_purchased' => 'Вы уже приобрели этот файл']);
         }
 
         $file->load('user');
@@ -35,11 +35,8 @@ class FilePurchaseController extends Controller
         $user = $request->user();
         $file = File::where('id', $id)->first();
 
-        if ($file->type != 'paid') {
-            return response()->json([
-                'success' => false,
-                'message' => 'Указанный файл нельзя приобрести'
-            ]);
+        if (!$file->price or $file->price < 0) {
+            return back()->withErrors(['wrong_price' => 'Файл имеет недопустимую цену']);
         }
 
         // if ($user->id == $file->user_id) {
@@ -50,10 +47,7 @@ class FilePurchaseController extends Controller
         // }
 
         if ($user->balance < $file->price) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Недостаточно средст на балансе. Не хватает: ' . ($file->price - $user->balance) . ' ' . trans_choice('рубля|рубля|рублей', $file->price - $user->balance)
-            ]);
+            return back()->withErrors(['balance' => 'Недостаточно средств на балансе для покупки (не хватает: ' . ($file->price - $user->balance) . ' ' . trans_choice('рубля|рубля|рублей', $file->price - $user->balance) . ')']);
         }
 
         if (!DB::transaction(function() use ($file, $user) {
@@ -68,17 +62,11 @@ class FilePurchaseController extends Controller
 
             return !!$purchase;
         })) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Не удалось совершить платёж'
-            ]);
+            return back()->withErrors(['error' => 'Произошла ошибка на стороне сервера при обработке платежа. Пожалуйста, попробуйте позже']);
         }
 
         Cache::forget('file.' . $file->id);
 
-        return response()->json([
-            'success' => true,
-            'redirect' => route('file-show', ['file' => $file])
-        ]);
+        return redirect()->route('file.show', ['id' => $file->id]);
     }
 }

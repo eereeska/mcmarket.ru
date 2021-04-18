@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\File;
 use App\Models\User;
 use App\Models\UserFollower;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Intervention\Image\Facades\Image;
@@ -15,15 +13,11 @@ class UserController extends Controller
 {
     public function show($name)
     {
-        $user = User::where('name', $name)->orWhere('id', $name)->with(['followers' => function($query) {
-            $query->orderBy('created_at', 'desc')->limit(5);
-        }])->withCount('followers')->first();
+        $user = User::where('name', $name)->orWhere('id', $name)->with('settings')->first();
 
         if (!$user) {
             abort(404);
         }
-
-        $user->files = File::where('user_id', $user->id)->latest()->paginate(10);
 
         return view('user.show', [
             'user' => $user
@@ -33,7 +27,7 @@ class UserController extends Controller
     public function settings()
     {
         return view('user.settings', [
-            'user' => Auth::user()
+            'user' => auth()->user()
         ]);
     }
 

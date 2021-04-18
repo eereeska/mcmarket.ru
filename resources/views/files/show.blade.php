@@ -28,25 +28,37 @@
             <li class="hover:text-blue-500">
                 <a href="{{ route('home', ['category' => $file->category->name]) }}">{{ $file->category->title }}</a>
             </li>
+            <li class="mx-2">
+                <i class="far fa-angle-right"></i>
+            </li>
+            <li class="text-gray-500">
+                <span>{{ $file->name }}</span>
+            </li>
         </ol>
         @if ($file->description)
             <article class="space-y-3">{!! $file->description !!}</article>
-        @else
+        @elseif (auth()->id() == $file->user_id)
             <a href="{{ route('file.edit', ['id' => $file->id, '#description']) }}" class="block bg-gray-200 rounded-md px-2 py-2 font-semibold text-center hover:text-blue-500">Заполните описание</a>
+        @else
+            <span class="block bg-gray-200 rounded-md px-2 py-2 font-semibold text-center">Описание отсутствует</span>
         @endif
     </main>
     <aside class="w-full lg:w-1/3">
         <div class="sticky top-6">
-            <section class="mb-6">
-                @include('files.components._cover')
-            </section>
+            @include('files.components._cover')
             <section class="mb-8">
-                <a href="{{ route('file.download', ['id' => $file->id]) }}" target="_blank" class="block bg-green-600 rounded-md px-6 py-4 font-semibold text-white text-center transition focus:outline-none focus:ring-2 focus:ring-green-500">Скачать</a>
-                <a href="{{ route('file.edit', ['id' => $file->id]) }}" class="block rounded-md mt-3 px-3 py-2 font-semibold text-center transition hover:bg-blue-100 hover:text-blue-500 focus:outline-none focus:bg-blue-100">Редактировать</a>
+                @if ($file->price and auth()->id() != $file->user_id and !auth()->user()->hasPurchasedFile($file))
+                    <a href="{{ route('file.purchase', ['id' => $file->id]) }}" class="block bg-indigo-500 rounded-md px-6 py-4 font-semibold text-white text-center transition focus:outline-none focus:ring-2 focus:ring-indigo-400">Купить</a>
+                @else
+                    <a href="{{ route('file.download', ['id' => $file->id]) }}" target="_blank" class="block bg-green-600 rounded-md px-6 py-4 font-semibold text-white text-center transition focus:outline-none focus:ring-2 focus:ring-green-500">Скачать</a>
+                @endif
+                @if (auth()->id() == $file->user_id)
+                    <a href="{{ route('file.edit', ['id' => $file->id]) }}" class="block rounded-md mt-3 px-3 py-2 font-semibold text-center transition hover:bg-blue-100 hover:text-blue-500 focus:outline-none focus:bg-blue-100">Редактировать</a>
+                @endif
             </section>
             <section class="mb-8">
                 <h2 class="mb-4 text-gray-500">Автор</h2>
-                <a href="{{ route('user.show', ['user' => $file->user]) }}" class="flex flex-wrap items-center gap-x-3 gap-y-3 font-semibold hover:text-blue-500">
+                <a href="{{ route('user.show', ['name' => $file->user->name]) }}" class="flex flex-wrap items-center gap-x-3 gap-y-3 font-semibold hover:text-blue-500">
                     <div class="w-12 h-12 bg-gray-200 bg-no-repeat bg-center bg-cover rounded-md" style="background-image: url({{ $file->user->getAvatar() }})"></div>
                     <span>{{ $file->user->name }}</span>
                 </a>
@@ -67,7 +79,7 @@
                 @if ($file->version)
                     <div class="flex flex-wrap items-center gap-x-3 gap-y-3">
                         <div class="w-12 h-12 flex items-center justify-center bg-gray-200 rounded-md">
-                            <i class="far fa-code-branch"></i>
+                            <i class="far fa-hashtag"></i>
                         </div>
                         <div class="flex-grow">
                             <div class="font-semibold">{{ $file->version }}</div>
@@ -134,6 +146,17 @@
                         <span class="text-gray-600">@choice('скачивание|скачивания|скачиваний', $file->downloads_count)</span>
                     </div>
                 </div>
+                @if ($file->price)
+                    <div class="flex flex-wrap items-center gap-x-3 gap-y-3">
+                        <div class="w-12 h-12 flex items-center justify-center bg-gray-200 rounded-md">
+                            <i class="far fa-cash-register"></i>
+                        </div>
+                        <div class="flex flex-wrap gap-x-1 gap-y-1">
+                            <span class="font-semibold">{{ number_format($file->purchases_count, 0, ' ', ' ') }}</span>
+                            <span class="text-gray-600">@choice('покупка|покупки|покупок', $file->purchases_count)</span>
+                        </div>
+                    </div>
+                @endif
             </section>
         </div>
     </aside>

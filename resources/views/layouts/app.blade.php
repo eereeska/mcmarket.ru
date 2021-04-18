@@ -66,7 +66,7 @@
                     
                     @endguest
                     @auth
-                    <a href="{{ route('user.show', ['user' => auth()->user() ]) }}" class="flex items-center space-x-2">
+                    <a href="{{ route('user.show', ['name' => auth()->user()->name ]) }}" class="flex items-center space-x-2">
                         <div class="w-8 h-8 rounded bg-cover bg-no-repeat bg-center" style="background-image: url({{ auth()->user()->getAvatar() }});"></div>
                         <span>{{ auth()->user()->name }}</span>
                     </a>

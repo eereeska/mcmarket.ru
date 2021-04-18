@@ -58,7 +58,7 @@ Route::group(['prefix' => 'upload', 'middleware' => 'auth'], function() {
     Route::post('/avatar', [UserController::class, 'uploadAvatar'])->name('upload-avatar');
 });
 
-Route::group(['prefix' => 'u/{user:name}'], function() {
+Route::group(['prefix' => 'u/{name}'], function() {
     Route::get('/', [UserController::class, 'show'])->name('user.show');
 
     Route::group(['middleware' => 'auth'], function() {

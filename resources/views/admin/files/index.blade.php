@@ -32,7 +32,7 @@
         </div>
     </aside>
     <main class="w-full space-y-4">
-        @each('files.components._preview', $files, 'file', 'components._empty')
+        @each('admin.files.components._preview', $files, 'file', 'components._empty')
     </main>
 </div>
 {{-- <aside class="sidebar">

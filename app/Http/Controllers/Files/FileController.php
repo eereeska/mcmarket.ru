@@ -82,7 +82,13 @@ class FileController extends Controller
     public function show(Request $request, $id)
     {
         $file = Cache::remember('file.' . $id, now()->addHour(), function() use ($id) {
-            return File::where('id', $id)->with(['category', 'user'])->first();
+            $f = File::where('id', $id)->with(['category', 'user'])->first();
+
+            if ($f->price) {
+                $f->loadCount('purchases');
+            }
+
+            return $f;
         });
 
         if (!$file) {
@@ -121,7 +127,7 @@ class FileController extends Controller
             return redirect()->route('file.show', ['id' => $file->id])->withErrors(['cant_download' => 'Запрашиваемый файл ещё не был одобрен администрацией']);
         }
         
-        if (auth()->user()->id != $file->user_id and $file->type == 'paid' and !$request->user()->hasPurchasedFile($file)) {
+        if (auth()->user()->id != $file->user_id and !is_null($file->price) and !$request->user()->hasPurchasedFile($file)) {
             return back()->withErrors(['purchase_required' => 'Вы должны сначала приобрести указанный файл']);
         }
 

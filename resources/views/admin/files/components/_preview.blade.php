@@ -1,9 +1,9 @@
 <div class="flex items-center gap-x-3 gap-y-3">
-    <a href="{{ route('file.edit', ['id' => $file->id]) }}" class="w-16 h-16 bg-gray-200 bg-no-repeat bg-center bg-cover rounded-md" style="background-image: url({{ $file->getCover() }})"></a>
+    <a href="{{ route('admin.file.edit', ['id' => $file->id]) }}" class="w-16 h-16 bg-gray-200 bg-no-repeat bg-center bg-cover rounded-md" style="background-image: url({{ $file->getCover() }})"></a>
     <div class="flex-grow space-y-1">
         <ul class="flex flex-wrap items-center gap-x-2 text-gray-500">
             <li class="font-semibold text-black hover:text-blue-500">
-                <a href="{{ route('file.show', ['id' => $file->id]) }}">{{ $file->name }}</a>
+                <a href="{{ route('admin.file.edit', ['id' => $file->id]) }}">{{ $file->name }}</a>
             </li>
             @if ($file->version)
                 <li>

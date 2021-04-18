@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Files;
 
 use App\Http\Controllers\Controller;
-use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
 
 class FileCoverController extends Controller
 {

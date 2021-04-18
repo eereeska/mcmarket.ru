@@ -49,14 +49,12 @@ class FileController extends Controller
         $file->is_visible = $request->boolean('is_visible');
         $file->is_approved = $request->boolean('is_approved');
 
+        $file->user_id = $request->get('user_id');
+
         $file->title = trim($request->title);
         $file->name = trim($request->name);
         $file->description = FileDescriptionController::normalize($request->description);
-        $file->type = trim($request->type);
-        
-        if ($file->type == 'paid') {
-            $file->price = $request->price ?? null;
-        }
+        $file->price = $request->price ?? null;
 
         if ($request->has('version')) {
             $file->version = trim($request->version);
