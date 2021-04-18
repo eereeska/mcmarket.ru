@@ -1,5 +1,5 @@
 <div class="flex items-center gap-x-3 gap-y-3">
-    <a href="{{ route('file.edit', ['id' => $file->id]) }}" class="w-16 h-16 bg-gray-200 bg-no-repeat bg-center bg-cover rounded-md" style="background-image: url({{ $file->getCover() }})"></a>
+    <a href="{{ route('file.show', ['id' => $file->id]) }}" class="w-16 h-16 bg-gray-200 bg-no-repeat bg-center bg-cover rounded-md" style="background-image: url({{ $file->getCover() }})"></a>
     <div class="flex-grow space-y-1">
         <ul class="flex flex-wrap items-center gap-x-2 text-gray-500">
             <li class="font-semibold text-black hover:text-blue-500">
@@ -27,10 +27,10 @@
                 <i class="far fa-folder text-sm"></i>
                 <a href="{{ route('home', ['category' => $file->category->name]) }}">{{ $file->category->title }}</a>
             </li>
-            @if ($file->version_updated_at)
-                <li title="Обновлён {{ $file->version_updated_at>format('d.m.Y h:i:s') }}">
+            @if ($file->version_updated_at != $file->created_at)
+                <li title="Обновлён {{ $file->version_updated_at->format('d.m.Y h:i:s') }}">
                     <i class="far fa-history text-sm"></i>
-                    <time datetime="{{ $file->version_updated_at>toAtomString() }}">{{ $file->version_updated_at>ago() }}</time>
+                    <time datetime="{{ $file->version_updated_at->toAtomString() }}">{{ $file->version_updated_at->ago() }}</time>
                 </li>
             @else
                 <li title="Добавлен {{ $file->created_at->format('d.m.Y h:i:s') }}">

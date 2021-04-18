@@ -35,6 +35,20 @@
                 @endif
             </div>
             <div class="mb-6">
+                <label for="cover" class="block mb-3 text-gray-500">Обложка</label>
+                <input type="file" name="cover" accept="image/*" class="w-full focus:outline-none focus:ring-2 focus:ring-blue-500">
+                @if ($errors->has('cover'))
+                    <p class="mt-2 text-red-600">{{ $errors->first('cover') }}</p>
+                @endif
+            </div>
+            <div class="mb-6">
+                <label for="description" class="block mb-3 text-gray-500">Описание</label>
+                <div contenteditable="true" spellcheck="true" data-name="description" class="bg-white border rounded-md px-3 py-2 space-y-3 focus:outline-none focus:ring-2 focus:border-blue-500"></div>
+                @if ($errors->has('description'))
+                    <p class="mt-2 text-red-600">{{ $errors->first('description') }}</p>
+                @endif
+            </div>
+            <div class="mb-6">
                 <label for="price" class="block mb-3 text-gray-500">Стоимость</label>
                 <input type="number" name="price" placeholder="От 1 до 100.000 рублей" value="{{ old('price') }}" min="1" max="100000" class="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:border-blue-300">
                 @if ($errors->has('price'))

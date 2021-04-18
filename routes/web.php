@@ -86,10 +86,9 @@ Route::group(['prefix' => 'files'], function() {
 Route::group(['prefix' => 'file'], function() {
     Route::group(['middleware' => 'auth'], function() {
         Route::get('/submit', [FileController::class, 'submit'])->middleware('role:admin')->name('file.submit');
-        Route::post('/submit', [FileController::class, 'store'])->middleware('role:admin')->name('file.store');
+        Route::post('/submit', [FileController::class, 'store'])->middleware('role:admin');
 
         Route::group(['prefix' => '/{id}'], function() {
-            Route::get('/download', [FileController::class, 'download'])->name('file.download');
             Route::get('/purchase', [FilePurchaseController::class, 'create'])->name('file.purchase');
             Route::post('/purchase', [FilePurchaseController::class, 'store']);
             Route::get('/edit', [FileController::class, 'edit'])->name('file.edit');
@@ -105,7 +104,10 @@ Route::group(['prefix' => 'file'], function() {
         });
     });
 
-    Route::get('/{id}', [FileController::class, 'show'])->name('file.show');
+    Route::group(['prefix' => '/{id}'], function() {
+        Route::get('/', [FileController::class, 'show'])->name('file.show');
+        Route::get('/download', [FileController::class, 'download'])->name('file.download');
+    });
 });
 
 Route::get('/conversations', [ConversationController::class, 'index'])->middleware('auth')->name('conversations.index');

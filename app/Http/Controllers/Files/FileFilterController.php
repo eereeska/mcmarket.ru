@@ -67,7 +67,7 @@ class FileFilterController extends Controller
         ];
 
         $files = $files->when(array_key_exists($request->get('sort'), $sort), function ($query) use ($request, $sort) {
-            return $query->orderBy($sort[$request->sort], substr($request->sort, -strlen($request->sort)) === 'up' ? 'asc' : 'desc');
+            return $query->orderBy($sort[$request->sort], str_contains($request->sort, '_up') ? 'asc' : 'desc');
         }, function($query) {
             return $query->orderBy('version_updated_at', 'desc');
         });
@@ -75,8 +75,7 @@ class FileFilterController extends Controller
         return $files->with([
             'category' => function($query) {
                 return $query->select(['id', 'name', 'title']);
-            },
-            'user' => function($query) {
+            }, 'user' => function($query) {
                 return $query->select(['id', 'name']);
             }
         ])->paginate($per_page)->appends($request->only(['category', 'type', 'sort']));

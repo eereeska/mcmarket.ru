@@ -28,9 +28,9 @@
                 <a href="{{ route('home', ['category' => $file->category->name]) }}">{{ $file->category->title }}</a>
             </li>
             @if ($file->version_updated_at)
-                <li title="Обновлён {{ $file->version_updated_at>format('d.m.Y h:i:s') }}">
+                <li title="Обновлён {{ $file->version_updated_at->format('d.m.Y h:i:s') }}">
                     <i class="far fa-history text-sm"></i>
-                    <time datetime="{{ $file->version_updated_at>toAtomString() }}">{{ $file->version_updated_at>ago() }}</time>
+                    <time datetime="{{ $file->version_updated_at->toAtomString() }}">{{ $file->version_updated_at->ago() }}</time>
                 </li>
             @else
                 <li title="Добавлен {{ $file->created_at->format('d.m.Y h:i:s') }}">

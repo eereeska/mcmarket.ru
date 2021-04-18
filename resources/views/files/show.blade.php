@@ -35,6 +35,9 @@
                 <span>{{ $file->name }}</span>
             </li>
         </ol>
+        @if ($errors->any())
+            <p class="mb-2 text-red-600">{{ $errors->first() }}</p>
+        @endif
         @if ($file->description)
             <article class="space-y-3">{!! $file->description !!}</article>
         @elseif (auth()->id() == $file->user_id)
@@ -47,7 +50,7 @@
         <div class="sticky top-6">
             @include('files.components._cover')
             <section class="mb-8">
-                @if ($file->price and auth()->id() != $file->user_id and !auth()->user()->hasPurchasedFile($file))
+                @if ($file->price or auth()->guest() or auth()->id() != $file->user_id and !auth()->user()->hasPurchasedFile($file))
                     <a href="{{ route('file.purchase', ['id' => $file->id]) }}" class="block bg-indigo-500 rounded-md px-6 py-4 font-semibold text-white text-center transition focus:outline-none focus:ring-2 focus:ring-indigo-400">Купить</a>
                 @else
                     <a href="{{ route('file.download', ['id' => $file->id]) }}" target="_blank" class="block bg-green-600 rounded-md px-6 py-4 font-semibold text-white text-center transition focus:outline-none focus:ring-2 focus:ring-green-500">Скачать</a>
@@ -114,7 +117,7 @@
                         <div class="text-sm text-gray-500">Добавлен</div>
                     </div>
                 </div>
-                @if ($file->version_updated_at)
+                @if ($file->version_updated_at != $file->created_at)
                     <div class="flex flex-wrap items-center gap-x-3 gap-y-3">
                         <div class="w-12 h-12 flex items-center justify-center bg-gray-200 rounded-md">
                             <i class="far fa-history"></i>

@@ -38,7 +38,7 @@ class CreateFileTables extends Migration
             $table->unsignedBigInteger('downloads_count')->default(0);
             $table->boolean('is_visible')->default(false);
             $table->boolean('is_approved')->default(false);
-            $table->timestamp('version_updated_at')->nullable();
+            $table->timestamp('version_updated_at')->useCurrent();
             $table->timestamps();
         });
 

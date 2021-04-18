@@ -74,6 +74,19 @@ class FileController extends Controller
         $file->extension = $request_file_extension;
         $file->price = $request->price ?? null;
 
+        if ($request->has('description')) {
+            $file->description = FileDescriptionController::normalize($request->description);
+        }
+
+        if ($request->hasFile('cover')) {
+            $file->cover_path = FileCoverController::store($file, $request->file('cover'));
+        }
+
+        if ($file->description and $file->cover_path and $user->is_admin) {
+            $file->is_visible = true;
+            $file->is_approved = true;
+        }
+
         $file->save();
 
         return redirect()->route('file.show', ['id' => $file->id]);
@@ -95,11 +108,11 @@ class FileController extends Controller
             return redirect()->route('home');
         }
 
-        $user = $request->user();
+        // $user = $request->user();
 
-        if (!$user and ($file->user_id != $user and ($file->is_visible or $file->is_approved))) {
-            return redirect()->route('home');
-        }
+        // if (!$user and ($file->user_id != $user and ($file->is_visible or $file->is_approved))) {
+        //     return redirect()->route('home');
+        // }
 
         $view_cache_key = 'file.' . $id . '.view.' . ($_SERVER['CF_CONNECTING_IP'] ?? $request->ip());
 
@@ -123,11 +136,13 @@ class FileController extends Controller
             return redirect()->route('home')->withErrors(['file_not_found' => 'Запрашиваемый файл не найден']);
         }
 
-        if (auth()->user()->id != $file->user_id and (!$file->is_visible or !$file->is_approved)) {
+        // TODO: Настройка: возможность отключить возможность скачивания неавторизованным пользователям
+
+        if (auth()->id() != $file->user_id and (!$file->is_visible or !$file->is_approved)) {
             return redirect()->route('file.show', ['id' => $file->id])->withErrors(['cant_download' => 'Запрашиваемый файл ещё не был одобрен администрацией']);
         }
         
-        if (auth()->user()->id != $file->user_id and !is_null($file->price) and !$request->user()->hasPurchasedFile($file)) {
+        if (auth()->id() != $file->user_id and !is_null($file->price) and !$request->user()->hasPurchasedFile($file)) {
             return back()->withErrors(['purchase_required' => 'Вы должны сначала приобрести указанный файл']);
         }
 

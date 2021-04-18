@@ -33,6 +33,7 @@
     </aside>
     <main class="w-full space-y-4">
         @each('admin.files.components._preview', $files, 'file', 'components._empty')
+        {{ $files->links() }}
     </main>
 </div>
 {{-- <aside class="sidebar">
