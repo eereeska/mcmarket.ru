@@ -1,42 +1,7 @@
-@font-face{font-family:"Font Awesome 5 Pro";font-style:normal;font-weight:300;font-display:block;src:url(./webfonts/fa-light-300.eot);src:url(./webfonts/fa-light-300.eot?#iefix) format("embedded-opentype"),url(./webfonts/fa-light-300.woff2) format("woff2"),url(./webfonts/fa-light-300.woff) format("woff"),url(./webfonts/fa-light-300.ttf) format("truetype"),url(./webfonts/fa-light-300.svg#fontawesome) format("svg")}
-
-@font-face{font-family:"Font Awesome 5 Pro";font-style:normal;font-weight:400;font-display:block;src:url(./webfonts/fa-regular-400.eot);src:url(./webfonts/fa-regular-400.eot?#iefix) format("embedded-opentype"),url(./webfonts/fa-regular-400.woff2) format("woff2"),url(./webfonts/fa-regular-400.woff) format("woff"),url(./webfonts/fa-regular-400.ttf) format("truetype"),url(./webfonts/fa-regular-400.svg#fontawesome) format("svg")}.far{font-family:"Font Awesome 5 Pro";font-weight:400}
-
-@font-face{font-family:"Font Awesome 5 Pro";font-style:normal;font-weight:900;font-display:block;src:url(./webfonts/fa-solid-900.eot);src:url(./webfonts/fa-solid-900.eot?#iefix) format("embedded-opentype"),url(./webfonts/fa-solid-900.woff2) format("woff2"),url(./webfonts/fa-solid-900.woff) format("woff"),url(./webfonts/fa-solid-900.ttf) format("truetype"),url(./webfonts/fa-solid-900.svg#fontawesome) format("svg")}.fa,.fas{font-family:"Font Awesome 5 Pro";font-weight:900}
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
-    [type=checkbox],
-    [type=radio] {
-        @apply w-5 h-5 inline-block align-middle bg-white rounded border border-gray-300 p-0 appearance-none select-none;
-    }
-
-    [type=radio] {
-        @apply rounded-full;
-    }
-
-    [type=checkbox]:focus,
-    [type=radio]:focus {
-        @apply outline-none ring-2 ring-offset-2 ring-offset-white;
-    }
-
-    [type=checkbox]:checked,
-    [type=radio]:checked {
-        @apply bg-center bg-no-repeat bg-current border-transparent;
-        
-        background-size: 100%;
-    }
-
-    [type=checkbox]:checked {
-        background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='white' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M12.207 4.793a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0l-2-2a1 1 0 011.414-1.414L6.5 9.086l4.293-4.293a1 1 0 011.414 0z'/%3e%3c/svg%3e");
-    }
-
-    [type=radio]:checked {
-        background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='white' xmlns='http://www.w3.org/2000/svg'%3e%3ccircle cx='8' cy='8' r='3'/%3e%3c/svg%3e");
-    }
-}
-
+@import './fonts.css';
+@import './forms.css';
 @import './icons.css';

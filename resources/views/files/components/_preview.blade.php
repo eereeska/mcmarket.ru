@@ -12,9 +12,9 @@
                 <li class="text-gray-500">{{ $file->version }}</li>
             @endif
             @if ($file->price)
-            <li class="ml-auto font-semibold">
-                <span>{{ $file->price }}</span>
-                <i class="far fa-ruble-sign text-sm"></i>
+                <li class="ml-auto font-semibold">
+                    <span>{{ $file->price }}</span>
+                    <i class="far fa-ruble-sign text-sm"></i>
                 </li>
             @endif
         </ul>

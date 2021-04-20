@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Articles\ArticleController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Balance\DepositController;
@@ -78,6 +79,10 @@ Route::group(['prefix' => 'group'], function() {
 
     Route::get('/{slug}', [GroupController::class, 'show'])->name('group-show');
 });
+
+Route::get('/articles', [ArticleController::class, 'index'])->name('articles.index');
+
+Route::get('/article/{slug}', [ArticleController::class, 'show'])->name('article.show');
 
 Route::group(['prefix' => 'files'], function() {
     Route::get('/my', [UserFileController::class, 'index'])->middleware('auth')->name('files.my');

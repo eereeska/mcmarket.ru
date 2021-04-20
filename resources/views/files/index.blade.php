@@ -5,7 +5,7 @@
     <aside class="w-full lg:w-1/3">
         <div class="mb-6">
             <label for="sort" class="block mb-3 text-gray-500">Сортировка</label>
-            <select name="sort" class="w-full bg-white border border-gray-300 rounded-md px-3 py-2 text-left cursor-default focus:outline-none focus:ring-2 focus:ring-blue-300">
+            <select name="sort" class="w-full bg-white px-3 py-2 text-left cursor-default focus:ring-blue-300">
                 <option value="updated">Последние обновления</option>
                 <option value="new">Сначала новые</option>
                 <option value="downloads">Самые скачиваемые</option>

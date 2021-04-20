@@ -62,7 +62,6 @@ class User extends Authenticatable
     
     protected $fillable = [
         'name',
-        'email',
         'password',
         'ip'
     ];
@@ -80,9 +79,14 @@ class User extends Authenticatable
         'created_at'
     ];
 
-    public function role()
+    public function permissions()
     {
-        return $this->belongsTo(Role::class);
+        return $this->hasMany(UserPermission::class);
+    }
+
+    public function hasPermission(string $permission)
+    {
+        return (bool) $this->permissions()->where('name', $permission)->count();
     }
 
     public function settings()
@@ -113,21 +117,6 @@ class User extends Authenticatable
     public function ownGroups()
     {
         return $this->belongsToMany(Group::class, null, 'id', 'owner_id');
-    }
-
-    public function participiedConversations()
-    {
-        return $this->belongsToMany(Conversation::class, 'conversation_participants', 'user_id', 'id');
-    }
-
-    public function conversations()
-    {
-        return $this->hasMany(ConversationParticipant::class)->pluck('conversation');
-    }
-
-    public function hasRole($role)
-    {
-        return ($this->roles && $this->roles->pluck('name')->contains($role));
     }
 
     public function hasPurchasedFile($file)

@@ -1,6 +1,6 @@
 @if ($file->cover_path)
     <section class="mb-6">
-        <img src="{{ $file->getCover() }}" alt="{{ $file->title }}" class="rounded-md">
+        <img src="{{ $file->getCover() }}" alt="{{ $file->title }}" class="w-full rounded-md">
     </section>
 @elseif (auth()->id() == $file->user_id)
     <section class="mb-6">
