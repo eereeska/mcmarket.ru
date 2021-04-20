@@ -1,1 +1,1 @@
-<strong class="w-full bg-gray-200 rounded-md px-2 py-2 font-semibold">Здесь пока ничего нет</strong>
+<span class="block bg-gray-200 rounded-md px-2 py-2 font-semibold text-center">Здесь пока ничего нет</span>

@@ -53,16 +53,6 @@ class User extends Authenticatable
         return $this->belongsToMany(User::class, 'user_followers');
     }
 
-    public function groups()
-    {
-        return $this->belongsToMany(Group::class, 'group_members');
-    }
-
-    public function ownGroups()
-    {
-        return $this->belongsToMany(Group::class, null, 'id', 'owner_id');
-    }
-
     public function hasPurchasedFile($file)
     {
         return FilePurchase::where([

@@ -10,12 +10,12 @@ class CreateGroupTables extends Migration
     {
         Schema::create('groups', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('owner_id')->nullable()->constrained('users')->onDelete('set null');
-            $table->string('name');
+            $table->foreignId('owner_id')->nullable()->constrained('users')->nullOnDelete();
+            $table->string('name')->unique();
+            $table->string('slug')->unique();
             $table->string('description')->nullable();
-            $table->enum('type', ['public', 'closed', 'private'])->default('public');
-            $table->string('slug');
-            $table->string('cover');
+            $table->enum('type', ['public', 'closed', 'private']);
+            $table->timestamp('cover_updated_at')->useCurrent();
             $table->timestamps();
         });
 

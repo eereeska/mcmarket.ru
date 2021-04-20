@@ -19,7 +19,7 @@ class CreateFileTables extends Migration
             $table->id();
             $table->foreignId('category_id')->nullable()->constrained('file_categories')->nullOnDelete();
             $table->foreignId('user_id')->nullable()->constrained('users')->nullOnDelete();
-            $table->foreignId('version_id')->constrained('file_versions');
+            // $table->foreignId('version_id')->constrained('file_versions');
             $table->string('title');
             $table->string('name');
             $table->decimal('price', 8, 2, true)->nullable();
@@ -30,19 +30,19 @@ class CreateFileTables extends Migration
             $table->timestamps();
         });
 
-        Schema::create('file_versions', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('file_id')->constrained('files')->cascadeOnDelete();
-            $table->string('title')->nullable();
-            $table->mediumText('description')->nullable();
-            $table->unsignedBigInteger('size');
-            $table->enum('state', ['visible', 'moderated', 'deleted']);
-            // $table->string('vt_id')->nullable();
-            // $table->enum('vt_status', ['completed', 'queued', 'in-progress'])->nullable();
-            // $table->json('vt_stats')->nullable();
-            // $table->string('vt_hash')->nullable();
-            $table->timestamps();
-        });
+        // Schema::create('file_versions', function (Blueprint $table) {
+        //     $table->id();
+        //     $table->foreignId('file_id')->constrained('files')->cascadeOnDelete();
+        //     $table->string('title')->nullable();
+        //     $table->mediumText('description')->nullable();
+        //     $table->unsignedBigInteger('size');
+        //     $table->enum('state', ['visible', 'moderated', 'deleted']);
+        //     $table->string('vt_id')->nullable();
+        //     $table->enum('vt_status', ['completed', 'queued', 'in-progress'])->nullable();
+        //     $table->json('vt_stats')->nullable();
+        //     $table->string('vt_hash')->nullable();
+        //     $table->timestamps();
+        // });
 
         Schema::create('file_meta', function (Blueprint $table) {
             $table->id();

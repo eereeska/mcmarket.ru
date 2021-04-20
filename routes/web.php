@@ -10,7 +10,8 @@ use App\Http\Controllers\Files\FileMediaController;
 use App\Http\Controllers\Files\FilePurchaseController;
 use App\Http\Controllers\Files\FileUpdateController;
 use App\Http\Controllers\Files\UserFileController;
-use App\Http\Controllers\GroupController;
+use App\Http\Controllers\Groups\GroupController;
+use App\Http\Controllers\Groups\GroupFollowController;
 use App\Http\Controllers\Search\UserSearchController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\UserController;
@@ -68,16 +69,21 @@ Route::group(['prefix' => 'u/{name}'], function() {
 });
 
 Route::group(['prefix' => 'groups'], function() {
-    Route::get('/', [GroupController::class, 'index'])->name('groups-index');
+    Route::get('/', [GroupController::class, 'index'])->name('groups.index');
 });
 
 Route::group(['prefix' => 'group'], function() {
     Route::group(['middleware' => 'auth'], function() {
-        Route::get('/create', [GroupController::class, 'create'])->name('group-create');
+        Route::get('/create', [GroupController::class, 'create'])->name('group.create');
         Route::post('/create', [GroupController::class, 'store']);
+
+        Route::group(['prefix' => '/{slug}'], function() {
+            Route::post('/follow', [GroupFollowController::class, 'follow'])->name('group.follow');
+            Route::post('/unfollow', [GroupFollowController::class, 'unfollow'])->name('group.unfollow');
+        });
     });
 
-    Route::get('/{slug}', [GroupController::class, 'show'])->name('group-show');
+    Route::get('/{slug}', [GroupController::class, 'show'])->name('group.show');
 });
 
 Route::get('/articles', [ArticleController::class, 'index'])->name('articles.index');

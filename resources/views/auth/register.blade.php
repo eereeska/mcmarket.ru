@@ -6,6 +6,9 @@
 <main class="w-full max-w-screen-lg mx-auto px-4 my-12 lg:px-0">
     <form action="{{ url()->current() }}" method="post" class="w-full md:w-2/5 mx-auto">
         @csrf
+        @if (request()->has('redirect'))
+            <input type="hidden" name="redirect" value="{{ request('redirect') }}">
+        @endif
         <div class="flex justify-between items-center space-x-4 mb-6">
             <div class="text-xl font-bold">Регистрация</div>
             <a href="{{ route('login') }}" class="hover:text-blue-600">Уже есть аккаунт?</a>

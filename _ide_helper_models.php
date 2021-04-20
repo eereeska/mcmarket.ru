@@ -10,10 +10,11 @@
  */
 
 
-namespace App\Models{
+namespace App\Models\Articles{
 /**
- * App\Models\Article
+ * App\Models\Articles\Article
  *
+ * @property-read \App\Models\User $user
  * @method static \Illuminate\Database\Eloquent\Builder|Article newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Article newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Article query()
@@ -260,9 +261,9 @@ namespace App\Models\Files{
 	class FileVersion extends \Eloquent {}
 }
 
-namespace App\Models{
+namespace App\Models\Groups{
 /**
- * App\Models\Group
+ * App\Models\Groups\Group
  *
  * @property int $id
  * @property int|null $owner_id
@@ -273,7 +274,7 @@ namespace App\Models{
  * @property string $cover
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\GroupMember[] $members
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Groups\GroupMember[] $members
  * @property-read int|null $members_count
  * @property-read \App\Models\User|null $owner
  * @method static \Illuminate\Database\Eloquent\Builder|Group newModelQuery()
@@ -292,9 +293,9 @@ namespace App\Models{
 	class Group extends \Eloquent {}
 }
 
-namespace App\Models{
+namespace App\Models\Groups{
 /**
- * App\Models\GroupMember
+ * App\Models\Groups\GroupMember
  *
  * @property int $id
  * @property int $group_id
@@ -371,10 +372,6 @@ namespace App\Models{
  * @property-read int|null $files_count
  * @property-read \Illuminate\Database\Eloquent\Collection|User[] $followers
  * @property-read int|null $followers_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Group[] $groups
- * @property-read int|null $groups_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Group[] $ownGroups
- * @property-read int|null $own_groups_count
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\File[] $purchasedFiles
  * @property-read int|null $purchased_files_count
  * @property-read \App\Models\UserSettings|null $settings

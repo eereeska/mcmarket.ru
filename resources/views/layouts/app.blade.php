@@ -58,25 +58,21 @@
     <header class="flex bg-white border-b-2 border-gray-200 px-4 lg:px-0">
         <div class="flex justify-between w-full max-w-screen-lg mx-auto py-3">
             <div class="flex flex-grow justify-between items-center space-x-4">
-                <a href="{{ route('home') }}" class="text-2xl font-bold">MCМаркет</a>
+                <a href="{{ route('home') }}" class="text-2xl font-bold focus:outline-none focus:text-blue-500">MCМаркет</a>
                 <nav class="flex items-center space-x-4">
-                    {{-- <a href="#" @if (request()->is('u*')) class="active" @endif>Пользователи</a> --}}
-                    {{-- <a href="{{ route('groups-index') }}" @if (request()->is('group*')) class="active" @endif>Сообщества</a> --}}
-                    @guest
-                    
-                    @endguest
-                    @auth
-                    <a href="{{ route('user.show', ['name' => auth()->user()->name ]) }}" class="flex items-center space-x-2">
+                    <a href="{{ route('groups.index') }}" class="focus:outline-none focus:text-blue-500">Сообщества</a>
+                </nav>
+                @guest
+                    <div class="flex">
+                        <a href="{{ route('login') }}" @if (request()->is('login')) class="active" @endif>Вход</a>
+                        <a href="{{ route('register') }}" @if (request()->is('register')) class="active" @endif>Регистрация</a>
+                    </div>
+                @else
+                    <a href="{{ route('user.show', ['name' => auth()->user()->name ]) }}" class="flex items-center space-x-2 focus:outline-none focus:text-blue-500">
                         <div class="w-8 h-8 rounded bg-cover bg-no-repeat bg-center" style="background-image: url({{ auth()->user()->getAvatar() }});"></div>
                         <span>{{ auth()->user()->name }}</span>
                     </a>
-                    {{-- <a href="{{ route('user.show', ['user' => auth()->user()]) }}">Профиль</a>
-                    <a href="{{ route('logout') }}">Выйти</a> --}}
-                    @else
-                    <a href="{{ route('login') }}" @if (request()->is('login')) class="active" @endif>Вход</a>
-                    <a href="{{ route('register') }}" @if (request()->is('register')) class="active" @endif>Регистрация</a>
-                    @endauth
-                </nav>
+                @endguest
             </div>
         </div>
     </header>

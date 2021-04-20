@@ -24,10 +24,7 @@ class FileFilterController extends Controller
         }
         
         if ($for_guests) {
-            $files = $files->where([
-                'is_visible' => true,
-                'is_approved' => true
-            ]);
+            $files = $files->where('state', 'visible');
         }
 
         $files = $files->when($request->get('from'), function($query) use ($request) {
