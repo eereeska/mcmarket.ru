@@ -3,15 +3,12 @@
 @section('meta.title', 'Настройки')
 
 @section('content')
-<div class="flex flex-wrap gap-x-10 gap-y-6 w-full max-w-screen-lg mx-auto px-4 my-12 lg:flex-nowrap lg:px-0">
-    <aside class="w-full lg:w-1/3">
+<div class="flex flex-wrap gap-x-10 gap-y-6 w-full max-w-lg mx-auto px-4 my-12 lg:flex-nowrap lg:px-0">
+    {{-- <aside class="w-full lg:w-1/3">
         <section class="mb-8">
-            <img src="{{ $user->getAvatar() }}" alt="{{ $user->name }}" class="rounded-md">
+            
         </section>
-        <section class="mb-8">
-            <button type="submit" class="sticky bottom-3 w-full bg-blue-500 rounded-md px-6 py-4 text-white focus:outline-none focus:ring-2 focus:ring-blue-300">Сохранить</button>
-        </section>
-    </aside>
+    </aside> --}}
     <main class="w-full">
         <form action="{{ url()->current() }}" method="post" enctype="multipart/form-data">
             @csrf
@@ -29,7 +26,7 @@
                     <p class="mt-2 text-red-600">{{ $errors->first('about') }}</p>
                 @endif
             </div>
-            <div id="about" class="mb-6">
+            <div id="privacy" class="mb-12">
                 <label for="a" class="block mb-3 text-gray-500">Приватность</label>
                 <div class="mb-4">
                     <div class="flex items-center">
@@ -42,6 +39,7 @@
                     <p class="mt-2 text-red-600">{{ $errors->first('about') }}</p>
                 @endif
             </div>
+            <button type="submit" class="w-full bg-blue-500 rounded-md px-6 py-4 text-white focus:outline-none focus:ring-2 focus:ring-blue-300">Сохранить</button>
         </form>
     </main>
 </div>

@@ -18,10 +18,10 @@
     <meta property="og:type" content="object">
     <meta property="og:url" content="{{ url()->current() }}">
     @hasSection ('meta.og:updated_time')
-    <meta name="og:updated_time" content="@yield('meta.og:updated_time')">
+        <meta name="og:updated_time" content="@yield('meta.og:updated_time')">
     @endif
     @hasSection ('meta.og:image')
-    <meta name="og:image" content="@yield('meta.og:image')">
+        <meta name="og:image" content="@yield('meta.og:image')">
     @endif
 
     <meta name="twitter:card" content="summary_large_image" />
@@ -35,8 +35,11 @@
 
     <link rel="canonical" href="{{ url()->current() }}" />
 
-    <link rel='shortcut icon' href='{{ asset('favicon.ico') }}' type="image/x-icon">
-    <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('apple-touch-icon.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('favicon-32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('favicon-16x16.png') }}">
+    <link rel="manifest" href="{{ asset('site.webmanifest') }}">
+    <link rel="mask-icon" href="{{ asset('safari-pinned-tab.svg') }}" color="#5bbad5">
 
     {{-- 
 
@@ -54,7 +57,7 @@
 
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 </head>
-<body class="flex flex-col h-screen bg-gray-100">
+<body class="flex flex-col min-h-screen bg-gray-100 font-sans antialiased">
     <header class="flex bg-white border-b-2 border-gray-200 px-4 lg:px-0">
         <div class="flex justify-between w-full max-w-screen-lg mx-auto py-3">
             <div class="flex flex-grow justify-between items-center space-x-4">

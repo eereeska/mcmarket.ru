@@ -19,49 +19,37 @@ class CreateFileTables extends Migration
             $table->id();
             $table->foreignId('category_id')->nullable()->constrained('file_categories')->nullOnDelete();
             $table->foreignId('user_id')->nullable()->constrained('users')->nullOnDelete();
-            // $table->foreignId('version_id')->constrained('file_versions');
             $table->string('title');
             $table->string('name');
+            $table->enum('state', ['visible', 'moderated', 'deleted'])->default('moderated');
             $table->decimal('price', 8, 2, true)->nullable();
-            $table->enum('state', ['visible', 'moderated', 'deleted']);
-            $table->unsignedInteger('views_count')->default(0);
-            $table->unsignedInteger('downloads_count')->default(0);
-            $table->timestamp('icon_updated_at')->nullable();
-            $table->timestamps();
-        });
-
-        // Schema::create('file_versions', function (Blueprint $table) {
-        //     $table->id();
-        //     $table->foreignId('file_id')->constrained('files')->cascadeOnDelete();
-        //     $table->string('title')->nullable();
-        //     $table->mediumText('description')->nullable();
-        //     $table->unsignedBigInteger('size');
-        //     $table->enum('state', ['visible', 'moderated', 'deleted']);
-        //     $table->string('vt_id')->nullable();
-        //     $table->enum('vt_status', ['completed', 'queued', 'in-progress'])->nullable();
-        //     $table->json('vt_stats')->nullable();
-        //     $table->string('vt_hash')->nullable();
-        //     $table->timestamps();
-        // });
-
-        Schema::create('file_meta', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('file_id')->constrained('files')->cascadeOnDelete();
             $table->mediumText('description')->nullable();
             $table->string('keywords')->nullable();
             $table->string('version')->nullable();
             $table->string('extension')->nullable();
             $table->string('donation_url')->nullable();
-            $table->string('vt_id')->nullable();
-            $table->enum('vt_status', ['completed', 'queued', 'in-progress'])->nullable();
-            $table->json('vt_stats')->nullable();
-            $table->string('vt_hash')->nullable();
+            $table->string('source_code_url')->nullable();
+            $table->unsignedInteger('views_count')->default(0);
+            $table->unsignedInteger('downloads_count')->default(0);
+            $table->timestamp('cover_updated_at')->nullable();
+            $table->timestamp('version_updated_at')->useCurrent();
+            $table->timestamps();
+        });
+
+        Schema::create('file_versions', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('file_id')->constrained('files')->cascadeOnDelete();
+            $table->string('title')->nullable();
+            $table->mediumText('description')->nullable();
+            $table->unsignedInteger('size');
+            $table->enum('state', ['visible', 'moderated', 'deleted'])->default('moderated');
+            $table->timestamps();
         });
 
         Schema::create('file_purchases', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('file_id')->constrained('files')->cascadeOnDelete();
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
+            $table->foreignId('file_id')->constrained('files')->cascadeOnDelete();
             $table->timestamps();
         });
 
@@ -78,6 +66,7 @@ class CreateFileTables extends Migration
     {
         Schema::dropIfExists('file_categories');
         Schema::dropIfExists('files');
+        Schema::dropIfExists('file_versions');
         Schema::dropIfExists('file_purchases');
         Schema::dropIfExists('file_media');
     }

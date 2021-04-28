@@ -35,6 +35,13 @@
                 @endif
             </div>
             <div class="mb-6">
+                <label for="file" class="block mb-3 text-gray-500">Файл <span class="text-red-500">*</span></label>
+                <input type="file" name="file" required class="w-full focus:outline-none focus:ring-2 focus:ring-blue-300">
+                @if ($errors->has('file'))
+                    <p class="mt-2 text-red-600">{{ $errors->first('file') }}</p>
+                @endif
+            </div>
+            <div class="mb-6">
                 <label for="cover" class="block mb-3 text-gray-500">Обложка</label>
                 <input type="file" name="cover" accept="image/*" class="w-full focus:outline-none focus:ring-2 focus:ring-blue-500">
                 @if ($errors->has('cover'))
@@ -43,7 +50,7 @@
             </div>
             <div class="mb-6">
                 <label for="description" class="block mb-3 text-gray-500">Описание</label>
-                <div contenteditable="true" spellcheck="true" data-name="description" class="bg-white border rounded-md px-3 py-2 space-y-3 focus:outline-none focus:ring-2 focus:border-blue-500"></div>
+                <div contenteditable placeholder="Описание" spellcheck="true" data-name="description" class="bg-white border rounded-md px-3 py-2 space-y-3 focus:outline-none focus:ring-2 focus:border-blue-500"></div>
                 @if ($errors->has('description'))
                     <p class="mt-2 text-red-600">{{ $errors->first('description') }}</p>
                 @endif
@@ -53,13 +60,6 @@
                 <input type="number" name="price" placeholder="От 1 до 100.000 рублей" value="{{ old('price') }}" min="1" max="100000" class="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:border-blue-300">
                 @if ($errors->has('price'))
                     <p class="mt-2 text-red-600">{{ $errors->first('price') }}</p>
-                @endif
-            </div>
-            <div class="mb-6">
-                <label for="file" class="block mb-3 text-gray-500">Файл</label>
-                <input type="file" name="file" class="w-full focus:outline-none focus:ring-2 focus:ring-blue-300">
-                @if ($errors->has('file'))
-                    <p class="mt-2 text-red-600">{{ $errors->first('file') }}</p>
                 @endif
             </div>
             <button type="submit" class="w-full bg-blue-500 rounded-md px-6 py-4 text-white focus:outline-none focus:ring-2 focus:ring-blue-300">Добавить</button>
