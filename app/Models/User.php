@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Models\Files\File;
+use App\Models\Files\FilePurchase;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 

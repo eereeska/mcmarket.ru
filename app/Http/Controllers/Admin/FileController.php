@@ -5,9 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Files\FileCategoryController;
 use App\Http\Controllers\Files\FileCoverController;
-use App\Http\Controllers\Files\FileDescriptionController;
 use App\Http\Controllers\Files\FileFilterController;
-use App\Models\File;
+use App\Models\Files\File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 
@@ -53,7 +52,7 @@ class FileController extends Controller
 
         $file->title = trim($request->title);
         $file->name = trim($request->name);
-        $file->description = FileDescriptionController::normalize($request->description);
+        // $file->description = FileDescriptionController::normalize($request->description);
         $file->price = $request->price ?? null;
 
         if ($request->has('version')) {

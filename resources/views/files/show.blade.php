@@ -117,7 +117,7 @@
                         <div class="text-sm text-gray-500">Добавлен</div>
                     </div>
                 </div>
-                @if ($file->version_updated_at != $file->created_at)
+                @if ($file->version_updated_at and $file->version_updated_at != $file->created_at)
                     <div class="flex flex-wrap items-center gap-x-3 gap-y-3">
                         <div class="w-12 h-12 flex items-center justify-center bg-gray-200 rounded-md">
                             <i class="far fa-history"></i>

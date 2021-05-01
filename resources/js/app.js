@@ -1,9 +1,67 @@
-import './modules/smartAttributes';
-import './modules/rte';
-import './modules/files';
-import './modules/select';
-import './modules/hide';
-import './modules/tabs';
+// import './modules/smartAttributes';
+// import './modules/rte';
+// import './modules/files';
+// import './modules/select';
+// import './modules/hide';
+// import './modules/tabs';
+// import './modules/files/upload';
+
+window.mcm = {
+    imageViewer: function() {
+        return {
+            url: '',
+            dragOver: false,
+    
+            fileChosen(event) {
+                this.url = event.target.files.length ? URL.createObjectURL(event.target.files[0]) : null;
+            },
+
+            drop(event) {
+                this.dragOver = false;
+
+                if (!event.dataTransfer.files.length || !event.dataTransfer.files[0].type.match('image/*')) {
+                    return;
+                }
+
+                this.$refs.cover.files = event.dataTransfer.files;
+                this.url = event.dataTransfer.files.length ? URL.createObjectURL(event.dataTransfer.files[0]) : null;
+            },
+        }
+    }
+}
+
+// window.mcm = (function() {
+// 	function MCM() {
+		
+// 	}
+	
+// 	var mcm = {
+//         click: (selector) => {
+//             var el = document.querySelector(selector);
+
+//             if (!el) {
+//                 return;
+//             }
+
+//             el.click();
+//         },
+// 		check: (selector) => {
+//             var el = document.querySelector(selector);
+
+//             if (!el) {
+//                 return;
+//             }
+
+//             if (el.getAttribute('type').toLowerCase() === 'radio') {
+//                 el.click();
+//             } else if (el.getAttribute('type').toLowerCase() === 'checkbox') {
+//                 el.checked = true;
+//             }
+//         }
+// 	};
+	
+// 	return mcm;
+// }());
 
 // $(document).on('change', 'form[data-action="search"] input, form[data-action="search"] select', function(e) {
 //     var $form = $(this).closest('form[data-action="search"]');

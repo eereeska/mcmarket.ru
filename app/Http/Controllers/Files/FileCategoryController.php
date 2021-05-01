@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Files;
 
 use App\Http\Controllers\Controller;
-use App\Models\FileCategory;
+use App\Models\Files\FileCategory;
 use Illuminate\Support\Facades\Cache;
 
 class FileCategoryController extends Controller

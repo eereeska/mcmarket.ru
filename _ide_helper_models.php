@@ -14,10 +14,16 @@ namespace App\Models\Articles{
 /**
  * App\Models\Articles\Article
  *
+ * @property int $id
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\User $user
  * @method static \Illuminate\Database\Eloquent\Builder|Article newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Article newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Article query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Article whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Article whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Article whereUpdatedAt($value)
  */
 	class Article extends \Eloquent {}
 }
@@ -116,82 +122,64 @@ namespace App\Models{
 	class ConversationParticipant extends \Eloquent {}
 }
 
-namespace App\Models{
+namespace App\Models\Files{
 /**
- * App\Models\File
+ * App\Models\Files\File
  *
  * @property int $id
- * @property int|null $user_id
  * @property int|null $category_id
+ * @property int|null $user_id
+ * @property string $state
  * @property string $title
  * @property string $name
- * @property string $path
- * @property int $size
- * @property float|null $price
- * @property string|null $cover_path
- * @property string|null $description
+ * @property string $description
+ * @property string|null $price
  * @property string|null $keywords
- * @property string|null $version
- * @property string|null $extension
  * @property string|null $donation_url
- * @property string|null $vt_id
- * @property string|null $vt_status
- * @property array|null $vt_stats
- * @property string|null $vt_hash
+ * @property string|null $source_code_url
  * @property int $views_count
  * @property int $downloads_count
- * @property int $is_visible
- * @property int $is_approved
- * @property \Illuminate\Support\Carbon|null $version_updated_at
+ * @property string|null $cover_updated_at
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \App\Models\FileCategory|null $category
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\FileMedia[] $media
+ * @property-read \App\Models\Files\FileCategory|null $category
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Files\FileMedia[] $media
  * @property-read int|null $media_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\FilePurchase[] $purchases
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Files\FilePurchase[] $purchases
  * @property-read int|null $purchases_count
  * @property-read \App\Models\User|null $user
  * @method static \Illuminate\Database\Eloquent\Builder|File newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|File newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|File query()
  * @method static \Illuminate\Database\Eloquent\Builder|File whereCategoryId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|File whereCoverPath($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|File whereCoverUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|File whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|File whereDescription($value)
  * @method static \Illuminate\Database\Eloquent\Builder|File whereDonationUrl($value)
  * @method static \Illuminate\Database\Eloquent\Builder|File whereDownloadsCount($value)
- * @method static \Illuminate\Database\Eloquent\Builder|File whereExtension($value)
  * @method static \Illuminate\Database\Eloquent\Builder|File whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|File whereIsApproved($value)
- * @method static \Illuminate\Database\Eloquent\Builder|File whereIsVisible($value)
  * @method static \Illuminate\Database\Eloquent\Builder|File whereKeywords($value)
  * @method static \Illuminate\Database\Eloquent\Builder|File whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|File wherePath($value)
  * @method static \Illuminate\Database\Eloquent\Builder|File wherePrice($value)
- * @method static \Illuminate\Database\Eloquent\Builder|File whereSize($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|File whereSourceCodeUrl($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|File whereState($value)
  * @method static \Illuminate\Database\Eloquent\Builder|File whereTitle($value)
  * @method static \Illuminate\Database\Eloquent\Builder|File whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|File whereUserId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|File whereVersion($value)
- * @method static \Illuminate\Database\Eloquent\Builder|File whereVersionUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|File whereViewsCount($value)
- * @method static \Illuminate\Database\Eloquent\Builder|File whereVtHash($value)
- * @method static \Illuminate\Database\Eloquent\Builder|File whereVtId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|File whereVtStats($value)
- * @method static \Illuminate\Database\Eloquent\Builder|File whereVtStatus($value)
  */
 	class File extends \Eloquent {}
 }
 
-namespace App\Models{
+namespace App\Models\Files{
 /**
- * App\Models\FileCategory
+ * App\Models\Files\FileCategory
  *
  * @property int $id
  * @property string $name
  * @property string $title
  * @property string $icon
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\File[] $files
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Files\File[] $files
  * @property-read int|null $files_count
  * @method static \Illuminate\Database\Eloquent\Builder|FileCategory newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|FileCategory newQuery()
@@ -204,16 +192,16 @@ namespace App\Models{
 	class FileCategory extends \Eloquent {}
 }
 
-namespace App\Models{
+namespace App\Models\Files{
 /**
- * App\Models\FileMedia
+ * App\Models\Files\FileMedia
  *
  * @property int $id
  * @property int|null $file_id
  * @property string $name
  * @property string $type
  * @property string|null $url
- * @property-read \App\Models\File|null $file
+ * @property-read \App\Models\Files\File|null $file
  * @method static \Illuminate\Database\Eloquent\Builder|FileMedia newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|FileMedia newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|FileMedia query()
@@ -226,16 +214,16 @@ namespace App\Models{
 	class FileMedia extends \Eloquent {}
 }
 
-namespace App\Models{
+namespace App\Models\Files{
 /**
- * App\Models\FilePurchase
+ * App\Models\Files\FilePurchase
  *
  * @property int $id
- * @property int $file_id
  * @property int $user_id
+ * @property int $file_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \App\Models\File $file
+ * @property-read \App\Models\Files\File $file
  * @property-read \App\Models\User $user
  * @method static \Illuminate\Database\Eloquent\Builder|FilePurchase newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|FilePurchase newQuery()
@@ -253,10 +241,32 @@ namespace App\Models\Files{
 /**
  * App\Models\Files\FileVersion
  *
- * @property-read \App\Models\File $file
+ * @property int $id
+ * @property int $file_id
+ * @property string $state
+ * @property string|null $title
+ * @property string|null $description
+ * @property string|null $url
+ * @property string|null $hash
+ * @property string|null $extension
+ * @property int|null $size
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\Files\File $file
  * @method static \Illuminate\Database\Eloquent\Builder|FileVersion newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|FileVersion newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|FileVersion query()
+ * @method static \Illuminate\Database\Eloquent\Builder|FileVersion whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|FileVersion whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|FileVersion whereExtension($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|FileVersion whereFileId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|FileVersion whereHash($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|FileVersion whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|FileVersion whereSize($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|FileVersion whereState($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|FileVersion whereTitle($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|FileVersion whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|FileVersion whereUrl($value)
  */
 	class FileVersion extends \Eloquent {}
 }
@@ -268,10 +278,10 @@ namespace App\Models\Groups{
  * @property int $id
  * @property int|null $owner_id
  * @property string $name
+ * @property string $slug
  * @property string|null $description
  * @property string $type
- * @property string $slug
- * @property string $cover
+ * @property \Illuminate\Support\Carbon $cover_updated_at
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Groups\GroupMember[] $members
@@ -280,7 +290,7 @@ namespace App\Models\Groups{
  * @method static \Illuminate\Database\Eloquent\Builder|Group newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Group newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Group query()
- * @method static \Illuminate\Database\Eloquent\Builder|Group whereCover($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Group whereCoverUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Group whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Group whereDescription($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Group whereId($value)
@@ -331,7 +341,7 @@ namespace App\Models{
  * App\Models\Payment
  *
  * @property int $id
- * @property string $unitpay_id
+ * @property string $gateway_id
  * @property int $user_id
  * @property float $sum
  * @property string|null $complete_at
@@ -342,9 +352,9 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Payment query()
  * @method static \Illuminate\Database\Eloquent\Builder|Payment whereCompleteAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Payment whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Payment whereGatewayId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Payment whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Payment whereSum($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Payment whereUnitpayId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Payment whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Payment whereUserId($value)
  */
@@ -368,11 +378,11 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $last_seen_at
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\File[] $files
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Files\File[] $files
  * @property-read int|null $files_count
  * @property-read \Illuminate\Database\Eloquent\Collection|User[] $followers
  * @property-read int|null $followers_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\File[] $purchasedFiles
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Files\File[] $purchasedFiles
  * @property-read int|null $purchased_files_count
  * @property-read \App\Models\UserSettings|null $settings
  * @method static \Database\Factories\UserFactory factory(...$parameters)

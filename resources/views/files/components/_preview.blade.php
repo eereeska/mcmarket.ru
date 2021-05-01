@@ -27,7 +27,7 @@
                 <i class="far fa-folder text-sm"></i>
                 <a href="{{ route('home', ['category' => $file->category->name]) }}">{{ $file->category->title }}</a>
             </li>
-            @if ($file->version_updated_at != $file->created_at)
+            @if ($file->version_updated_at and $file->version_updated_at != $file->created_at)
                 <li title="Обновлён {{ $file->version_updated_at->format('d.m.Y h:i:s') }}">
                     <i class="far fa-history text-sm"></i>
                     <time datetime="{{ $file->version_updated_at->toAtomString() }}">{{ $file->version_updated_at->ago() }}</time>

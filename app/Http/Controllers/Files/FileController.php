@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Files;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\FileSubmitRequest;
+use App\Http\Requests\Files\FileSubmitRequest;
 use App\Http\Requests\FileUpdateRequest;
-use App\Models\File;
-use App\Models\FileCategory;
+use App\Models\Files\File;
+use App\Models\Files\FileCategory;
+use App\Models\Files\FileVersion;
+use App\Services\Files\FileService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
@@ -39,43 +41,24 @@ class FileController extends Controller
         ]);
     }
 
-    public function store(FileSubmitRequest $request)
+    public function store(FileSubmitRequest $request, FileService $file_service)
     {
         $user = auth()->user();
+        $saved_file = $file_service->save($request->file('file'));
 
-        $request_file = $request->file('file');
-        $request_file_extension = $request_file->getClientOriginalExtension();
-
-        // if ($request->type != 'paid') {
-        //     $vt_analyse_response = Http::withHeaders([
-        //         'x-apikey' => $this->vt_key
-        //     ])->attach('file', file_get_contents($request_file), $request->name)->post('https://www.virustotal.com/api/v3/files');
-    
-        //     if ($vt_analyse_response->failed() or array_key_exists('error', $vt_analyse_response->json())) {
-        //         return back()->withErrors(['vt_error' => 'Не удалось загрузить файл для проверки на VirusTotal'])->withInput($request->all());
-        //     }
-        // }
-
-        $path = $this->save($request_file);
-
-        if (!$path) {
-            return back()->withErrors(['store_error' => 'Не удалось сохранить файл'])->withInput($request->all());
+        if (!$saved_file['success']) {
+            return back()->withErrors($saved_file['errors'])->with($saved_file['flash']);
         }
 
-        $category = FileCategory::where('name', $request->category)->first();
-
         $file = new File();
-        $file->category_id = $category->id;
+        $file->category_id = FileCategory::where('name', $request->category)->first()->id;
         $file->user_id = $user->id;
-        $file->title = $request->title;
-        $file->name = $request->name;
-        $file->size = $request_file->getSize();
-        $file->path = $path;
-        $file->extension = $request_file_extension;
-        $file->price = $request->price ?? null;
+        $file->title = trim($request->title);
+        $file->name = trim($request->name);
+        $file->description = $request->description;
 
-        if ($request->has('description')) {
-            $file->description = FileDescriptionController::normalize($request->description);
+        if ($request->has('price')) {
+            $file->price = $request->price;
         }
 
         if ($request->hasFile('cover')) {
@@ -88,6 +71,10 @@ class FileController extends Controller
         }
 
         $file->save();
+
+        FileVersion::create(array_merge([
+            'file_id' => $file->id
+        ], $saved_file));
 
         return redirect()->route('file.show', ['id' => $file->id]);
     }
@@ -181,7 +168,7 @@ class FileController extends Controller
 
         $file->title = trim($request->title);
         $file->name = trim($request->name);
-        $file->description = FileDescriptionController::normalize($request->description);
+        // $file->description = FileDescriptionController::normalize($request->description);
         $file->price = $request->price ?? null;
         $file->version = trim($request->version) ?? null;
 

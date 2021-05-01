@@ -2,14 +2,11 @@
 
 namespace App\Models\Files;
 
-use App\Models\File;
 use Illuminate\Database\Eloquent\Model;
 
 class FileVersion extends Model
 {
-    protected $fillable = [
-        ''
-    ];
+    protected $guarded = ['id', 'state'];
 
     public function file()
     {

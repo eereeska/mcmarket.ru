@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Files;
 
 use App\Http\Controllers\Controller;
-use App\Models\File;
+use App\Models\Files\File;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -66,7 +66,7 @@ class FileFilterController extends Controller
         $files = $files->when(array_key_exists($request->get('sort'), $sort), function ($query) use ($request, $sort) {
             return $query->orderBy($sort[$request->sort], str_contains($request->sort, '_up') ? 'asc' : 'desc');
         }, function($query) {
-            return $query->orderBy('version_updated_at', 'desc');
+            return $query->orderBy('created_at', 'desc');
         });
 
         return $files->with([

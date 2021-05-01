@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Files;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 
 class FilePurchase extends Model

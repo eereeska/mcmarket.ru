@@ -56,6 +56,9 @@
     {{-- @include('misc.metrics') --}}
 
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.8.2/dist/alpine.min.js" defer></script>
+    <script src="{{ asset('js/app.js') }}"></script>
 </head>
 <body class="flex flex-col min-h-screen bg-gray-100 font-sans antialiased">
     <header class="flex bg-white border-b-2 border-gray-200 px-4 lg:px-0">
@@ -81,6 +84,6 @@
     </header>
     @yield('content')
     @include('components._footer')
-    <script src="{{ asset('js/app.js') }}"></script>
+    @yield('footer.scripts')
 </body>
 </html>

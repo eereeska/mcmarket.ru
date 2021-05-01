@@ -1,27 +1,16 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Files;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 
 class File extends Model
 {
-    protected $fillable = [
-        'category',
-        'title',
-        'name',
-        'description',
-        'path',
-        'extension',
-        'version',
-        'donation_url',
-        'keywords',
-        'version_updated_at'
-    ];
+    protected $guarded = ['id', 'state'];
 
     protected $casts = [
-        'vt_stats' => 'json',
-        'version_updated_at' => 'datetime'
+        'cover_updated_at' => 'datetime'
     ];
     
     public function category()
