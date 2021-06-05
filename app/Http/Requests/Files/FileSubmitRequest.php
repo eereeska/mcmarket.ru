@@ -19,7 +19,7 @@ class FileSubmitRequest extends FormRequest
             'title' => ['required', 'min:3', 'max:80'],
             'name' => ['required', 'min:3', 'max:20'],
             'cover' => ['nullable', 'image', 'max:5120'],
-            'description' => ['required', 'string', 'max:100000'],
+            'description' => ['required', 'max:100000'],
             'description_raw' => ['min:5'],
             'file' => ['required', 'file', 'max:5120'],
             'price' => ['nullable', 'numeric', 'min:1']
@@ -52,11 +52,11 @@ class FileSubmitRequest extends FormRequest
     protected function prepareForValidation()
     {
         $this->merge([
-            'description' => (new FileService())->normalizeDescription($this->description)
+            'description' => (new FileService())->formatDescription($this->description)
         ]);
 
         $this->merge([
-            'description_raw' => strip_tags($this->description)
+            'description_raw' => dd(strip_tags($this->description))
         ]);
     }
 }

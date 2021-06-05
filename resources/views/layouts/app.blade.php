@@ -6,7 +6,7 @@
     <title>@yield('meta.title', 'Minecraft Маркет')</title>
 
     @hasSection ('meta.robots')
-    <meta name="robots" content="@yield('meta.robots')">
+        <meta name="robots" content="@yield('meta.robots')">
     @endif
 
     <meta name="description" content="@yield('meta.description', 'Настоящий Маркет в мире Minecraft: Покупайте, продавайте, устраивайте розыгрыши и раздавайте любые товары и услуги, связанные с игрой Minecraft')">
@@ -57,7 +57,6 @@
 
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 
-    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.8.2/dist/alpine.min.js" defer></script>
     <script src="{{ asset('js/app.js') }}"></script>
 </head>
 <body class="flex flex-col min-h-screen bg-gray-100 font-sans antialiased">

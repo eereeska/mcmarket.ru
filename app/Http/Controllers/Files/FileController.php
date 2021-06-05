@@ -62,7 +62,7 @@ class FileController extends Controller
         }
 
         if ($request->hasFile('cover')) {
-            $file->cover_path = FileCoverController::store($file, $request->file('cover'));
+            FileCoverController::store($file, $request->file('cover'));
         }
 
         if ($file->description and $file->cover_path and $user->is_admin) {

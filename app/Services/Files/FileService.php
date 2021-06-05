@@ -4,6 +4,7 @@ namespace App\Services\Files;
 
 use App\Models\Files\FileVersion;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Mail\Markdown;
 use Illuminate\Support\Facades\Storage;
 
 class FileService {
@@ -70,5 +71,15 @@ class FileService {
         }
 
         return trim($description);
+    }
+
+    public function formatDescription(string $description)
+    {
+        $text = strip_tags($description, '<br><p><li>');
+    $text = preg_replace ('/<[^>]*>/', PHP_EOL, $text);
+
+    dd($text);
+        dd(preg_replace( "/\n\s+/", "\n", rtrim(html_entity_decode(strip_tags($description))) ));
+        return Markdown::parse($description);
     }
 }

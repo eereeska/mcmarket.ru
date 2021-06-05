@@ -35,18 +35,19 @@
                     <p class="mt-2 text-red-600">{{ $errors->first('name') }}</p>
                 @endif
             </div>
-            <div class="mb-6">
+            <div x-data="{selected: null}" class="mb-6">
                 <label for="name" class="block mb-3 text-gray-500">Файл <span class="text-red-500">*</span></label>
                 <div class="flex items-center mb-3">
-                    <input id="file_submit_type-upload" name="file_submit_type" type="radio" value="upload" class="w-4 h-4 text-blue-500 focus:ring-indigo-400">
-                    <label for="file_submit_type-upload" class="ml-2 font-medium text-gray-700">Загрузка <span class="text-gray-500">(до 5 мб)</span></label>
+                    <input id="target-upload" name="target" type="radio" value="upload" class="w-4 h-4 text-blue-500 focus:ring-indigo-400" x-ref="targetUploadRadio">
+                    <label for="target-upload" class="ml-2 font-medium text-gray-700">Загрузка <span class="text-gray-500">(до 5 мб)</span></label>
                 </div>
-                <div x-data="{selected: null}" class="pl-7">
-                    <input type="file" name="file" class="hidden" accept=".{{ implode(',.', config('mcm.files.allowed_extensions')) }}" x-on:change="selected = $event.target.files.length ? $event.target.files[0].name : null">
+                <div class="pl-6">
+                    <input type="file" name="file" class="hidden" accept=".{{ implode(',.', config('mcm.files.allowed_extensions')) }}" x-ref="file" x-on:change="selected = $event.target.files.length ? $event.target.files[0].name : null">
                     <p x-show="selected != null" x-text="selected" class="mb-2 break-words"></p>
-                    <button type="button" class="bg-gray-200 rounded-md px-3 py-2 hover:bg-gray-300 focus:shadow-outline focus:outline-none" onclick="mcm.click('input[name=file]'); mcm.check('#file_submit_type-upload')">Выберите файл</button>
+                    <button type="button" class="bg-gray-200 rounded-md px-3 py-2 hover:bg-gray-300 focus:shadow-outline focus:outline-none" x-on:click.prevent="$refs.file.click(); $refs.targetUploadRadio.click()">Выберите файл</button>
                 </div>
-                @if ($errors->has('file'))
+
+                {{-- @if ($errors->has('file'))
                     <p class="mt-2 text-red-600">{{ $errors->first('file') }}</p>
                 @endif
                 @if ($errors->has('file_already_exists'))
@@ -54,13 +55,13 @@
                     @if (session()->has('existed_file'))
                         @include('files.components._preview', ['file' => session()->get('existed_file')])
                     @endif
-                @endif
+                @endif --}}
                 <div class="flex items-center mt-4 mb-3">
-                    <input id="file_submit_type-url" name="file_submit_type" type="radio" value="url" class="w-4 h-4 text-blue-500 focus:ring-indigo-400">
-                    <label for="file_submit_type-url" class="ml-2 font-medium text-gray-700">Прямая ссылка на скачивание</label>
+                    <input id="target-url" name="target" type="radio" value="url" class="w-4 h-4 text-blue-500 focus:ring-indigo-400" x-ref="targetUrlRadio">
+                    <label for="target-url" class="ml-2 font-medium text-gray-700">Прямая ссылка на скачивание</label>
                 </div>
-                <div class="pl-7">
-                    <input type="text" name="url" placeholder="Yandex.Disk, Google Drive, AnonFiles" value="{{ old('url') }}" class="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:border-blue-300" onfocus="mcm.check('#file_submit_type-url')">
+                <div class="pl-6">
+                    <input type="text" name="url" placeholder="Yandex.Disk, Google Drive, AnonFiles" value="{{ old('url') }}" class="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:border-blue-300" x-on:focus="$refs.targetUrlRadio.click()">
                 </div>
                 @if ($errors->has('name'))
                     <p class="mt-2 text-red-600">{{ $errors->first('name') }}</p>
@@ -80,9 +81,10 @@
                     <p class="mt-2 text-red-600">{{ $errors->first('cover') }}</p>
                 @endif
             </div>
-            <div class="mb-6">
+            <div x-data="mcm.editor()" class="mb-6">
                 <label for="description" class="block mb-3 text-gray-500">Описание</label>
-                <div contenteditable placeholder="От 3 символов" data-name="description" class="bg-white border rounded-md px-3 py-2 space-y-3 focus:outline-none focus:ring-2 focus:border-blue-500"></div>
+                <div contenteditable placeholder="От 3 символов" class="bg-white border rounded-md px-3 py-2 space-y-3 focus:outline-none focus:ring-2 focus:border-blue-500" x-on:input="inputHandler"></div>
+                <input type="hidden" name="description" required :value="inputValue">
                 @if ($errors->has('description'))
                     <p class="mt-2 text-red-600">{{ $errors->first('description') }}</p>
                 @endif
@@ -98,8 +100,4 @@
         </form>
     </main>
 </div>
-@endsection
-
-@section('footer.scripts')
-    <script src="{{ asset('js/files/submit.js') }}" defer></script>
 @endsection

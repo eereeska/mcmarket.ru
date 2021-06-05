@@ -15,6 +15,6 @@ mix.postCss('resources/css/app.css', 'public/css', [
     require('postcss-import'),
     require('tailwindcss'),
     require('autoprefixer'),
-]).js('resources/js/app.js', 'public/js').js('resources/js/files/submit.js', 'public/js/files');
+]).js('resources/js/app.js', 'public/js');
 
 mix.disableNotifications();
