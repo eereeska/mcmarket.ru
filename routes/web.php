@@ -43,10 +43,10 @@ Route::group(['prefix' => 'search', 'middleware' => 'auth'], function() {
 });
 
 Route::get('/login', [LoginController::class, 'index'])->middleware('guest')->name('login');
-Route::post('/login', [LoginController::class, 'login'])->middleware(['guest', 'captcha']);
+Route::post('/login', [LoginController::class, 'login'])->middleware(['guest', 'recaptcha']);
 
 Route::get('/register', [RegisterController::class, 'index'])->middleware('guest')->name('register');
-Route::post('/register', [RegisterController::class, 'register'])->middleware(['guest', 'captcha']);
+Route::post('/register', [RegisterController::class, 'register'])->middleware(['guest', 'recaptcha']);
 
 Route::get('/logout', [LoginController::class, 'logout'])->middleware('auth')->name('logout');
 

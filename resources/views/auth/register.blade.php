@@ -28,13 +28,19 @@
             @endif
         </div>
         <div class="mb-6">
-            <div class="h-captcha flex justify-center" data-sitekey="{{ config('mcm.hcaptcha.public_key') }}"></div>
-            <script src="https://hcaptcha.com/1/api.js" async defer></script>
-            @if ($errors->has('h-captcha-response'))
-                <p class="mt-2 text-center text-red-600">{{ $errors->first('h-captcha-response') }}</p>
+            {{-- <div class="h-captcha flex justify-center" data-sitekey="{{ config('mcm.hcaptcha.public_key') }}"></div> --}}
+            {{-- <script src="https://hcaptcha.com/1/api.js" async defer></script> --}}
+            <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+            @if ($errors->has('g-captcha-response'))
+                <p class="mt-2 text-center text-red-600">{{ $errors->first('g-captcha-response') }}</p>
             @endif
         </div>
-        <button type="submit" class="w-full bg-blue-500 rounded-md px-6 py-4 text-white focus:outline-none focus:ring-2 focus:border-blue-300">Создать аккаунт</button>
+        <script>
+            function onSubmit() {
+                document.querySelector('form').submit();
+            }
+        </script>
+        <button type="submit" class="g-recaptcha w-full bg-blue-500 rounded-md px-6 py-4 text-white focus:outline-none focus:ring-2 focus:border-blue-300" data-sitekey="{{ config('services.recaptcha.sitekey') }}" data-callback="onSubmit">Создать аккаунт</button>
     </form>
 </main>
 @endsection

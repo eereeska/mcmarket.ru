@@ -75,6 +75,7 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'ajax' => \App\Http\Middleware\AjaxOnly::class,
         'role' => \App\Http\Middleware\Role::class,
-        'captcha' => \App\Http\Middleware\HCaptcha::class,
+        'hcaptcha' => \App\Http\Middleware\HCaptcha::class,
+        'recaptcha' => \App\Http\Middleware\ReCaptcha::class,
     ];
 }
