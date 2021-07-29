@@ -11,7 +11,7 @@
         @endif
         <div class="flex justify-between items-center space-x-4 mb-6">
             <div class="text-xl font-bold">Авторизация</div>
-            <a href="{{ route('register') }}" class="hover:text-blue-600">Ещё нет аккаунта?</a>
+            <a href="{{ route('register', ['redirect' => request()->input('redirect') ?? null ]) }}" class="hover:text-blue-600">Ещё нет аккаунта?</a>
         </div>
         <div class="mb-6">
             <label for="username" class="block mb-3 text-gray-500">Никнейм</label>

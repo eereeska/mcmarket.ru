@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Accounts\AccountController;
 use App\Http\Controllers\Articles\ArticleController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
@@ -17,26 +18,15 @@ use App\Http\Controllers\SearchController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
-Route::match(['get', 'post'], '/', [FileController::class, 'index'])->name('home');
-Route::get('/test', function() {
-    return view('test');
-});
+Route::match(['get', 'post'], '/', [AccountController::class, 'index'])->name('home');
+Route::view('/test', 'test');
 
-Route::get('/contact', function() {
-    return view('help.contact');
-})->name('contact');
+Route::view('/contact', 'help.contact')->name('contact');
+Route::view('/terms', 'help.terms')->name('terms');
+Route::view('/privacy', 'help.privacy')->name('privacy');
 
-Route::get('/terms', function() {
-    return view('help.terms');
-})->name('terms');
-
-Route::get('/privacy', function() {
-    return view('help.privacy');
-})->name('privacy');
-
-Route::get('/search', [SearchController::class, 'index'])->name('search');
-Route::post('/search', [SearchController::class, 'search']);
-
+// Route::get('/search', [SearchController::class, 'index'])->name('search');
+// Route::post('/search', [SearchController::class, 'search']);
 
 Route::group(['prefix' => 'search', 'middleware' => 'auth'], function() {
     Route::post('/users', [UserSearchController::class, 'search'])->name('search.users');
